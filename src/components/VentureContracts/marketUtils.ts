@@ -3,8 +3,12 @@ import { MarketplaceDaoClient } from "@liberland/marketplace-contracts/client/go
 import { deploymentNetworks } from "@liberland/marketplace-contracts/deployment/networks";
 import { getAddress, parseUnits } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
-import axios from "axios";
-import { BACKEND_URL, getAccessToken } from "../../gqlFetcher";
+import { gqlFetcher } from "../../gqlFetcher";
+import {
+    VentureContractIndexDocument,
+    type VentureContractIndexQuery,
+    type VentureContractIndexQueryVariables,
+} from "../../generated/graphql";
 
 import { ventureWalletClient } from "./constants";
 import type {
@@ -20,16 +24,13 @@ export const fetchVentureIndex = async (props: VentureMarketProps): Promise<Vent
     if (!props.ventureId || !props.deployment.id) {
         throw new Error("Save this deployment to its Venture before loading its persisted market index.");
     }
-    const serverURL = props.serverURL || BACKEND_URL;
-    const token = getAccessToken(serverURL);
-    const result = await axios.get<VentureIndexSnapshot>(
-        `${serverURL}/api/startups/${encodeURIComponent(props.ventureId)}/contract-index`,
-        {
-            params: { deploymentId: props.deployment.id },
-            headers: token ? { Authorization: `Bearer ${token}` } : {},
-        },
-    );
-    return result.data;
+    const result = await gqlFetcher<VentureContractIndexQuery, VentureContractIndexQueryVariables>(
+        VentureContractIndexDocument,
+        { ventureId: props.ventureId, deploymentId: props.deployment.id },
+        undefined,
+        props.serverURL,
+    )();
+    return result.ventureContractIndex;
 };
 
 export const getVentureProvider = (deployment: VentureDeployment) =>

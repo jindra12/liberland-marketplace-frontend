@@ -1,0 +1,7 @@
+query CompanyPaymentSettings($companyId: String!) {
+    companyPaymentSettings(companyId: $companyId) {
+        companyId
+        paymentWebhookUrl
+        hasWebhookSecret
+    }
+}

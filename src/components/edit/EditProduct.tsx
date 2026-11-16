@@ -39,6 +39,7 @@ const EditProduct: React.FunctionComponent = () => {
                                         priceInUSD: fromCents(product?.priceInUSD),
                                         url: product?.url,
                                         inventory: product?.inventory,
+                                        orderable: product?.orderable,
                                         company: product?.company?.id,
                                         parameters: product?.parameters,
                                         cryptoAddresses: product?.cryptoAddresses

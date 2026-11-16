@@ -15,6 +15,7 @@ import { gatewayRegressionChecks } from "./cypress/support/security-regressions/
 import { protocolRegressionChecks } from "./cypress/support/security-regressions/protocolChecks";
 import { gatewayRoutingChecks } from "./cypress/support/security-regressions/gatewayRoutingChecks";
 import { gatewayTransportChecks } from "./cypress/support/security-regressions/http/utils";
+import { publicMarketplaceChecks } from "./cypress/support/publicMarketplaceChecks";
 
 const envFilePath = fs.existsSync(path.resolve(".env")) ? ".env" : "dev.env";
 const envFile = fs.readFileSync(path.resolve(envFilePath), "utf8");
@@ -106,6 +107,7 @@ export default defineConfig({
                 ...protocolRegressionChecks,
                 ...gatewayRoutingChecks,
                 ...gatewayTransportChecks,
+                ...publicMarketplaceChecks,
                 async saveGraphQLRequestLogs(payload: GraphQLRequestLogPayload) {
                     if (payload.logs.length === 0) {
                         return null;

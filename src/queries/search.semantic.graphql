@@ -1,0 +1,12 @@
+query SemanticSearch($query: String!, $limit: Int) {
+    semanticSearch(query: $query, limit: $limit) {
+        answer
+        sources {
+            collection
+            id
+            title
+            slug
+            serverUrl
+        }
+    }
+}

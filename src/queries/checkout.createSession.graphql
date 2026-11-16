@@ -1,0 +1,22 @@
+mutation CreateHostedCheckoutSession($input: HostedCheckoutInput!) {
+    createHostedCheckoutSession(input: $input) {
+        sessionId
+        title
+        status
+        expiresAt
+        amountUsdCents
+        receiver
+        thirdwebClientId
+        returnUrl
+        checkoutUrl
+        settlement {
+            chainId
+            tokenAddress
+            decimals
+            symbol
+        }
+        purchaseData {
+            nswapSessionId
+        }
+    }
+}

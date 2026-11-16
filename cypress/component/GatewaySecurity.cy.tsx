@@ -5,6 +5,9 @@ describe("Public gateway security boundaries", { retries: 0 }, () => {
     it("binds RAG source provenance to the backend that actually returned it", () => {
         cy.task("gatewayBindsRagProvenance").should("equal", true);
     });
+    it("supports anonymous GET RAG searches with the same validation and provenance as POST", () => {
+        cy.task("gatewayRagSupportsGet").should("equal", true);
+    });
     it("backs off repeated failed Poppy discovery calls", () => {
         cy.task("gatewayBacksOffFailedPoppyDiscovery").should("equal", true);
     });

@@ -1,0 +1,3 @@
+mutation DeleteVentureDeploymentRecovery($ventureId: String!, $walletAddress: String!) {
+    deleteVentureDeploymentRecovery(ventureId: $ventureId, walletAddress: $walletAddress)
+}

@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Card, Typography } from "antd";
+import type { CheckoutWidgetProps } from "thirdweb/react";
 
 import { connectThirdwebWalletStub, paymentBroadcastCounts, type WalletStubState, useWalletStubState } from "./state";
 
@@ -26,6 +28,13 @@ type UseConnectModalResult = {
 export const ThirdwebProvider: React.FunctionComponent<React.PropsWithChildren> = (props) => {
     return <>{props.children}</>;
 };
+
+export const CheckoutWidget: React.FunctionComponent<CheckoutWidgetProps> = (props) => (
+    <Card title="Thirdweb checkout (test double)" data-cy="thirdweb-checkout">
+        <Typography.Paragraph>Amount: {String(props.amount)}</Typography.Paragraph>
+        <Typography.Paragraph>Recipient: {props.seller}</Typography.Paragraph>
+    </Card>
+);
 
 export const ConnectButton: React.FunctionComponent<ConnectButtonProps> = (props) => {
     const walletState = useWalletStubState();

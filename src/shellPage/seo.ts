@@ -534,6 +534,11 @@ export const SEO_BY_ROUTE: Record<string, SeoConfig> = {
         description: "Submit order details and complete chain-specific payment steps.",
         noIndex: true,
     },
+    "/pay": {
+        title: "Secure checkout | NSwap",
+        description: "Complete a product payment or donation without a Nswap account.",
+        noIndex: true,
+    },
     "/unsubscribe": {
         title: "Unsubscribe | NSwap",
         description: "Manage email notification preferences for marketplace subscription updates.",

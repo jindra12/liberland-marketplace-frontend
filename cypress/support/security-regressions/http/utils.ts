@@ -14,7 +14,7 @@ import { withBackend } from "../../publicDiscoveryChecks";
 import { withDiscoveryConfig } from "../../agentReadinessChecks";
 import { registerFixtureSyndications, withGatewayClient } from "../utils";
 
-const withHttpFixture = async (handler: RequestListener, check: (url: string) => Promise<void>) => {
+export const withHttpFixture = async (handler: RequestListener, check: (url: string) => Promise<void>) => {
     const server = createServer(handler);
     server.listen(0, "127.0.0.1");
     await once(server, "listening");

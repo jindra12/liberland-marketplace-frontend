@@ -92,6 +92,7 @@ export const graphqlSchema = buildSchema(`
         Syndications(draft: Boolean, limit: Int, page: Int, where: JSON): MockCollection!
         Comment(id: String!, draft: Boolean): MockNode
         Company(id: String!, draft: Boolean): MockNode
+        companyPaymentSettings(companyId: String!): CompanyPaymentSettings
         Job(id: String!, draft: Boolean): MockNode
         Post(id: String!, draft: Boolean): MockNode
         Posts(
@@ -153,6 +154,12 @@ export const graphqlSchema = buildSchema(`
         trackAnalyticsEvent(input: AnalyticsTrackInput): MockNode
     }
 
+    type CompanyPaymentSettings {
+        companyId: String!
+        paymentWebhookUrl: String
+        hasWebhookSecret: Boolean!
+    }
+
     type LikeStateMutationResult {
         collection: LikeableCollectionMutation
         hasLiked: Boolean
@@ -198,6 +205,7 @@ export const graphqlSchema = buildSchema(`
 
     type SellerOrderProduct {
         id: String!
+        chainId: Int
         chain: String!
         fulfilled: Boolean!
         rejected: Boolean!
@@ -373,6 +381,8 @@ export const graphqlSchema = buildSchema(`
         subtotal: JSON
         customerEmail: JSON
         status: JSON
+        thirdwebCheckoutAvailable: Boolean
+        thirdwebCheckoutRecipients: [String]
         createdAt: JSON
         updatedAt: JSON
         deletedAt: JSON
@@ -384,6 +394,11 @@ export const graphqlSchema = buildSchema(`
         inventory: JSON
         enableVariants: JSON
         orderable: JSON
+        acceptThirdwebDonations: Boolean
+        acceptThirdwebPayments: Boolean
+        canAcceptThirdwebDonations: Boolean
+        paymentWebhookUrl: JSON
+        paymentWebhookSecret: JSON
         companyIdentityId: JSON
         url: JSON
         applyUrl: JSON
@@ -399,6 +414,13 @@ export const graphqlSchema = buildSchema(`
         quantity: JSON
         purchasedAt: JSON
         payerAddress: JSON
+        productID: JSON
+        recipientAddress: JSON
+        normalizedRecipientAddress: JSON
+        unitAmount: JSON
+        stableAmount: JSON
+        fulfilled: JSON
+        rejected: JSON
         chain: JSON
         address: JSON
         value: JSON
@@ -465,6 +487,8 @@ export const graphqlSchema = buildSchema(`
         options: [MockNode!]
         properties: [MockNode!]
         transactions: [MockNode!]
+        paymentTargets: [MockNode!]
+        paymentProofs: [MockNode!]
         transactionHashes: [MockNode!]
         variantTypes: [MockNode!]
         wallets: [MockNode!]

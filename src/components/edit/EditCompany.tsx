@@ -10,7 +10,8 @@ import { AuthGuard } from "../AuthGuard";
 import { useCompanyByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
 import { OwnerGuard } from "../OwnerGuard";
-import { CompanyForm } from "../publish/CompanyForm";
+
+import { EditCompanyForm } from "./EditCompanyForm";
 
 const EditCompany: React.FunctionComponent = () => {
     const { id, serverUrl } = useParams<{ id: string; serverUrl: string }>();
@@ -29,27 +30,7 @@ const EditCompany: React.FunctionComponent = () => {
                             <OwnerGuard createdById={createdById} serverURL={routeServerURL}>
                                 <DetailPageTracker serverUrl={company?.serverURL ?? routeServerURL} />
                                 <Typography.Title level={3}>Edit Company</Typography.Title>
-                                <CompanyForm
-                                    mode="edit"
-                                    initialValues={{
-                                        id: company?.id,
-                                        name: company?.name,
-                                        description: company?.description,
-                                        email: company?.email,
-                                        phone: company?.phone,
-                                        website: company?.website,
-                                        identity: company?.identity?.id,
-                                        cryptoAddresses: company?.cryptoAddresses
-                                            ? {
-                                                  chain: company.cryptoAddresses.chain,
-                                                  address: company.cryptoAddresses.address,
-                                              }
-                                            : undefined,
-                                        existingImageUrl: company?.image?.url,
-                                        existingImageId: company?.image?.id,
-                                    }}
-                                    url={routeServerURL}
-                                />
+                                <EditCompanyForm company={company!} serverUrl={routeServerURL} />
                             </OwnerGuard>
                         );
                     }}

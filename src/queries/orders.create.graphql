@@ -2,6 +2,8 @@ mutation CreateOrder($data: mutationOrderInput!, $draft: Boolean!) {
     createOrder(data: $data, draft: $draft) {
         id
         status
+        thirdwebCheckoutAvailable
+        thirdwebCheckoutRecipients
         payerAddress
         customer {
             id

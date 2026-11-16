@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { DollarOutlined } from "@ant-design/icons";
-import { Form, Input, InputNumber } from "antd";
+import { Checkbox, Form, Input, InputNumber } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 
 import { CompanyField } from "../CompanyField";
@@ -27,6 +27,7 @@ interface ProductFormValues {
     priceInUSD?: string | number | null;
     url?: string | null;
     inventory?: number | null;
+    orderable?: boolean | null;
     company?: string | null;
     cryptoAddresses?: CryptoAddressesFormValue | null;
     parameters?: ProductParameterDraft[] | null;
@@ -46,6 +47,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
     const updateMutation = useUpdateProductMutation();
     const defaults: Partial<ProductFormValues> = {
         ...props.initialValues,
+        orderable: props.initialValues?.orderable ?? true,
     };
     const { form, draftRef, loading, onFinish } = useEntityForm({
         entityName: "Product",
@@ -71,6 +73,7 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
                 priceInUSDEnabled: true,
                 priceInUSD: values.priceInUSD ? toCents(Number(values.priceInUSD)) : null,
                 inventory: values.inventory,
+                orderable: values.orderable,
                 ...(imageId !== undefined && {
                     image: imageId,
                 }),
@@ -132,6 +135,14 @@ export const ProductForm: React.FunctionComponent<ProductFormProps> = (props) =>
             </Form.Item>
             <Form.Item name="inventory" label="Inventory" className="Publish__productInventoryField">
                 <InputNumber min={0} className="Publish__fullWidth" />
+            </Form.Item>
+            <Form.Item
+                name="orderable"
+                valuePropName="checked"
+                extra="Allow customers to buy this product directly on Nswap. A payout wallet must be set on the product or its company."
+                className="Publish__productOrderableField"
+            >
+                <Checkbox>Allow purchases on Nswap</Checkbox>
             </Form.Item>
             <Form.Item
                 name="company"

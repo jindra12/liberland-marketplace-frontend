@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Divider, Flex, Result, Tag } from "antd";
+import { Flex, Result, Tag } from "antd";
 
-import { OrderPaymentChainButton } from "./OrderPaymentChainButton";
 import { findPaymentWalletForChain, type ChainPaymentAmount } from "./payment/utils";
 import { RememberWalletCheckbox } from "./RememberWalletCheckbox";
+import { OrderPaymentMethods } from "./Thirdweb/OrderPaymentMethods";
 import type { PaymentProfileUser, SubmittedOrder } from "./types";
 import { useOrderPaymentChainController } from "./useOrderPaymentChainController";
 
@@ -31,23 +31,23 @@ export const OrderPaymentChainAction: React.FunctionComponent<OrderPaymentChainA
 
     if (controller.isPaymentCompleted) {
         return (
-            <div className="CryptoPaymentGroup">
+            <Flex justify="center" className="OrderPaymentComplete">
                 <Result status="success" title="Payment submitted" />
-            </div>
+            </Flex>
         );
     }
 
     if (props.canPay && props.recipient) {
         return (
             <Flex align="stretch" gap={8} vertical className="OrderPaymentChainAction">
-                {!props.isLargeScreen && <Divider />}
-                <OrderPaymentChainButton
+                <OrderPaymentMethods
                     chainPayment={props.chainPayment}
                     entry={props.entry}
                     onTransactionId={controller.handleTransactionId}
                     onWalletSelected={controller.handleWalletSelected}
                     recipient={props.recipient}
                     preferredWallet={preferredWallet}
+                    onVerified={controller.handleVerifiedPayment}
                 />
                 {controller.showRememberWallet && (
                     <RememberWalletCheckbox

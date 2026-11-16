@@ -1,5 +1,21 @@
 import axios from "axios";
-import { BACKEND_URL, getAccessToken } from "../../gqlFetcher";
+import { z } from "zod";
+import { gqlFetcher } from "../../gqlFetcher";
+import {
+    VentureDeploymentRecoveryDocument,
+    SaveVentureDeploymentRecoveryDocument,
+    DeleteVentureDeploymentRecoveryDocument,
+    ReconcileVentureDeploymentRecoveryDocument,
+    type VentureDeploymentRecoveryQuery,
+    type VentureDeploymentRecoveryQueryVariables,
+    type SaveVentureDeploymentRecoveryMutation,
+    type SaveVentureDeploymentRecoveryMutationVariables,
+    type DeleteVentureDeploymentRecoveryMutation,
+    type DeleteVentureDeploymentRecoveryMutationVariables,
+    type ReconcileVentureDeploymentRecoveryMutation,
+    type ReconcileVentureDeploymentRecoveryMutationVariables,
+    type VentureDeploymentRecoveryInput,
+} from "../../generated/graphql";
 import type { DeploymentFlowProps, DeploymentRecovery } from "./types";
 
 export const getRecoveryError = (error: Error | null): string => {
@@ -29,22 +45,57 @@ export const writeDeploymentRecovery = (
 
 export const clearDeploymentRecovery = (key: string) => window.localStorage.removeItem(key);
 
-const recoveryRequest = (props: DeploymentFlowProps) => {
-    const serverURL = props.serverURL || BACKEND_URL;
-    const token = getAccessToken(serverURL);
+const recoveryVariables = (props: DeploymentFlowProps) => ({
+    ventureId: props.ventureId,
+    walletAddress: props.account.address,
+});
+
+// pendingSync is a browser journal flag, not part of the backend input schema.
+const recoveryInput = (record: DeploymentRecovery): VentureDeploymentRecoveryInput => ({
+    values: record.values,
+    transactions: record.transactions,
+    progress: record.progress,
+    manifest: record.manifest,
+    saved: record.saved,
+    runnerId: record.runnerId,
+});
+
+const readRemoteRecovery = (
+    record: VentureDeploymentRecoveryQuery["ventureRecoveryRecord"],
+): DeploymentRecovery | null => {
+    if (!record) {
+        return null;
+    }
     return {
-        url: `${serverURL}/api/startups/${encodeURIComponent(props.ventureId)}/deployment-recovery`,
-        config: {
-            params: { walletAddress: props.account.address },
-            headers: token ? { Authorization: `Bearer ${token}` } : {},
+        values: {
+            ...record.values,
+            deploymentNetwork: z.enum(["ethereum", "sepolia", "localhost"]).parse(record.values.deploymentNetwork),
         },
+        transactions: record.transactions.map((step) => ({
+            label: step.label,
+            hash: step.hash,
+            ...(step.nonce !== null ? { nonce: step.nonce } : {}),
+            ...(step.chainId !== null ? { chainId: step.chainId } : {}),
+            ...(step.submittedAtBlock !== null ? { submittedAtBlock: step.submittedAtBlock } : {}),
+        })),
+        progress: record.progress,
+        manifest: record.manifest,
+        ...(record.saved !== null ? { saved: record.saved } : {}),
+        ...(record.runnerId !== null ? { runnerId: record.runnerId } : {}),
     };
 };
 
 export const saveRemoteRecovery = async (props: DeploymentFlowProps, record: DeploymentRecovery) => {
-    const request = recoveryRequest(props);
-    const response = await axios.put<{ record: DeploymentRecovery }>(request.url, record, request.config);
-    return response.data.record;
+    const response = await gqlFetcher<
+        SaveVentureDeploymentRecoveryMutation,
+        SaveVentureDeploymentRecoveryMutationVariables
+    >(
+        SaveVentureDeploymentRecoveryDocument,
+        { ...recoveryVariables(props), record: recoveryInput(record) },
+        undefined,
+        props.serverURL,
+    )();
+    return readRemoteRecovery(response.saveVentureDeploymentRecovery)!;
 };
 
 export const loadRemoteRecovery = async (
@@ -52,10 +103,14 @@ export const loadRemoteRecovery = async (
     key: string,
     runnerId: string,
 ): Promise<DeploymentRecovery | null> => {
-    const request = recoveryRequest(props);
-    const response = await axios.get<{ record: DeploymentRecovery | null }>(request.url, request.config);
+    const response = await gqlFetcher<VentureDeploymentRecoveryQuery, VentureDeploymentRecoveryQueryVariables>(
+        VentureDeploymentRecoveryDocument,
+        recoveryVariables(props),
+        undefined,
+        props.serverURL,
+    )();
     const local = readDeploymentRecovery(key);
-    const remote = response.data.record;
+    const remote = readRemoteRecovery(response.ventureRecoveryRecord);
     // Preserve the hash if an earlier backend save failed after the wallet broadcast.
     if (local?.pendingSync) {
         const synchronized = { ...local, runnerId: local.runnerId || remote?.runnerId || runnerId };
@@ -81,8 +136,12 @@ export const persistRecovery = async (
 };
 
 export const deleteRemoteRecovery = async (props: DeploymentFlowProps, key: string) => {
-    const request = recoveryRequest(props);
-    await axios.delete(request.url, request.config);
+    await gqlFetcher<DeleteVentureDeploymentRecoveryMutation, DeleteVentureDeploymentRecoveryMutationVariables>(
+        DeleteVentureDeploymentRecoveryDocument,
+        recoveryVariables(props),
+        undefined,
+        props.serverURL,
+    )();
     clearDeploymentRecovery(key);
 };
 
@@ -93,11 +152,18 @@ export const reconcileRemoteRecovery = async (
     runnerId: string,
     action: "takeover" | "abandon",
 ) => {
-    const request = recoveryRequest(props);
-    const response = await axios.post<{ record: DeploymentRecovery | null }>(request.url,
-        { action, record, runnerId, confirmed: true }, request.config);
-    if (response.data.record) {
-        writeDeploymentRecovery(key, () => response.data.record!);
+    const response = await gqlFetcher<
+        ReconcileVentureDeploymentRecoveryMutation,
+        ReconcileVentureDeploymentRecoveryMutationVariables
+    >(
+        ReconcileVentureDeploymentRecoveryDocument,
+        { ...recoveryVariables(props), action, record: recoveryInput(record), runnerId, confirmed: true },
+        undefined,
+        props.serverURL,
+    )();
+    const remote = readRemoteRecovery(response.reconcileVentureDeploymentRecovery);
+    if (remote) {
+        writeDeploymentRecovery(key, () => remote);
     } else {
         clearDeploymentRecovery(key);
     }

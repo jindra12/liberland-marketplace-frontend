@@ -1,0 +1,35 @@
+query VentureContractIndex($ventureId: String!, $deploymentId: String!) {
+    ventureContractIndex(ventureId: $ventureId, deploymentId: $deploymentId) {
+        pools {
+            id
+            key {
+                currency0
+                currency1
+                fee
+                tickSpacing
+                hooks
+            }
+            currency0 {
+                address
+                symbol
+                decimals
+            }
+            currency1 {
+                address
+                symbol
+                decimals
+            }
+        }
+        proposals {
+            id
+            proposer
+            description
+            targets
+            values
+            calldatas
+        }
+        lastBlock
+        blockHash
+        hasMore
+    }
+}

@@ -272,6 +272,14 @@ const permissionsForHost = (host: string) => {
 };
 
 export const queryResolvers = {
+    companyPaymentSettings: (_parent: null, args: { companyId: string }) => {
+        const company = activeFixtures.companies.find((item) => item.id === args.companyId);
+        return company ? {
+            companyId: company.id,
+            paymentWebhookUrl: company.paymentWebhookUrl,
+            hasWebhookSecret: Boolean(company.paymentWebhookSecret),
+        } : null;
+    },
     Carts: (_parent: unknown, args: { limit?: number; where?: { secret?: { equals?: string } } }, _context: unknown, info: GraphQLResolveInfo): MockCollection => {
         const carts = activeFixtures.carts;
         const filtered = args.where?.secret?.equals ? carts.filter((item) => item.secret === args.where?.secret?.equals) : carts;

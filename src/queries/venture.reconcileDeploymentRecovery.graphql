@@ -1,0 +1,40 @@
+mutation ReconcileVentureDeploymentRecovery(
+    $ventureId: String!
+    $walletAddress: String!
+    $record: VentureDeploymentRecoveryInput!
+    $runnerId: String!
+    $action: String!
+    $confirmed: Boolean!
+) {
+    reconcileVentureDeploymentRecovery(
+        ventureId: $ventureId
+        walletAddress: $walletAddress
+        record: $record
+        runnerId: $runnerId
+        action: $action
+        confirmed: $confirmed
+    ) {
+        values {
+            tokenName
+            tokenSymbol
+            initialSupply
+            tokensPerEth
+            deploymentNetwork
+            acknowledged
+        }
+        transactions {
+            label
+            hash
+            nonce
+            chainId
+            submittedAtBlock
+        }
+        progress {
+            label
+            hash
+        }
+        manifest
+        saved
+        runnerId
+    }
+}

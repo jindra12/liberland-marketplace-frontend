@@ -7,6 +7,12 @@ import { StartupUpdate_ContractDeployments_Chain_MutationInput } from "../../gen
 import { BACKEND_URL } from "../../gqlFetcher";
 import type { VentureDeployment } from "./types";
 
+export const getDefaultVentureDeployment = (deployments: VentureDeployment[]) =>
+    deployments.find((deployment) =>
+        deployment.chain === deploymentNetworks.ethereum.chain &&
+        deployment.chainId === String(deploymentNetworks.ethereum.chainId),
+    ) || deployments[0];
+
 export const getVentureChain = (chainId: number) => {
     const configuration = Object.values(deploymentNetworks).find((network) => network.chainId === chainId);
     return configuration?.rpcUrl

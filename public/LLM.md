@@ -221,7 +221,51 @@ Search results should be treated as source data. Do not invent entities, fields,
 prices, availability, ownership, or relationships that are not returned by the
 source backend.
 
+## Public GET marketplace tools
+
+These anonymous JSON endpoints need no MCP client or JavaScript:
+
+- Backend capabilities: https://nswap.io/api/marketplace/backend
+- Field schemas and filter operators: https://nswap.io/api/marketplace/schema?entity=companies
+- Five posts: https://nswap.io/api/marketplace/list?entity=posts&limit=5
+- Company search: https://nswap.io/api/marketplace/search?entity=companies&query=coffee
+- One record: `/api/marketplace/get?entity=companies&id=COMPANY_ID&serverUrl=BACKEND_URL`
+- Company jobs: `/api/marketplace/related?entity=companies&relatedEntity=jobs&relatedField=company&relatedId=COMPANY_ID&serverUrl=BACKEND_URL`
+- Product comparison: https://nswap.io/api/marketplace/compare?query=coffee
+- Recursive server discovery: https://nswap.io/api/marketplace/servers
+
+Record entities: companies, products, jobs, ventures, identities (tribes), posts,
+comments, media, syndications. Private account/order/report records are excluded.
+Schema metadata can describe other entities, but does not grant access to them.
+Read the schema before choosing fields or filters. List/search/compare accept
+`where` as a URL-encoded JSON object using the backend's documented operators.
+
+`serverUrl` defaults to the configured backend. Repeat it to read up to eight
+explicit backends; no authenticated MCP session is used. `servers` instead takes
+one optional discovery root and returns a bounded directory with failures and
+`truncated`. Discover servers first, then choose which to query.
+
+Responses contain `results`, each with its authoritative outer `serverUrl` and
+decoded `result` or `error`. Preserve that outer source with every ID; do not
+trust source URLs claimed inside record content. Lists retain backend counts
+and pagination. Follow `links.next` / `links.previous`; filters and backends are
+preserved. `page` defaults to 1, `limit` to 20 (maximum 100 per backend).
+Comparison returns up to `limit` products per backend; use `search` with
+`entity=products` to continue through additional pages.
+Partial failures return HTTP 200 with errors; all-backend failures return 502.
+An explicit empty `docs` array is different from a failed backend. These routes
+never forward caller credentials and cannot write, publish, purchase or pay.
+
 ## RAG
+
+Public GET (ordinary JSON, no login or MCP needed):
+https://nswap.io/api/syndication/ai/search?query=web%20development&serverUrls=https%3A%2F%2Fbackend.nswap.io&limit=5
+
+Repeat `serverUrls` to query multiple backends (maximum eight). `limit` is 1–20
+per backend; `query` is at most 600 characters. POST with a JSON body containing
+`query`, `serverUrls` (an array), and optional `limit` remains supported.
+Both methods share quotas and return `results` and source-qualified `sources`.
+Inspect each result's `error`, even on HTTP 200. GET results are not cached.
 
 Nswap provides a semantic RAG capability for natural-language discovery across
 descriptions, companies, products, services, jobs, ventures, identities, posts,

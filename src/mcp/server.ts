@@ -376,8 +376,10 @@ export const createNswapMcpServer = (
             limit: z.number().int().positive().max(100).default(20),
         },
     }, async (args) => {
-        const relatedArguments = { entity: args.relatedEntity, page: args.page, limit: args.limit, where: { [args.relatedField]: { equals: args.relatedId } } };
-        if (args.serverUrl) return textResult(await call("find_related_entities", { ...relatedArguments, serverUrl: args.serverUrl }));
+        const { serverUrl, ...relatedArguments } = args;
+        if (serverUrl) {
+            return textResult(await call("find_related_entities", args));
+        }
         return textResult(await callAll("find_related_entities", relatedArguments));
     });
 

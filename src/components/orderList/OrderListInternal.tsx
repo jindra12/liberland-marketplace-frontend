@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { LinkOutlined, WalletOutlined } from "@ant-design/icons";
 import { Divider, Flex, Tag, Typography } from "antd";
+import { base } from "thirdweb/chains";
 
 import { AppList } from "../AppList";
 
@@ -13,6 +14,7 @@ import {
     formatShippingAddressLines,
     getOrderStatusColor,
     getOrderStatusLabel,
+    getTransactionExplorerName,
 } from "./utils";
 
 type OrderListInternalProps = {
@@ -53,7 +55,7 @@ export const OrderListInternal: React.FunctionComponent<OrderListInternalProps> 
                 description: (order) => (
                     <Flex vertical gap={6} className="OrderList__meta">
                         <Flex wrap gap={8} align="center">
-                            <Tag color="blue">Chain: {order.chain}</Tag>
+                            <Tag color="blue">Chain: {order.chainId === base.id ? "Base (USDC)" : order.chain}</Tag>
                             {order.orderStatus ? <Tag>{order.orderStatus}</Tag> : null}
                             <Typography.Text type="secondary" className="OrderList__createdAt">
                                 Ordered {new Date(order.orderCreatedAt).toLocaleString()}
@@ -66,17 +68,13 @@ export const OrderListInternal: React.FunctionComponent<OrderListInternalProps> 
                             </Typography.Text>
                         </Typography.Text>
                         <Typography.Link
-                            href={buildTransactionExplorerUrl(order.chain, order.transactionHash)}
+                            href={buildTransactionExplorerUrl(order.chain, order.transactionHash, order.chainId)}
                             target="_blank"
                             rel="noreferrer"
                             className="OrderList__transactionLink"
                         >
                             <LinkOutlined /> View transaction on{" "}
-                            {order.chain.toLowerCase() === "tron"
-                                ? "TronScan"
-                                : order.chain.toLowerCase() === "solana"
-                                    ? "Solscan"
-                                    : "Etherscan"}
+                            {getTransactionExplorerName(order.chain, order.chainId)}
                         </Typography.Link>
                     </Flex>
                 ),

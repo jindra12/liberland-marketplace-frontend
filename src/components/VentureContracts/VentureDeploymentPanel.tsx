@@ -5,11 +5,13 @@ import { Alert, Flex, Select } from "antd";
 import { DeploymentSummary } from "./DeploymentSummary";
 import { TokenWallet } from "./TokenWallet";
 import type { VentureDeploymentPanelProps } from "./types";
+import { getDefaultVentureDeployment } from "./utils";
 
 export const VentureDeploymentPanel: React.FunctionComponent<VentureDeploymentPanelProps> = (props) => {
     const [deploymentId, setDeploymentId] = React.useState("");
     const deployments = props.venture.contractDeployments!;
-    const deployment = deployments.find((item, index) => (item.id || String(index)) === deploymentId) || deployments[0];
+    const deployment = deployments.find((item, index) => (item.id || String(index)) === deploymentId) ||
+        getDefaultVentureDeployment(deployments);
 
     return (
         <Flex vertical gap={20}>

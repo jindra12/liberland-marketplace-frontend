@@ -3,6 +3,66 @@
     max-width: 1200px;
 }
 
+.OrderThirdwebPayment {
+    width: 100%;
+    max-width: 460px;
+}
+
+.OrderPaymentCards {
+    width: 100%;
+    max-width: 560px;
+}
+
+.OrderPaymentOrderCard .ant-card-body {
+    padding: 24px;
+}
+
+.ThirdwebCheckoutWidget {
+    max-width: 100%;
+}
+
+.OrderPaymentChainRow.ant-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding-block: 8px;
+}
+
+.OrderPaymentMethods {
+    width: 100%;
+    max-width: 460px;
+    min-width: 0;
+}
+
+.OrderPaymentAmount.ant-typography {
+    margin: 0;
+}
+
+.OrderNativePayment {
+    .CryptoPaymentGroup {
+        padding: 0;
+        justify-content: flex-start;
+    }
+
+    .CryptoPaymentGroup__connectButton {
+        margin: 0;
+    }
+}
+
+.OrderPaymentDetails {
+    width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.OrderPaymentComplete .ant-result {
+    padding: 16px;
+}
+
+.OrderThirdwebPayment .ant-typography {
+    margin-bottom: 0;
+}
+
 .Order__geoapifySearchItem {
     margin-bottom: 12px;
 

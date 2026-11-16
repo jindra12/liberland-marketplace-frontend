@@ -1,0 +1,21 @@
+mutation CreateOrderCheckoutSession($orderId: String!, $recipient: String!) {
+    createOrderCheckoutSession(orderId: $orderId, recipient: $recipient) {
+        sessionId
+        title
+        status
+        paymentRecorded
+        expiresAt
+        amountUsdCents
+        receiver
+        thirdwebClientId
+        settlement {
+            chainId
+            tokenAddress
+            decimals
+            symbol
+        }
+        purchaseData {
+            nswapSessionId
+        }
+    }
+}

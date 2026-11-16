@@ -23,10 +23,13 @@ export const OrderPaymentOrderCard: React.FunctionComponent<OrderPaymentOrderCar
 
     return (
         <Card
-            title={`${props.orderIndex}${props.orderIndex === 1 ? "st" : props.orderIndex === 2 ? "nd" : props.orderIndex === 3 ? "rd" : "th"} payment`}
+            className="OrderPaymentOrderCard"
+            title={`Payment ${props.orderIndex}`}
             key={buildOrderEntryKey(entryState.url, entryState.order.id)}
         >
-            <Typography.Paragraph>Order {entryState.order.id}</Typography.Paragraph>
+            <Typography.Paragraph type="secondary">
+                Marketplace: {new URL(entryState.url).host}
+            </Typography.Paragraph>
             {chainPayments.length === 0 ? (
                 <Alert
                     showIcon

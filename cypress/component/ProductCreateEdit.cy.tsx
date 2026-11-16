@@ -12,7 +12,7 @@ import {
     uploadTestImage,
 } from "../support/component-tests/directBasic";
 
-const assertProductTitle = (productId: string, expectedTitle: string) => {
+const assertProductDetails = (productId: string, expectedTitle: string, expectedOrderable: boolean) => {
     cy.window().then(async (win) => {
         const response = await win.fetch(`${MAIN_SERVER_URL}/api/graphql`, {
             method: "POST",
@@ -23,6 +23,7 @@ const assertProductTitle = (productId: string, expectedTitle: string) => {
                 query: `query ProductById($id: String!, $draft: Boolean = false) {
                     Product(id: $id, draft: $draft) {
                         name
+                        orderable
                     }
                 }`,
                 variables: {
@@ -35,12 +36,14 @@ const assertProductTitle = (productId: string, expectedTitle: string) => {
             data?: {
                 Product?: {
                     name?: string | null;
+                    orderable?: boolean | null;
                 } | null;
             };
         };
 
         expect(response.status).to.equal(200);
         expect(body.data?.Product?.name).to.equal(expectedTitle);
+        expect(body.data?.Product?.orderable).to.equal(expectedOrderable);
     });
 };
 
@@ -84,6 +87,9 @@ describe("product create/edit", () => {
         mountProductForm("create");
         cy.wait("@ownedCompanies");
 
+        cy.get(".Publish__productOrderableField input").should("be.checked");
+        cy.contains(".ant-form-item-extra", "A payout wallet must be set on the product or its company.").should("be.visible");
+
         fillFormField("Product Name", productName);
         fillFormField("Price (USD)", "79");
         fillFormField("Product URL", "https://signal.beacon.example");
@@ -99,11 +105,12 @@ describe("product create/edit", () => {
             expect(interception.request.body.variables.data.priceInUSD).to.equal(7900);
             expect(interception.request.body.variables.data.url).to.equal("https://signal.beacon.example");
             expect(interception.request.body.variables.data.inventory).to.equal(12);
+            expect(interception.request.body.variables.data.orderable).to.equal(true);
         });
         cy.location("pathname").should("match", /\/products-services\/product-[^/]+\/[a-f0-9]+$/);
         cy.location("pathname").then((pathname) => {
             const createdId = pathname.split("/")[2];
-            assertProductTitle(createdId, productName);
+            assertProductDetails(createdId, productName, true);
             screenshotStep("product-created-form");
         });
     });
@@ -114,6 +121,7 @@ describe("product create/edit", () => {
 
         mountProductForm("create");
         cy.wait("@ownedCompanies");
+        cy.get(".Publish__productOrderableField input").should("be.checked").uncheck();
 
         fillFormField("Product Name", productName);
         fillFormField("Price (USD)", "49");
@@ -126,16 +134,19 @@ describe("product create/edit", () => {
         cy.wait("@mediaUpload");
         cy.wait("@createProduct").then((interception) => {
             expect(interception.response?.statusCode).to.equal(200);
+            expect(interception.request.body.variables.data.orderable).to.equal(false);
         });
 
         cy.location("pathname").then((pathname) => {
             const createdId = pathname.split("/")[2];
+            assertProductDetails(createdId, productName, false);
             mountProductForm("edit", {
                 id: createdId,
                 name: productName,
                 priceInUSD: "49",
                 url: "https://editable.signal.example",
                 inventory: 7,
+                orderable: false,
                 company: "company-harbor-labs",
             });
 
@@ -143,6 +154,7 @@ describe("product create/edit", () => {
             assertFormFieldValue("Price (USD)", "49");
             assertFormFieldValue("Product URL", "https://editable.signal.example");
             assertFormFieldValue("Inventory", "7");
+            cy.get(".Publish__productOrderableField input").should("not.be.checked").check();
 
             fillFormField("Product Name", updatedProductName);
             fillFormField("Price (USD)", "89");
@@ -159,9 +171,10 @@ describe("product create/edit", () => {
                 expect(updateInterception.request.body.variables.data.priceInUSD).to.equal(8900);
                 expect(updateInterception.request.body.variables.data.url).to.equal("https://edited.signal.example");
                 expect(updateInterception.request.body.variables.data.inventory).to.equal(10);
+                expect(updateInterception.request.body.variables.data.orderable).to.equal(true);
             });
             cy.location("pathname").should("match", new RegExp(`/products-services/${createdId}/[a-f0-9]+$`));
-            assertProductTitle(createdId, updatedProductName);
+            assertProductDetails(createdId, updatedProductName, true);
             screenshotStep("product-updated-form");
         });
     });

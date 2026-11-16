@@ -8,7 +8,7 @@ import { AntProvider } from "../../src/components/AntProvider";
 import { CryptoAddressesField } from "../../src/components/publish/CryptoAddressesField/CryptoAddressesField";
 import type { CryptoAddressesFormValue } from "../../src/components/publish/CryptoAddressesField/types";
 import { buildCryptoAddressesInput, validateCryptoAddress } from "../../src/components/publish/CryptoAddressesField/utils";
-import { screenshotStep } from "../support/component-tests/utils";
+import { screenshotStep } from "../support/component-tests/directBasic";
 
 interface CryptoAddressesSubmitPayload {
     cryptoAddresses?: CryptoAddressesFormValue;

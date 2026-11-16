@@ -8,13 +8,13 @@ import { LONG_TEXT_INPUT_MAX_LENGTH } from "../form/constants";
 
 interface MarkdownEditorProps extends Pick<React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     "id" | "name" | "disabled" | "required" | "onBlur" | "aria-label" | "aria-labelledby" | "aria-describedby" | "aria-invalid" | "aria-required"> {
-    value?: string;
+    value?: string | null;
     onChange?: (value: string) => void;
     rows?: number;
     placeholder?: string;
 }
 export const MarkdownEditor: React.FunctionComponent<MarkdownEditorProps> = (props) => {
-    const value = props.value === undefined ? "" : props.value;
+    const value = props.value ?? "";
     const rows = props.rows === undefined ? 6 : props.rows;
     const remainingCharacters = LONG_TEXT_INPUT_MAX_LENGTH - value.length;
     return (

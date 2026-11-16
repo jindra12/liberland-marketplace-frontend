@@ -1,0 +1,23 @@
+query HostedCheckoutSession($sessionId: String!) {
+    hostedCheckoutSession(sessionId: $sessionId) {
+        sessionId
+        title
+        status
+        paymentRecorded
+        expiresAt
+        amountUsdCents
+        receiver
+        thirdwebClientId
+        returnUrl
+        checkoutUrl
+        settlement {
+            chainId
+            tokenAddress
+            decimals
+            symbol
+        }
+        purchaseData {
+            nswapSessionId
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { mount } from "cypress/react";
 
 import { MarkdownEditor } from "../../src/components/publish/MarkdownEditor";
 
-import { screenshotStep } from "../support/component-tests/utils";
+import { screenshotStep } from "../support/component-tests/directBasic";
 
 const sampleMarkdown = `# Harbor Preview
 

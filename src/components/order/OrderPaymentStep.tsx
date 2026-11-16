@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Grid, Typography } from "antd";
+import { Flex, Grid, Typography } from "antd";
 
 import { OrderPaymentLockProvider } from "./OrderPaymentLockContext";
 import { OrderPaymentOrderCard } from "./OrderPaymentOrderCard";
@@ -53,23 +53,25 @@ export const OrderPaymentStep: React.FunctionComponent<OrderPaymentStepProps> = 
     return (
         <OrderPaymentLockProvider>
             <Typography.Paragraph type="secondary">
-                Orders submitted. Pay each order using the chain amount below.
+                Choose how to pay for each order below. Payment confirmation happens automatically.
             </Typography.Paragraph>
 
-            {props.submittedOrders.map((entry, index) => {
-                return (
-                    <OrderPaymentOrderCard
-                        key={`${entry.url}::${entry.order.id}`}
-                        entry={entry}
-                        isLargeScreen={Boolean(lg)}
-                        orderIndex={index + 1}
-                        onPayerAddressSelected={props.onPayerAddressSelected}
-                        onPaymentCompleted={markPaymentSubmitted}
-                        onPaymentWalletRemembered={props.onPaymentWalletRemembered}
-                        profileUser={props.profileUsersByUrl[entry.url]}
-                    />
-                );
-            })}
+            <Flex vertical gap="middle" className="OrderPaymentCards">
+                {props.submittedOrders.map((entry, index) => {
+                    return (
+                        <OrderPaymentOrderCard
+                            key={`${entry.url}::${entry.order.id}`}
+                            entry={entry}
+                            isLargeScreen={Boolean(lg)}
+                            orderIndex={index + 1}
+                            onPayerAddressSelected={props.onPayerAddressSelected}
+                            onPaymentCompleted={markPaymentSubmitted}
+                            onPaymentWalletRemembered={props.onPaymentWalletRemembered}
+                            profileUser={props.profileUsersByUrl[entry.url]}
+                        />
+                    );
+                })}
+            </Flex>
         </OrderPaymentLockProvider>
     );
 };
