@@ -223,6 +223,8 @@
         "test:ct:company-detail-donations": "yarn cypress:run --component --browser chrome --spec cypress/component/CompanyDetailDonations.cy.tsx",
         "test:ct:company-detail-donations:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/CompanyDetailDonations.cy.tsx",
         "test:ct:hosted-checkout": "yarn cypress:run --component --browser chrome --spec cypress/component/HostedCheckout.cy.tsx",
+        "test:ct:order-thirdweb-checkout": "yarn cypress:run --component --browser chrome --spec cypress/component/OrderThirdwebCheckout.cy.tsx",
+        "test:ct:order-thirdweb-checkout:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/OrderThirdwebCheckout.cy.tsx",
         "test:ct:hosted-checkout:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/HostedCheckout.cy.tsx",
         "test:ct:company-payments:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/CompanyPaymentIntegration.cy.tsx",
         "test:ct:company:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/CompanyCreateEdit.cy.tsx",

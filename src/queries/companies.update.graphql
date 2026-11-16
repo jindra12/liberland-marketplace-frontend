@@ -3,6 +3,7 @@ mutation UpdateCompany($id: String!, $data: mutationCompanyUpdateInput!, $draft:
         id
         name
         acceptThirdwebDonations
+        acceptThirdwebPayments
         verification
         isPrivate
         cryptoAddresses {

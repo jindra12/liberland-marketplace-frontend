@@ -103,6 +103,10 @@ import {
     useListCommentRepliesQuery as useListCommentRepliesQuerySingle,
     CreateOrderDocument,
     useCreateOrderMutation as useCreateOrderMutationSingle,
+    CreateOrderCheckoutSessionDocument,
+    useCreateOrderCheckoutSessionMutation as useCreateOrderCheckoutSessionMutationSingle,
+    VerifyOrderCheckoutSessionDocument,
+    useVerifyOrderCheckoutSessionMutation as useVerifyOrderCheckoutSessionMutationSingle,
     PostByIdDocument,
     usePostByIdQuery as usePostByIdQuerySingle,
     CreatePostCommentDocument,
@@ -622,6 +626,14 @@ export const useUpdateOrderMutation = enhancedMutationFactory(
     useUpdateOrderMutationSingle,
     UpdateOrderDocument,
     anonymizeUpdateOrderVariables,
+);
+export const useCreateOrderCheckoutSessionMutation = enhancedMutationFactory(
+    useCreateOrderCheckoutSessionMutationSingle,
+    CreateOrderCheckoutSessionDocument,
+);
+export const useVerifyOrderCheckoutSessionMutation = enhancedMutationFactory(
+    useVerifyOrderCheckoutSessionMutationSingle,
+    VerifyOrderCheckoutSessionDocument,
 );
 export const useCreatePostCommentMutation = enhancedMutationFactory(
     useCreatePostCommentMutationSingle,

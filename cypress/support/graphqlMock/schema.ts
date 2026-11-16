@@ -205,6 +205,7 @@ export const graphqlSchema = buildSchema(`
 
     type SellerOrderProduct {
         id: String!
+        chainId: Int
         chain: String!
         fulfilled: Boolean!
         rejected: Boolean!
@@ -380,6 +381,8 @@ export const graphqlSchema = buildSchema(`
         subtotal: JSON
         customerEmail: JSON
         status: JSON
+        thirdwebCheckoutAvailable: Boolean
+        thirdwebCheckoutRecipients: [String]
         createdAt: JSON
         updatedAt: JSON
         deletedAt: JSON
@@ -392,6 +395,7 @@ export const graphqlSchema = buildSchema(`
         enableVariants: JSON
         orderable: JSON
         acceptThirdwebDonations: Boolean
+        acceptThirdwebPayments: Boolean
         canAcceptThirdwebDonations: Boolean
         paymentWebhookUrl: JSON
         paymentWebhookSecret: JSON

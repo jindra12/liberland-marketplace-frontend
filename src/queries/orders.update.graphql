@@ -2,6 +2,8 @@ mutation UpdateOrder($orderId: String!, $data: mutationOrderUpdateInput!, $draft
     updateOrder(id: $orderId, data: $data, draft: $draft) {
         id
         status
+        thirdwebCheckoutAvailable
+        thirdwebCheckoutRecipients
         payerAddress
         customer {
             id

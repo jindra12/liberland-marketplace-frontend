@@ -3,6 +3,7 @@ query SellerOrderProducts($fulfilled: Boolean, $rejected: Boolean, $limit: Int =
         docs {
             id
             chain
+            chainId
             fulfilled
             rejected
             orderCreatedAt

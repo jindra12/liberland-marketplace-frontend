@@ -60,13 +60,12 @@ describe("Saved Venture contracts", () => {
         cy.get(".VentureContracts__connect").should("contain.text", "Connected");
     });
 
-    it("switches between deployments without creating another tab bar", () => {
+    it("defaults to mainnet even after a test deployment and allows switching between both", () => {
         mountWithProviders(
             <VentureContracts
                 venture={{
                     ...emptyVenture,
                     contractDeployments: [
-                        savedDeployment,
                         {
                             ...savedDeployment,
                             id: "second-deployment",
@@ -76,15 +75,32 @@ describe("Saved Venture contracts", () => {
                             chainId: "11155111",
                             tokenAddress: `0x${"1".repeat(40)}`,
                         },
+                        savedDeployment,
                     ],
                 }}
                 serverURL={MAIN_SERVER_URL}
             />,
         );
+        cy.get(".ant-select").should("contain.text", "mainnet");
+        cy.contains("Harbor Venture").should("be.visible");
+        cy.get(`a[href="https://etherscan.io/address/${savedDeployment.tokenAddress}"]`).should("be.visible");
+        screenshotStep("venture-multiple-deployments-mainnet-default");
         cy.contains(".ant-select", "HBR").click();
+        cy.get(".ant-select-dropdown").should("be.visible");
+        cy.contains(".ant-select-dropdown .ant-select-item-option-content", "mainnet").should("be.visible");
+        cy.contains(".ant-select-dropdown .ant-select-item-option-content", "sepolia").should("be.visible");
+        cy.get(".ant-select-dropdown").should(($dropdown) => {
+            expect($dropdown).to.have.css("opacity", "1");
+            expect($dropdown[0].getAnimations()).to.have.length(0);
+        });
+        screenshotStep("venture-multiple-deployments-options");
         cy.contains(".ant-select-dropdown .ant-select-item-option-content", "ALT").click();
+        cy.get(".ant-select-dropdown").should("have.class", "ant-select-dropdown-hidden");
         cy.contains("Second Venture").should("be.visible");
         cy.contains("Chain 11155111").should("be.visible");
+        cy.get(`a[href="https://sepolia.etherscan.io/address/0x${"1".repeat(40)}"]`).should("be.visible");
+        cy.get(".ant-select").should("contain.text", "sepolia");
+        screenshotStep("venture-multiple-deployments-sepolia-selected");
         cy.get('[role="tablist"]').should("not.exist");
     });
 

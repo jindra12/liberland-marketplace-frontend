@@ -5,6 +5,7 @@ import { deploymentNetworks } from "@liberland/marketplace-contracts/deployment/
 import { Alert, Button, Checkbox, Col, Form, Input, Row, Select } from "antd";
 import { MaxUint256, parseUnits } from "ethers";
 
+import { TestDeploymentAlert } from "./TestDeploymentAlert";
 import type { DeploymentFormProps, DeploymentValues } from "./types";
 
 export const DeploymentForm: React.FunctionComponent<DeploymentFormProps> = (props) => {
@@ -67,6 +68,7 @@ export const DeploymentForm: React.FunctionComponent<DeploymentFormProps> = (pro
                     }))}
                 />
             </Form.Item>
+            <TestDeploymentAlert />
             <Form.Item
                 name="tokensPerEth"
                 label="Starting price (tokens per ETH)"

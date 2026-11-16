@@ -90,6 +90,8 @@ describe("Company hosted payment integration", () => {
         });
         mountWithProviders(<CompanyForm mode="create" url={MAIN_SERVER_URL} />);
         fillFormField("Company Name", "Merchant Integration");
+        cy.contains("label", "Accept card and crypto payments through Thirdweb")
+            .find("input").should("not.be.checked").check();
         cy.contains("label", "Accept donations in Thirdweb").find("input").should("not.be.checked").check();
         selectFormOption("Tribe", "Nova Rivers");
         fillFormField("Payment webhook URL", "https://merchant.example/payments");
@@ -98,6 +100,7 @@ describe("Company hosted payment integration", () => {
             expect(result.response?.statusCode).to.equal(200);
             expect(result.request.body.variables.data.paymentWebhookUrl).to.equal("https://merchant.example/payments");
             expect(result.request.body.variables.data.acceptThirdwebDonations).to.equal(true);
+            expect(result.request.body.variables.data.acceptThirdwebPayments).to.equal(true);
             expect(result.request.body.variables.data).not.to.have.property("paymentWebhookSecret");
         });
         mountWithProviders(
@@ -114,16 +117,42 @@ describe("Company hosted payment integration", () => {
                     cryptoAddresses: null,
                     image: null,
                     acceptThirdwebDonations: true,
+                    acceptThirdwebPayments: true,
                 }}
             />,
         );
         cy.wait("@companyPaymentSettings").its("request.body.variables.companyId").should("eq", "company-merchant");
         cy.get(".Publish__companyPaymentWebhook input").should("have.value", "https://merchant.example/payments");
         cy.contains("label", "Accept donations in Thirdweb").find("input").should("be.checked");
+        cy.contains("label", "Accept card and crypto payments through Thirdweb").find("input").should("be.checked");
         cy.contains("test-owner-only-signing-secret").should("not.exist");
         cy.contains("button", "Rotate secret").should("be.visible");
         cy.contains("button", "Generate secret").should("not.exist");
         screenshotStep("company-payment-integration-settings");
+    });
+
+    it("lets a company opt into normal checkout without a merchant callback or donations", () => {
+        cy.intercept<{ query: string }>("POST", `${MAIN_SERVER_URL}/api/graphql`, (request) => {
+            if (request.body.query.includes("CreateCompany")) {
+                request.alias = "createCardPaymentCompany";
+            }
+        });
+        mountWithProviders(<CompanyForm mode="create" url={MAIN_SERVER_URL} />);
+        fillFormField("Company Name", "Card Payment Seller");
+        selectFormOption("Tribe", "Nova Rivers");
+        cy.contains("label", "Accept card and crypto payments through Thirdweb")
+            .find("input").should("not.be.checked").check();
+        cy.contains("label", "Accept donations in Thirdweb").find("input").should("not.be.checked");
+        cy.get(".Publish__companyPaymentWebhook input").should("have.value", "");
+        cy.contains(".ant-form-item", "Accept card and crypto payments through Thirdweb")
+            .screenshot("company-thirdweb-checkout-opt-in");
+        cy.contains("button", "Publish Company").click();
+        cy.wait("@createCardPaymentCompany").then((result) => {
+            expect(result.response?.statusCode).to.equal(200);
+            expect(result.request.body.variables.data.acceptThirdwebPayments).to.equal(true);
+            expect(result.request.body.variables.data.acceptThirdwebDonations).to.equal(false);
+            expect(result.request.body.variables.data.paymentWebhookUrl).not.to.be.ok;
+        });
     });
 
     it("shows a generated secret once, never caches it, and offers only rotation after dismissal", () => {

@@ -1,8 +1,7 @@
 import * as React from "react";
 
-import { Flex, List, Typography } from "antd";
+import { Collapse, Flex, List, Typography } from "antd";
 
-import { CRYPTO_CHAIN_LABELS, CRYPTO_CHAIN_TICKERS } from "./constants";
 import { OrderPaymentChainAction } from "./OrderPaymentChainAction";
 import {
     buildPaymentKey,
@@ -47,51 +46,26 @@ export const OrderPaymentChainRow: React.FunctionComponent<OrderPaymentChainRowP
         />
     );
 
-    if (!props.isLargeScreen) {
-        return (
-            <List.Item>
-                <Flex vertical gap={12} className="OrderPaymentChainRow">
-                    <List.Item.Meta
-                        title={`${CRYPTO_CHAIN_LABELS[props.chainPayment.chain]} (${CRYPTO_CHAIN_TICKERS[props.chainPayment.chain]})`}
-                        description={
-                            <Flex vertical gap={4}>
-                                <Typography.Text>
-                                    Amount due: {props.chainPayment.amount}{" "}
-                                    {CRYPTO_CHAIN_TICKERS[props.chainPayment.chain]}
-                                </Typography.Text>
-                                {recipient && (
-                                    <Typography.Text type="secondary">
-                                        Recipient: {recipient}
-                                    </Typography.Text>
-                                )}
-                            </Flex>
-                        }
-                    />
-                    {action}
-                </Flex>
-            </List.Item>
-        );
-    }
-
     return (
-        <List.Item
-            actions={[action]}
-        >
-            <List.Item.Meta
-                title={`${CRYPTO_CHAIN_LABELS[props.chainPayment.chain]} (${CRYPTO_CHAIN_TICKERS[props.chainPayment.chain]})`}
-                description={
-                    <Flex vertical gap={4}>
-                        <Typography.Text>
-                            Amount due: {props.chainPayment.amount}{" "}
-                            {CRYPTO_CHAIN_TICKERS[props.chainPayment.chain]}
-                        </Typography.Text>
-                        {recipient && (
-                            <Typography.Text type="secondary">
-                                Recipient: {recipient}
+        <List.Item className="OrderPaymentChainRow">
+            {action}
+            <Collapse
+                ghost
+                size="small"
+                className="OrderPaymentDetails"
+                items={[{
+                    key: "details",
+                    label: "Payment details",
+                    children: (
+                        <Flex vertical gap={8}>
+                            <Typography.Text type="secondary">Order: {props.entry.order.id}</Typography.Text>
+                            <Typography.Text type="secondary">Recipient wallet</Typography.Text>
+                            <Typography.Text ellipsis={{ tooltip: recipient }} copyable={{ text: recipient }}>
+                                {recipient}
                             </Typography.Text>
-                        )}
-                    </Flex>
-                }
+                        </Flex>
+                    ),
+                }]}
             />
         </List.Item>
     );

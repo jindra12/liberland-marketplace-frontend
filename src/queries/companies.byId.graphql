@@ -5,6 +5,7 @@ query CompanyById($id: String!, $draft: Boolean = false) {
         serverURL
         name
         acceptThirdwebDonations
+        acceptThirdwebPayments
         canAcceptThirdwebDonations
         verification
         isPrivate

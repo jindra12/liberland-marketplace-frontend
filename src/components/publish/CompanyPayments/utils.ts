@@ -1,3 +1,5 @@
+import { base } from "thirdweb/chains";
+
 import { SITE_URL } from "../../../siteUrl";
 
 export const buildDonationLink = (serverUrl: string, companyId: string): string => {
@@ -55,7 +57,7 @@ export const PAYMENT_NOTIFICATION_EXAMPLE = JSON.stringify(
         requestedAmountUsdCents: 1000,
         settlement: {
             receiver: "0xYourCompanyWallet",
-            chainId: 8453,
+            chainId: base.id,
             tokenSymbol: "USDC",
             tokenAddress: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
             amount: "10000000",
@@ -78,7 +80,7 @@ export const PAYMENT_NOTIFICATION_EXAMPLE = JSON.stringify(
                 "x-pay-signature": "original-provider-signature",
                 "x-pay-timestamp": "original-timestamp",
             },
-            transactions: [{ chainId: 8453, transactionHash: "0xDestinationTransactionHash" }],
+            transactions: [{ chainId: base.id, transactionHash: "0xDestinationTransactionHash" }],
         },
     },
     null,

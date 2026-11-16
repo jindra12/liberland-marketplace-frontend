@@ -194,9 +194,11 @@ export const useOrderPaymentChainController = (props: OrderPaymentChainControlle
         }
 
         await rememberSelectedWallet();
-        dispatch({
-            type: "completePayment",
-        });
+        handleVerifiedPayment();
+    };
+
+    const handleVerifiedPayment = () => {
+        dispatch({ type: "completePayment" });
         props.onPaymentCompleted(props.paymentKey);
     };
 
@@ -210,6 +212,7 @@ export const useOrderPaymentChainController = (props: OrderPaymentChainControlle
 
     return {
         handleTransactionId,
+        handleVerifiedPayment,
         handleWalletSelected,
         isPaymentCompleted: state.isPaymentCompleted,
         isSavingWallet: updateUserMutation.isPending,

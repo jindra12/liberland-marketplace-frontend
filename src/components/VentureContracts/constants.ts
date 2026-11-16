@@ -1,6 +1,10 @@
 import { createThirdwebClient } from "thirdweb";
 import type { VentureContractSection } from "./types";
 
+// Hardhat's deliberately public development wallet. Never use it for real assets.
+export const ventureTestWalletPhrase = "test test test test test test test test test test test junk";
+export const ventureTestWalletAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+
 export const ventureContractSections: { key: VentureContractSection; label: string }[] = [
     { key: "token", label: "Token" },
     { key: "account", label: "Balances & rewards" },

@@ -26,6 +26,7 @@ interface CompanyFormValues {
     cryptoAddresses?: CryptoAddressesFormValue | null;
     paymentWebhookUrl?: string | null;
     acceptThirdwebDonations?: boolean | null;
+    acceptThirdwebPayments?: boolean | null;
     imageFile?: UploadFile[];
 }
 export interface CompanyFormProps {
@@ -66,6 +67,7 @@ export const CompanyForm: React.FunctionComponent<CompanyFormProps> = (props) =>
                 cryptoAddresses: buildCryptoAddressesInput(values.cryptoAddresses),
                 paymentWebhookUrl: values.paymentWebhookUrl,
                 acceptThirdwebDonations: values.acceptThirdwebDonations,
+                acceptThirdwebPayments: values.acceptThirdwebPayments,
                 ...(imageId !== undefined && {
                     image: imageId,
                 }),

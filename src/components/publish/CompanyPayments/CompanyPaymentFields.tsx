@@ -16,6 +16,14 @@ interface CompanyPaymentFieldsProps {
 export const CompanyPaymentFields: React.FunctionComponent<CompanyPaymentFieldsProps> = (props) => (
     <>
         <Form.Item
+            name="acceptThirdwebPayments"
+            valuePropName="checked"
+            initialValue={false}
+            extra="Offer Card or crypto during normal checkout. You receive USDC on Base at the saved Ethereum-compatible payout wallet. The marketplace confirms payments automatically; no company webhook is needed."
+        >
+            <Checkbox>Accept card and crypto payments through Thirdweb</Checkbox>
+        </Form.Item>
+        <Form.Item
             name="acceptThirdwebDonations"
             valuePropName="checked"
             initialValue={false}

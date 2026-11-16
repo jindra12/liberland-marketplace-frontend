@@ -3,6 +3,7 @@ query HostedCheckoutSession($sessionId: String!) {
         sessionId
         title
         status
+        paymentRecorded
         expiresAt
         amountUsdCents
         receiver

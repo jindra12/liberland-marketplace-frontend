@@ -18,6 +18,7 @@ interface EditCompanyFormProps {
         | "cryptoAddresses"
         | "image"
         | "acceptThirdwebDonations"
+        | "acceptThirdwebPayments"
     >;
     serverUrl: string;
 }
@@ -40,6 +41,7 @@ export const EditCompanyForm: React.FunctionComponent<EditCompanyFormProps> = (p
                         identity: props.company.identity?.id,
                         paymentWebhookUrl: data.companyPaymentSettings?.paymentWebhookUrl,
                         acceptThirdwebDonations: props.company.acceptThirdwebDonations,
+                        acceptThirdwebPayments: props.company.acceptThirdwebPayments,
                         hasPaymentWebhookSecret: data.companyPaymentSettings?.hasWebhookSecret || false,
                         cryptoAddresses: props.company.cryptoAddresses
                             ? {

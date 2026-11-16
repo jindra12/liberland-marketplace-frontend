@@ -1,10 +1,9 @@
 import * as React from "react";
 
 import { Alert, Flex, Typography } from "antd";
-import { createThirdwebClient, defineChain } from "thirdweb";
-import { CheckoutWidget } from "thirdweb/react";
 
 import { HostedPaymentComplete } from "./HostedPaymentComplete";
+import { HostedPaymentWidget } from "./HostedPaymentWidget";
 import type { HostedSession } from "./types";
 
 interface HostedPaymentProps {
@@ -31,18 +30,7 @@ export const HostedPayment: React.FunctionComponent<HostedPaymentProps> = (props
                 No Nswap account required. Settlement is in {props.session.settlement.symbol}; payment-provider fees and
                 verification may apply.
             </Typography.Paragraph>
-            <CheckoutWidget
-                client={createThirdwebClient({ clientId: props.session.thirdwebClientId })}
-                chain={defineChain(props.session.settlement.chainId)}
-                seller={props.session.receiver}
-                tokenAddress={props.session.settlement.tokenAddress}
-                amount={(props.session.amountUsdCents / 100).toFixed(2)}
-                purchaseData={props.session.purchaseData}
-                name={props.session.title}
-                paymentMethods={["crypto", "card"]}
-                feePayer="user"
-                theme="dark"
-            />
+            <HostedPaymentWidget session={props.session} />
             <Alert
                 type="info"
                 showIcon

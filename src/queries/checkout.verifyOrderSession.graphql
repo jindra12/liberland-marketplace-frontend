@@ -1,0 +1,7 @@
+mutation VerifyOrderCheckoutSession($sessionId: String!) {
+    verifyOrderCheckoutSession(sessionId: $sessionId) {
+        sessionId
+        status
+        paymentRecorded
+    }
+}

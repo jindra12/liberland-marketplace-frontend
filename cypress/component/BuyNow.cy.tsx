@@ -132,7 +132,8 @@ describe("buy now", () => {
         cy.wait("@createOrder");
         cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
         cy.contains(".BuyNowPaymentModal", "Payment submitted").should("not.exist");
-        screenshotStep("buy-now-returned-payment-modal");
+        cy.get(".BuyNowPaymentModal").should("not.have.class", "ant-zoom-appear")
+            .screenshot("buy-now-returned-payment-modal");
     });
 
     it("tells users without a saved shipping address to go to profile", () => {
@@ -199,7 +200,8 @@ describe("buy now", () => {
 
         cy.wait("@createOrder");
         cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
-        screenshotStep("buy-now-payment-modal-after-address-choice");
+        cy.get(".BuyNowPaymentModal").should("not.have.class", "ant-zoom-appear")
+            .screenshot("buy-now-payment-modal-after-address-choice");
         cy.get(".BuyNowPaymentModal .ant-modal-close").click();
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
         cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
@@ -223,7 +225,8 @@ describe("buy now", () => {
         cy.contains(".AddToCartButton__buyNow", "Buy now").should("be.visible").click();
         cy.wait("@createOrder");
         cy.contains(".BuyNowPaymentModal", "Complete payment").should("be.visible");
-        screenshotStep("buy-now-saved-shipping-address-payment-modal");
+        cy.get(".BuyNowPaymentModal").should("not.have.class", "ant-zoom-appear")
+            .screenshot("buy-now-saved-shipping-address-payment-modal");
         cy.get(".ShippingAddressSelectModal").should("not.exist");
     });
 });

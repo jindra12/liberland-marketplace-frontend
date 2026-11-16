@@ -7,7 +7,7 @@ import { TronPaymentButton } from "../crypto/TronPaymentButton";
 import { type ChainPaymentAmount } from "./payment/utils";
 import type { PaymentWalletSelection, SubmittedOrder } from "./types";
 
-type OrderPaymentChainButtonProps = {
+export type OrderPaymentChainButtonProps = {
     chainPayment: ChainPaymentAmount;
     entry: SubmittedOrder;
     preferredWallet?: PaymentWalletSelection;

@@ -28,6 +28,7 @@ export const hostedSessionSchema = z.object({
     sessionId: z.uuid(),
     title: z.string(),
     status: z.enum(["pending", "paid"]),
+    paymentRecorded: z.boolean().optional(),
     expiresAt: z.string(),
     amountUsdCents: z.number().int().positive(),
     receiver: paymentAddressSchema,

@@ -1,7 +1,12 @@
+import { base } from "thirdweb/chains";
+
 import type { SellerOrderProduct } from "./types";
 import { ORDER_TRANSACTION_EXPLORER_BASE_URLS } from "./constants";
 
-export const buildTransactionExplorerUrl = (chain: string, transactionHash: string): string => {
+export const buildTransactionExplorerUrl = (chain: string, transactionHash: string, chainId?: number | null): string => {
+    if (chainId === base.id) {
+        return `${ORDER_TRANSACTION_EXPLORER_BASE_URLS.base}${transactionHash}`;
+    }
     const normalizedChain = chain.toLowerCase();
 
     switch (normalizedChain) {
@@ -13,6 +18,16 @@ export const buildTransactionExplorerUrl = (chain: string, transactionHash: stri
             return `${ORDER_TRANSACTION_EXPLORER_BASE_URLS.tron}${transactionHash}`;
         default:
             return transactionHash;
+    }
+};
+
+export const getTransactionExplorerName = (chain: string, chainId?: number | null): string => {
+    switch (chainId === base.id ? "base" : chain.toLowerCase()) {
+        case "base": return "BaseScan";
+        case "ethereum": return "Etherscan";
+        case "solana": return "Solscan";
+        case "tron": return "TronScan";
+        default: return "explorer";
     }
 };
 
