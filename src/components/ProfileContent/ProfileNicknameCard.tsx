@@ -27,8 +27,16 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
     const auth = useAuth();
     const { authUrl } = useEndpointContext();
     const [form] = Form.useForm<NicknameFormValues>();
-    const mutation = useUpdateUserByIdMutation();
     const queryClient = useQueryClient();
+    const mutation = useUpdateUserByIdMutation({
+        onSuccess: async () => {
+            if (props.selectedServerUrl === authUrl && auth.isAuthenticated) {
+                await auth.signinSilent();
+            }
+            await queryClient.invalidateQueries({ queryKey: ["MeUser"] });
+            await props.onUserUpdated();
+        },
+    });
 
     React.useEffect(() => {
         form.setFieldValue("name", props.currentName);
@@ -43,11 +51,6 @@ export const ProfileNicknameCard: React.FunctionComponent<ProfileNicknameCardPro
                 },
                 url: props.selectedServerUrl,
             });
-            if (props.selectedServerUrl === authUrl && auth.isAuthenticated) {
-                await auth.signinSilent();
-            }
-            await queryClient.invalidateQueries({ queryKey: ["MeUser"] });
-            await props.onUserUpdated();
             props.messageApi.success("Nickname updated");
         } catch (error) {
             console.error("Failed to update nickname", error);

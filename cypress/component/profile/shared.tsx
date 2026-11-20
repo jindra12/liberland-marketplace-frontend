@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { User } from "oidc-client-ts";
+import type { AuthContextProps } from "react-oidc-context";
 
 import { AUTH_URL_STORAGE_KEY } from "../../../src/components/endpoints/constants";
 import { ProfileContent } from "../../../src/components/ProfileContent/ProfileContent";
@@ -9,8 +10,8 @@ import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../../support/component-tests/
 import {
     buildTestAuthContext,
     mountWithProviders,
-    seedAuthorizedProfile,
-} from "../../support/component-tests/utils";
+} from "../../support/component-tests/mount";
+import { seedAuthorizedProfile } from "../../support/component-tests/auth";
 
 export const buildProfileEndpointUrls = (serverUrls: string[]) => {
     return serverUrls.map((serverUrl, index) => ({
@@ -20,7 +21,10 @@ export const buildProfileEndpointUrls = (serverUrls: string[]) => {
     }));
 };
 
-export const mountProfileContent = (serverUrls: string[] = [MAIN_SERVER_URL, COOP_SERVER_URL]) => {
+export const mountProfileContent = (
+    serverUrls: string[] = [MAIN_SERVER_URL, COOP_SERVER_URL],
+    signinSilent?: AuthContextProps["signinSilent"],
+) => {
     cy.intercept("POST", "**/api/graphql", (req) => {
         const body = req.body as { operationName?: string; query?: string };
 
@@ -35,6 +39,7 @@ export const mountProfileContent = (serverUrls: string[] = [MAIN_SERVER_URL, COO
 
     mountWithProviders(<ProfileContent />, {
         auth: buildTestAuthContext({
+            ...(signinSilent ? { signinSilent } : {}),
             isAuthenticated: true,
             user: new User({
                 access_token: "mock-profile-access-token",

@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import PostDetail from "../../../src/components/detail/PostDetail";
 import { detailRoute, MAIN_SERVER_URL } from "../../support/component-tests/constants";
 import { buildTestAuthContext, mountWithProviders } from "../../support/component-tests/directBasic";
-import { seedAuthorizedProfile } from "../../support/component-tests/utils";
+import { seedAuthorizedProfile } from "../../support/component-tests/auth";
 
 export const mountPostDetail = (emailVerified = true) => {
     cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {

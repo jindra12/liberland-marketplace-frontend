@@ -3,7 +3,8 @@ import { encodeServerUrlSegment } from "../../src/routes";
 import Unsubscribe from "../../src/components/Unsubscribe/Unsubscribe";
 import { buildNotificationSubscriptionID } from "../../src/components/share/SubscribeButton/utils";
 
-import { mountWithProviders, seedAuthorizedProfile } from "../support/component-tests/utils";
+import { mountWithProviders } from "../support/component-tests/utils";
+import { seedAuthorizedProfile } from "../support/component-tests/auth";
 
 const MAIN_SERVER_URL = "http://127.0.0.1:3010";
 
