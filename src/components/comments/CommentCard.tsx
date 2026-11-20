@@ -175,6 +175,7 @@ export const CommentCard: React.FunctionComponent<React.PropsWithChildren<Commen
             {formState === "edit" && (
                 <CommentEditComposer
                     commentId={props.comment.id}
+                    serverURL={props.comment.serverUrl}
                     initialValue={props.comment.content || ""}
                     initialCompany={props.comment.company?.id}
                     placeholder={props.commentEditPlaceholder}

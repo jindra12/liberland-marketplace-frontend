@@ -7,6 +7,7 @@ import {
     mountAuthenticatedMainRoute,
 } from "../../support/component-tests/utils";
 import type { GraphQLVariables } from "../../support/component-tests/types";
+import { mountPostDetail } from "./mount";
 
 export const DESKTOP_VIEWPORT = {
     width: 1280,
@@ -107,25 +108,6 @@ export const waitForCollectionRequest = (
 
 export const waitForDetailRequest = (selector: string, expectedText: string) => {
     cy.contains(selector, expectedText).should("be.visible");
-};
-
-const mountPostDetail = () => {
-    cy.intercept("POST", `${MAIN_SERVER_URL}/api/graphql`, (req) => {
-        const body = req.body as { operationName?: string; query?: string };
-        if (body.operationName === "PostById" || body.query?.includes("PostById")) {
-            req.alias = "postById";
-        }
-    });
-
-    mountAuthenticatedMainRoute(detailRoute("/posts", "post-harbor-operations-digest"), true);
-
-    cy.wait("@postById").then((interception) => {
-        expect(interception.request.url).to.equal(`${MAIN_SERVER_URL}/api/graphql`);
-        expect(interception.response?.statusCode).to.equal(200);
-    });
-
-    cy.get(".PostDetail").should("be.visible");
-    cy.contains(".PostDetail", "Harbor Operations Digest").should("be.visible");
 };
 
 export const waitForPostComments = (expectedTitle: string, minimumDocs = 1) => {
@@ -339,7 +321,11 @@ export const createAndEditComment = (viewport: ViewportConfig) => {
             expect(interception.response?.statusCode).to.equal(200);
             expect(updatedComment?.id).to.equal(createdCommentId);
         });
-        cy.get(`.CommentCard[data-comment-id="${createdCommentId}"]`).should("be.visible");
+        cy.get(`.CommentCard[data-comment-id="${createdCommentId}"]`)
+            .should("be.visible")
+            .and("contain.text", editedText)
+            .scrollIntoView()
+            .screenshot(`comment-edited-${viewport.name}`);
     });
 };
 

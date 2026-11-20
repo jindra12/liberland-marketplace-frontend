@@ -5,6 +5,7 @@ import type { CommentComposerValues, CommentEditPayload } from "./types";
 
 type CommentEditComposerProps = {
     commentId: string;
+    serverURL?: string | null;
     initialValue: string;
     initialCompany?: string | null;
     placeholder: string;
@@ -15,6 +16,7 @@ type CommentEditComposerProps = {
 export const CommentEditComposer: React.FunctionComponent<CommentEditComposerProps> = (props) => {
     return (
         <CommentComposerActions
+            serverURL={props.serverURL}
             placeholder={props.placeholder}
             submitLabel="Save"
             initialValue={props.initialValue}

@@ -1,5 +1,4 @@
-import { detailRoute } from "../support/component-tests/constants";
-import { mountAuthenticatedMainRoute } from "../support/component-tests/utils";
+import { mountPostDetail } from "./comments/mount";
 import {
     createAndEditComment,
     installCommentSpecExceptionGuard,
@@ -18,7 +17,7 @@ describe("comments manage flow desktop", () => {
     });
 
     it("routes unverified users to the email verification warning before commenting", () => {
-        mountAuthenticatedMainRoute(detailRoute("/posts", "post-harbor-operations-digest"), false);
+        mountPostDetail(false);
 
         cy.contains(".EntityCommentsSection", "Harbor Operations Digest keeps the team aligned.").should("be.visible");
         cy.contains(".EntityCommentsSection__header .CommentComposer button", "Comment").click();

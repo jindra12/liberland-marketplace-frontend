@@ -14,7 +14,7 @@ const scalar = (name: string) =>
         name,
         serialize: (value) => value,
         parseValue: (value) => value,
-        parseLiteral: (ast) => valueFromASTUntyped(ast),
+        parseLiteral: (ast, variables) => valueFromASTUntyped(ast, variables),
     });
 
 const mockScalarMap = [
