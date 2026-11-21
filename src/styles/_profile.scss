@@ -6,6 +6,21 @@
         margin-bottom: 16px;
     }
 
+    &__summaryDetails {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__summaryEmail {
+        min-width: 0;
+        width: 100%;
+    }
+
+    &__email {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
     &__card {
         flex: 1;
         min-width: 280px;
@@ -74,5 +89,17 @@
 
     &__listingsTitle {
         margin: 0;
+    }
+}
+
+@include sm-min {
+    .Profile {
+        &__summary {
+            flex-direction: column;
+        }
+
+        &__summaryDetails {
+            width: 100%;
+        }
     }
 }

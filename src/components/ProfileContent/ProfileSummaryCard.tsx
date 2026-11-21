@@ -3,7 +3,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Card, Descriptions, Space, Tag } from "antd";
+import { Avatar, Card, Descriptions, Flex, Tag, Typography } from "antd";
 
 import { routes } from "../../routes";
 
@@ -16,24 +16,24 @@ type ProfileSummaryCardProps = {
 export const ProfileSummaryCard: React.FunctionComponent<ProfileSummaryCardProps> = (props) => {
     return (
         <Card className="Profile__info">
-            <Space size={16} align="start">
+            <Flex gap={16} align="start" className="Profile__summary">
                 <Link to={routes.profile.route}>
                     <Avatar size={64} src={props.picture} icon={<UserOutlined />} />
                 </Link>
-                <Descriptions column={1} size="small">
+                <Descriptions column={1} size="small" className="Profile__summaryDetails">
                     <Descriptions.Item label="Name">{props.name || "—"}</Descriptions.Item>
                     <Descriptions.Item label="Email">
-                        <Space>
-                            {props.email || "—"}
+                        <Flex wrap gap={8} align="center" className="Profile__summaryEmail">
+                            <Typography.Text className="Profile__email">{props.email || "—"}</Typography.Text>
                             {props.emailVerified ? (
                                 <Tag color="success">Verified</Tag>
                             ) : (
                                 <Tag color="warning">Unverified</Tag>
                             )}
-                        </Space>
+                        </Flex>
                     </Descriptions.Item>
                 </Descriptions>
-            </Space>
+            </Flex>
         </Card>
     );
 };

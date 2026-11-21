@@ -2,15 +2,8 @@ import * as React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import {
-    ArrowLeftOutlined,
-    FileTextOutlined,
-    RocketOutlined,
-    ShopOutlined,
-    TeamOutlined,
-    ToolOutlined,
-} from "@ant-design/icons";
-import { Button, Popconfirm, Space, Typography } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Button, Popconfirm, Typography } from "antd";
 
 import { routes } from "../../routes";
 import type { Category } from "../tour/types";
@@ -19,6 +12,7 @@ import { CompanyForm } from "./CompanyForm";
 import { JobForm } from "./JobForm";
 import { PostForm } from "./PostForm";
 import { ProductForm } from "./ProductForm";
+import { PublishCategoryPicker } from "./PublishCategoryPicker";
 import { StartupForm } from "./StartupForm";
 import { usePublicationCategory } from "./usePublicationCategory";
 
@@ -96,63 +90,7 @@ export const PublishForms: React.FunctionComponent<PublishFormsProps> = (props) 
                 <div className="Publish">
                     <Typography.Title level={2}>Create</Typography.Title>
                     <Typography.Paragraph type="secondary">Choose what you'd like to publish</Typography.Paragraph>
-                    <Space direction="vertical" size={16} className="Publish__categories">
-                        <Button block className="Publish__category" onClick={() => setCategory("publish-job")}>
-                            <Space size={16}>
-                                <ToolOutlined className="Publish__categoryIcon" />
-                                <div>
-                                    <Typography.Text strong className="Publish__categoryTitle">
-                                        Job
-                                    </Typography.Text>
-                                    <Typography.Text type="secondary">Post a job listing</Typography.Text>
-                                </div>
-                            </Space>
-                        </Button>
-                        <Button block className="Publish__category" onClick={() => setCategory("publish-company")}>
-                            <Space size={16}>
-                                <TeamOutlined className="Publish__categoryIcon" />
-                                <div>
-                                    <Typography.Text strong className="Publish__categoryTitle">
-                                        Company
-                                    </Typography.Text>
-                                    <Typography.Text type="secondary">Create a company profile</Typography.Text>
-                                </div>
-                            </Space>
-                        </Button>
-                        <Button block className="Publish__category" onClick={() => setCategory("publish-product")}>
-                            <Space size={16}>
-                                <ShopOutlined className="Publish__categoryIcon" />
-                                <div>
-                                    <Typography.Text strong className="Publish__categoryTitle">
-                                        Product
-                                    </Typography.Text>
-                                    <Typography.Text type="secondary">List a product or service</Typography.Text>
-                                </div>
-                            </Space>
-                        </Button>
-                        <Button block className="Publish__category" onClick={() => setCategory("publish-post")}>
-                            <Space size={16}>
-                                <FileTextOutlined className="Publish__categoryIcon" />
-                                <div>
-                                    <Typography.Text strong className="Publish__categoryTitle">
-                                        Post
-                                    </Typography.Text>
-                                    <Typography.Text type="secondary">Write a post</Typography.Text>
-                                </div>
-                            </Space>
-                        </Button>
-                        <Button block className="Publish__category" onClick={() => setCategory("publish-startup")}>
-                            <Space size={16}>
-                                <RocketOutlined className="Publish__categoryIcon" />
-                                <div>
-                                    <Typography.Text strong className="Publish__categoryTitle">
-                                        Venture
-                                    </Typography.Text>
-                                    <Typography.Text type="secondary">Launch a venture</Typography.Text>
-                                </div>
-                            </Space>
-                        </Button>
-                    </Space>
+                    <PublishCategoryPicker onSelect={setCategory} />
                 </div>
             );
     }
