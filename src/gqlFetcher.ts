@@ -1,6 +1,8 @@
 import axios, { AxiosHeaders } from "axios";
 import { appAnalytics } from "./components/analytics/analytics";
 import { readStoredAuthUser } from "./components/auth/utils";
+import { CART_SECRET_HEADER } from "./components/cart/constants";
+import { getCartRequestSecret } from "./components/cart/utils";
 
 type GQLError = { message: string };
 
@@ -57,6 +59,11 @@ export const gqlFetcher =
         const { operationName, operationType } = getGraphQLOperation(query);
         const headers = normalizeAndReduce(options);
         const token = getAccessToken(defUrl);
+        const cartSecret = getCartRequestSecret(operationName, variables, defUrl);
+
+        if (cartSecret) {
+            headers.set(CART_SECRET_HEADER, cartSecret);
+        }
 
         if (token) {
             headers.set("Authorization", `Bearer ${token}`);

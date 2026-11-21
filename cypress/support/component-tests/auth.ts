@@ -27,4 +27,5 @@ export const seedAuthorizedProfile = (win: Window, serverUrl: string, emailVerif
         buildAuthStorageKey(buildAuthAuthority(serverUrl), process.env.REACT_APP_OIDC_CLIENT_ID || ""),
         user.toStorageString(),
     );
+    return user;
 };

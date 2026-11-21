@@ -85,7 +85,7 @@ export const installGraphQLMock = () => {
             headers: {
                 "access-control-allow-origin": origin,
                 "access-control-allow-methods": "POST, OPTIONS",
-                "access-control-allow-headers": "content-type, authorization, x-requested-with",
+                "access-control-allow-headers": "content-type, authorization, x-requested-with, x-cart-secret",
                 "access-control-max-age": "86400",
             },
         });

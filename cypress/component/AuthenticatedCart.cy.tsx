@@ -1,10 +1,36 @@
+import React from "react";
+import Order from "../../src/components/Order";
+import { CART_SECRETS_INDEX_KEY } from "../../src/components/cart/cartSecrets";
+import { seedAuthorizedProfile } from "../support/component-tests/auth";
 import { COOP_SERVER_URL, MAIN_SERVER_URL } from "../support/component-tests/constants";
 import {
     assertFormFieldValue,
     gqlAlias,
-    mountAuthenticatedCartRoute,
     screenshotStep,
-} from "../support/component-tests/utils";
+    mountWithProviders,
+    buildTestAuthContext,
+} from "../support/component-tests/direct";
+
+const mountOrder = (serverUrls: string[], cartSecrets: Record<string, string>) => {
+    cy.window().then((win) => {
+        win.localStorage.clear();
+        const user = seedAuthorizedProfile(win, MAIN_SERVER_URL);
+        serverUrls.filter((url) => url !== MAIN_SERVER_URL).forEach((url) => seedAuthorizedProfile(win, url));
+        win.localStorage.setItem("endpoints.urls", JSON.stringify(serverUrls.map((url, index) => ({
+            value: url,
+            name: index === 0 ? "Main" : "Co-op",
+            enabled: true,
+        }))));
+        win.localStorage.setItem(CART_SECRETS_INDEX_KEY, JSON.stringify(
+            Object.entries(cartSecrets).map(([url, secret]) => ({ url, secret })),
+        ));
+        mountWithProviders(<Order />, {
+            route: "/order",
+            clearStorage: false,
+            auth: buildTestAuthContext({ isAuthenticated: true, user }),
+        });
+    });
+};
 
 const assertMainOrderPrefill = () => {
     assertFormFieldValue("Email", "nova@example.test");
@@ -26,21 +52,20 @@ const assertCoopOrderPrefill = () => {
 
 describe("authenticated cart", () => {
     it("prefills the order form from the main server me query", () => {
-        mountAuthenticatedCartRoute("/order", [MAIN_SERVER_URL], {
+        mountOrder([MAIN_SERVER_URL], {
             [MAIN_SERVER_URL]: "alpha-secret",
-        }, true);
+        });
         cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "CartBySecret", { secret: "alpha-secret" })}`);
         cy.contains("h2", "Order").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");
-        screenshotStep("authenticated-cart-main-prefill");
-
         assertMainOrderPrefill();
+        screenshotStep("authenticated-cart-main-prefill", "viewport");
     });
 
     it("lets the user switch to a shipping address from another logged-in server", () => {
-        mountAuthenticatedCartRoute("/order", [MAIN_SERVER_URL, COOP_SERVER_URL], {
+        mountOrder([MAIN_SERVER_URL, COOP_SERVER_URL], {
             [MAIN_SERVER_URL]: "alpha-secret",
-        }, true);
+        });
         cy.wait(`@${gqlAlias(MAIN_SERVER_URL, "CartBySecret", { secret: "alpha-secret" })}`);
         cy.contains("h2", "Order").should("be.visible");
         cy.get(".AddToCartButton__buyNow").should("not.exist");
@@ -48,11 +73,14 @@ describe("authenticated cart", () => {
         cy.contains("button", "Choose default address").should("be.visible").click();
 
         cy.contains(".ShippingAddressSelectModal", "Choose a default shipping address").should("be.visible");
-        screenshotStep("authenticated-cart-shipping-address-picker");
         cy.contains(".ShippingAddressSelectModal__option", "Nova Rivers").should("be.visible");
+        cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible");
+        cy.get(".ShippingAddressSelectModal").should("have.css", "opacity", "1");
+        screenshotStep("authenticated-cart-shipping-address-picker", "viewport");
         cy.contains(".ShippingAddressSelectModal__option", "Iris Shore").should("be.visible").click();
 
-        screenshotStep("authenticated-cart-coop-prefill");
         assertCoopOrderPrefill();
+        cy.get(".ShippingAddressSelectModal").should("not.exist");
+        screenshotStep("authenticated-cart-coop-prefill", "viewport");
     });
 });

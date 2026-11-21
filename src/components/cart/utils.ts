@@ -1,7 +1,20 @@
 import type { Cart, MutationCartUpdate_ItemsInput } from "../../generated/graphql";
 import type { CartSecretEntry } from "./cartSecrets";
+import { readStoredCartSecret } from "./cartSecrets";
 import { ADD_TO_CART_INITIAL_QUANTITY, ADD_TO_CART_PRODUCT_KEY_SEPARATOR } from "./constants";
 import type { ProductParameterSelectionMap, ProductParameterSource } from "../productParameters/types";
+
+export const getCartRequestSecret = (operation: string, variables: object | undefined, serverUrl: string): string => {
+    switch (operation) {
+        case "CartBySecret":
+            return variables && "secret" in variables && typeof variables.secret === "string" ? variables.secret : "";
+        case "UpdateCart":
+        case "DeleteCart":
+            return readStoredCartSecret(serverUrl);
+        default:
+            return "";
+    }
+};
 
 export const notifyCartSecretsChanged = (entries: CartSecretEntry[]) => {
     window.dispatchEvent(
