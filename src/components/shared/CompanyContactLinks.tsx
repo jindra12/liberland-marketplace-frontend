@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { GlobalOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
-import { List, Typography } from "antd";
+import { Flex, List, Typography } from "antd";
 
 import { IdentityTagItem } from "./IdentityTagLink";
 
@@ -74,25 +74,20 @@ export const CompanyContactLinks: React.FunctionComponent<CompanyContactLinksPro
         .join(" ");
     if (variant === "compact") {
         return (
-            <div className={resolvedClassName}>
-                <Typography.Text className="CompanyContactLinks__heading">Contacts</Typography.Text>
-                <div className="CompanyContactLinks__compactList">
-                    {items.map((item) => (
-                        <div key={item.key} className="CompanyContactLinks__row">
-                            <Typography.Text className="CompanyContactLinks__label">{item.title}</Typography.Text>
-                            <Typography.Link
-                                className="CompanyContactLinks__value"
-                                href={item.href}
-                                target={item.external ? "_blank" : undefined}
-                                rel={item.external ? "noreferrer" : undefined}
-                            >
-                                {item.icon}
-                                <span>{item.text}</span>
-                            </Typography.Link>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <Flex wrap gap={12} className={resolvedClassName}>
+                {items.map((item) => (
+                    <Typography.Link
+                        key={item.key}
+                        className="CompanyContactLinks__value"
+                        href={item.href}
+                        target={item.external ? "_blank" : undefined}
+                        rel={item.external ? "noreferrer" : undefined}
+                    >
+                        {item.icon}
+                        {item.title}
+                    </Typography.Link>
+                ))}
+            </Flex>
         );
     }
     return (

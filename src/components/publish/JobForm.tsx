@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { DatePicker, Form, Input, InputNumber, Select } from "antd";
+import { DatePicker, Flex, Form, Input, InputNumber, Select } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 import dayjs from "dayjs";
 
@@ -193,7 +193,7 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
             </Form.Item>
 
             <Form.Item label="Salary Range">
-                <Input.Group compact>
+                <Flex gap={8} className="Publish__salaryFields">
                     <Form.Item name="salaryMin" noStyle>
                         <InputNumber placeholder="Min" className="Publish__salaryMin" />
                     </Form.Item>
@@ -204,15 +204,16 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                         <Select
                             placeholder="Currency"
                             options={currencyOptions}
+                            optionLabelProp="value"
                             className="Publish__currencySelect"
                             allowClear
                         />
                     </Form.Item>
-                </Input.Group>
+                </Flex>
             </Form.Item>
 
             <Form.Item label="Bounty">
-                <Input.Group compact>
+                <Flex gap={8} className="Publish__amountFields">
                     <Form.Item name="bountyAmount" noStyle>
                         <InputNumber placeholder="Amount" className="Publish__amountInput" />
                     </Form.Item>
@@ -220,11 +221,12 @@ export const JobForm: React.FunctionComponent<JobFormProps> = (props) => {
                         <Select
                             placeholder="Currency"
                             options={currencyOptions}
+                            optionLabelProp="value"
                             className="Publish__currencySelect"
                             allowClear
                         />
                     </Form.Item>
-                </Input.Group>
+                </Flex>
             </Form.Item>
 
             <Form.Item>

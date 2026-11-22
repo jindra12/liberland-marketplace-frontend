@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { UseQueryResult } from "@tanstack/react-query";
 
 import { UsergroupAddOutlined } from "@ant-design/icons";
-import { Avatar, Flex, Grid } from "antd";
+import { Avatar, Flex } from "antd";
 
 import { Company, ListCompaniesByIdentityQuery, ListCompaniesQuery } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
@@ -27,7 +27,6 @@ export interface CompanyListInternalProps {
 }
 
 export const CompanyListInternal: React.FunctionComponent<CompanyListInternalProps> = (props) => {
-    const { md } = Grid.useBreakpoint();
     const likeMutation = useLikeCompanyMutation();
     const dislikeMutation = useDislikeCompanyMutation();
     const allItems = useAccumulatedDocs(props.query.data?.Companies?.docs, props.page);
@@ -74,37 +73,22 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         )}
                     </Flex>
                 ),
-                actions: (company) =>
-                    md ? (
-                        <Flex justify="flex-end" gap="12px" wrap className="EntityList__actionsRow">
-                            <ListShareDetailButtons
-                                detailPath={routes.companies.detail.getLink(company as Company)}
-                                title={company.name}
-                                text={`Check out ${company.name} on NSwap.`}
-                                subscriptionTarget={{
-                                    collection: "companies",
-                                    targetID: company.id,
-                                    serverURL: company.serverURL,
-                                    isSubscribed: company.isSubscribed,
-                                }}
-                            />
-                        </Flex>
-                    ) : (
-                        <Flex vertical gap="12px" className="EntityList__actionsRow CompanyList__actionsRow">
-                            <ListShareDetailButtons
-                                compact
-                                detailPath={routes.companies.detail.getLink(company as Company)}
-                                title={company.name}
-                                text={`Check out ${company.name} on NSwap.`}
-                                subscriptionTarget={{
-                                    collection: "companies",
-                                    targetID: company.id,
-                                    serverURL: company.serverURL,
-                                    isSubscribed: company.isSubscribed,
-                                }}
-                            />
-                        </Flex>
-                    ),
+                actions: (company) => (
+                    <Flex wrap gap={8} className="EntityList__actionsRow CompanyList__actionsRow">
+                        <ListShareDetailButtons
+                            compact
+                            detailPath={routes.companies.detail.getLink(company as Company)}
+                            title={company.name}
+                            text={`Check out ${company.name} on NSwap.`}
+                            subscriptionTarget={{
+                                collection: "companies",
+                                targetID: company.id,
+                                serverURL: company.serverURL,
+                                isSubscribed: company.isSubscribed,
+                            }}
+                        />
+                    </Flex>
+                ),
                 avatar: (company) =>
                     company.image?.url ? (
                         <Link to={routes.companies.detail.getLink(company as Company)}>
@@ -112,16 +96,16 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                         </Link>
                     ) : undefined,
                 body: (company) => (
-                    <div className="EntityList__body CompanyList__body">
-                        <CompanyContactLinks
-                            website={company.website}
-                            email={company.email}
-                            phone={company.phone}
-                            variant="compact"
-                            className="CompanyList__contacts"
-                        />
+                    <Flex vertical gap={8} className="EntityList__body CompanyList__body">
                         <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>
-                    </div>
+                        {company.website && (
+                            <CompanyContactLinks
+                                website={company.website}
+                                variant="compact"
+                                className="CompanyList__contacts"
+                            />
+                        )}
+                    </Flex>
                 ),
             }}
         />

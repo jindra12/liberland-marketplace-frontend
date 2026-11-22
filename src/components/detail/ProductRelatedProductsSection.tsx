@@ -29,7 +29,7 @@ export const ProductRelatedProductsSection: React.FunctionComponent<ProductRelat
         },
     );
     const fallbackProducts = (companyProductsQuery.data?.Products?.docs || []) as ProductCardItem[];
-    const items = combineUniqueById(relatedProducts, fallbackProducts, 5);
+    const items = combineUniqueById(relatedProducts, fallbackProducts, 5, props.product);
 
     if (items.length === 0) {
         return null;

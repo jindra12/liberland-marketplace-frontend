@@ -6,29 +6,28 @@
     }
 
     .ant-list-header {
-        margin-bottom: 18px;
+        margin-bottom: 20px;
         padding: 0;
         border-bottom: 0;
     }
 
     .ant-list-item {
-        margin-bottom: 20px;
-        padding: 28px 28px 24px;
-        border-radius: 24px;
-        background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
-        box-shadow:
-            0 18px 40px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(147, 214, 255, 0.05);
+        margin-bottom: 12px;
+        padding: 20px;
+        border: 1px solid var(--market-border);
+        border-radius: 6px;
+        background: var(--market-surface);
+        box-shadow: none;
     }
 
     .ant-list-item-meta-title {
         margin-bottom: 8px !important;
-        font-size: 22px;
-        line-height: 1.08;
+        font-size: 20px;
+        line-height: 1.35;
     }
 
     .ant-list-item-meta-description {
-        color: rgba(188, 217, 203, 0.78);
+        color: var(--market-muted);
     }
 
     .ant-list .ant-list-item .ant-list-item-action {
@@ -49,13 +48,12 @@
 
 .AppList__title {
     margin: 0 !important;
-    font-size: 40px !important;
-    line-height: 1 !important;
-    letter-spacing: -0.04em;
+    font-size: 28px !important;
+    line-height: 1.25 !important;
 }
 
 .AppList__titleSlot {
-    flex: 1 1 0;
+    flex: 1;
     min-width: 0;
 }
 
@@ -64,11 +62,11 @@
 }
 
 .AppList__filters {
-    flex: 0 1 520px;
+    flex: 0 1 420px;
     width: 100%;
-    max-width: 520px;
+    max-width: 420px;
     margin-left: auto;
-    min-width: 320px;
+    min-width: 240px;
 
     > * {
         width: 100%;
@@ -79,11 +77,9 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    padding-top: 16px;
-}
-
-.AppList__actions--stacked {
-    align-items: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
 }
 
 .infinite-scroll-component__outerdiv,
@@ -96,18 +92,20 @@
 }
 
 .AppList__tribeEnd {
+    padding: 20px;
     text-align: center;
-    padding: 32px 16px;
-    border-radius: 24px;
-    background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
-    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.05);
+    border-top: 1px solid var(--market-border);
 }
 
 .AppList__tribeEndHeading {
-    margin-bottom: 16px !important;
+    margin-bottom: 12px !important;
 }
 
 @include md-min {
+    .InfinityScroll .ant-list-item {
+        padding: 16px;
+    }
+
     .AppList__header {
         align-items: stretch !important;
     }
@@ -117,9 +115,5 @@
         flex: 1 1 100%;
         max-width: none;
         min-width: 0;
-    }
-
-    .AppList__title {
-        font-size: 34px !important;
     }
 }

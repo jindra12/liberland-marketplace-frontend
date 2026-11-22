@@ -3,7 +3,7 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
+import { Avatar, Flex, Grid, Space, Typography } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo, Company } from "../../generated/graphql";
 import { decodeServerUrlSegment, routes } from "../../routes";
@@ -14,16 +14,14 @@ import { CompanyPostsList } from "../lists/CompanyPostsList";
 import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesList";
 import { CompanyStartupsList } from "../lists/CompanyStartupsList";
 import { Loader } from "../Loader";
-import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
-import { CompanyContactLinks } from "../shared/CompanyContactLinks";
 import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 
 import { CommonDetail } from "./CommonDetail";
 import { CompanyDonateButton } from "./companyDetail/CompanyDonateButton";
+import { CompanyOverview } from "./companyDetail/CompanyOverview";
 import { CompanyVerificationTag } from "./companyDetail/CompanyVerificationTag";
-import { IdentityGroups } from "./IdentityGroups";
 import { useCompanyTabCounts } from "./useCompanyTabCounts";
 import { useIsOwnedByServerUser } from "./useIsOwnedByServerUser";
 
@@ -33,7 +31,7 @@ const CompanyDetail: React.FunctionComponent = () => {
     const company = useCompanyByIdQuery({ id: id!, url: routeServerURL });
     const { md } = Grid.useBreakpoint();
 
-    const counts = useCompanyTabCounts(id);
+    const counts = useCompanyTabCounts(id, routeServerURL);
     const isOwner = useIsOwnedByServerUser({
         ownerUserId: company.data?.Company?.createdBy?.id,
         serverURL: company.data?.Company?.serverURL ?? routeServerURL,
@@ -50,8 +48,6 @@ const CompanyDetail: React.FunctionComponent = () => {
                           name: companyData.identity.name,
                       }
                     : undefined;
-                const allowedIdentities = companyData?.allowedIdentities || [];
-                const disallowedIdentities = companyData?.disallowedIdentities || [];
                 const avatarSize = md ? 120 : 72;
                 const shareTitle = companyData?.name ?? "Company";
                 const shareText = `Check out ${shareTitle} on NSwap.`;
@@ -77,7 +73,11 @@ const CompanyDetail: React.FunctionComponent = () => {
                         }
                         gap={md ? 18 : 16}
                         header={
-                            <Space size={md ? 24 : 16} align="start" className="EntityDetail__header CompanyDetail__header">
+                            <Space
+                                size={md ? 24 : 16}
+                                align="start"
+                                className="EntityDetail__header CompanyDetail__header"
+                            >
                                 {imageSrc && <Avatar shape="circle" size={avatarSize} src={imageSrc} />}
                                 <Flex vertical align="start" gap={md ? 18 : 14} className="EntityDetail__headerBody">
                                     <div className="EntityDetail__titleBlock">
@@ -88,12 +88,7 @@ const CompanyDetail: React.FunctionComponent = () => {
                                             </Typography.Title>
                                         </div>
                                         {(companyIdentity || companyData?.verification) && (
-                                            <Flex
-                                                gap={8}
-                                                wrap
-                                                align="center"
-                                                className="CompanyDetail__identityRow"
-                                            >
+                                            <Flex gap={8} wrap align="center" className="CompanyDetail__identityRow">
                                                 {companyIdentity && (
                                                     <IdentityTagLink
                                                         identity={companyIdentity}
@@ -126,24 +121,14 @@ const CompanyDetail: React.FunctionComponent = () => {
                                         Edit
                                     </RouteButton>
                                 )}
-                                <Divider />
-                                <Markdown>{companyData?.description}</Markdown>
-                                <Divider />
-                                <CompanyContactLinks
-                                    identity={companyIdentity}
-                                    website={companyData?.website}
-                                    email={companyData?.email}
-                                    phone={companyData?.phone}
-                                    className="EntityDetail__meta"
-                                />
-                                <IdentityGroups
-                                    allowedIdentities={allowedIdentities}
-                                    disallowedIdentities={disallowedIdentities}
-                                    className="EntityDetail__identityGroups"
-                                />
                             </>
                         }
                         sections={[
+                            {
+                                key: "overview",
+                                label: "Overview",
+                                children: companyData && <CompanyOverview company={companyData} listings={counts} />,
+                            },
                             {
                                 key: "jobs",
                                 label: `Jobs (${counts.jobs})`,

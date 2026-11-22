@@ -1,75 +1,56 @@
 .AppHeader {
     box-sizing: border-box;
     width: 100%;
-    padding: 0 20px;
     height: auto;
+    padding-inline: 24px;
     line-height: normal;
-    background: transparent !important;
+    background: var(--market-surface) !important;
+    border-bottom: 1px solid var(--market-border);
     position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 20;
 
     &__inner {
-        width: 100%;
-        max-width: 1480px;
+        width: min(1232px, 100%);
         min-width: 0;
-        box-sizing: border-box;
-        min-height: 76px;
-        margin: 18px auto 0;
+        min-height: 68px;
+        margin-inline: auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 18px;
-        padding: 14px 18px;
-        border-radius: 30px;
-        background: rgba(2, 10, 18, 0.72);
-        backdrop-filter: blur(18px);
-        box-shadow:
-            0 20px 44px rgba(0, 0, 0, 0.26),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06);
+        gap: 24px;
     }
 
     &__brand {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        text-decoration: none;
         min-width: 0;
+        color: var(--market-text);
+        text-decoration: none;
     }
 
     &__logo {
-        width: 38px;
-        height: 38px;
-        display: block;
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
 
         .ant-image-img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            display: block;
         }
     }
 
     &__name {
-        font-weight: 800;
+        font-weight: 600;
         font-size: 20px;
         line-height: 1;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 240px;
-
-        @include sm-min {
-            max-width: 160px;
-            font-size: 17px;
-        }
     }
 
     &__menuSlot {
+        flex: 1;
         min-width: 0;
         display: flex;
         justify-content: center;
@@ -80,32 +61,18 @@
         border-bottom: 0 !important;
         background: transparent !important;
 
-        .ant-menu-overflow {
-            justify-content: center;
-        }
-
         .ant-menu-item {
             display: inline-flex;
             align-items: center;
             min-height: 44px;
-            margin-inline: 2px;
-            padding-inline: 14px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+            padding-inline: 12px;
+            font-size: 15px;
+            font-weight: 500;
         }
 
         .ant-menu-title-content {
             display: inline-flex;
             align-items: center;
-            min-height: 100%;
-        }
-
-        &::after {
-            display: none !important;
         }
     }
 
@@ -114,27 +81,12 @@
         display: flex;
         align-items: center;
         width: 100%;
-        min-height: 100%;
+        min-height: 40px;
         color: inherit;
         text-decoration: none;
-
-        &:hover,
-        &:focus-visible {
-            color: inherit;
-            text-decoration: none;
-        }
-    }
-
-    &__menuLink {
-        justify-content: center;
-    }
-
-    &__drawerMenuLink {
-        justify-content: flex-start;
     }
 
     &__desktopActions {
-        justify-content: flex-end;
         flex-shrink: 0;
     }
 
@@ -144,76 +96,13 @@
 
     &__iconButton.ant-btn,
     &__burger.ant-btn {
-        min-width: 44px;
-        height: 44px;
-        padding-inline: 0;
-        border: 0;
-        border-radius: 999px;
-        background: rgba(4, 14, 24, 0.82);
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
+        min-width: 40px;
+        height: 40px;
+        padding-inline: 8px;
+        border-radius: 6px;
     }
 
-    &__quickActionsBtn {
-        border-radius: 999px;
-    }
-
-    &__quickActionsBtn.ant-btn {
-        border: 0;
-        background: rgba(4, 14, 24, 0.82);
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    }
-
-    &__authBtn.LoginButton.ant-select {
-        min-width: 118px;
-    }
-
-    &__authBtn.LoginButton.ant-select .ant-select-selector,
-    &__mobileAuthBtn.LoginButton.ant-select .ant-select-selector {
-        display: inline-flex;
-        align-items: center;
-        width: 100%;
-        border: 0 !important;
-        border-radius: 999px !important;
-        background: rgba(4, 14, 24, 0.82) !important;
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    }
-
-    &__authBtn.LoginButton.ant-select .ant-select-selector {
-        min-height: 44px;
-        padding-inline: 16px;
-    }
-
-    &__mobileAuthBtn.LoginButton.ant-select .ant-select-selector {
-        min-height: 40px;
-        padding-inline: 12px;
-    }
-
-    &__authBtn.LoginButton.ant-select .ant-select-selection-item,
-    &__authBtn.LoginButton.ant-select .ant-select-selection-placeholder,
-    &__mobileAuthBtn.LoginButton.ant-select .ant-select-selection-item,
-    &__mobileAuthBtn.LoginButton.ant-select .ant-select-selection-placeholder {
-        display: inline-flex;
-        align-items: center;
-        color: #eef8f3;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-    }
-
-    &__authBtn.LoginButton.ant-select .ant-select-arrow,
-    &__mobileAuthBtn.LoginButton.ant-select .ant-select-arrow {
-        color: rgba(238, 248, 243, 0.72);
-    }
-
-    &__authBtn.LoginButton.ant-select .ant-select-selection-search,
-    &__mobileAuthBtn.LoginButton.ant-select .ant-select-selection-search {
-        display: none;
-    }
-
-    &__cartLink {
-        display: inline-flex;
-        align-items: center;
-    }
-
+    &__cartLink,
     &__ordersLink {
         display: inline-flex;
         align-items: center;
@@ -228,30 +117,22 @@
         .ant-drawer-content,
         .ant-drawer-header,
         .ant-drawer-body {
-            background: rgba(47, 140, 255, 0.08);
+            background: var(--market-surface);
         }
 
         .ant-drawer-header {
-            padding: 24px 24px 0;
-            border-bottom: 0;
-        }
-
-        .ant-drawer-header-title {
-            align-items: center;
-        }
-
-        .ant-drawer-body {
-            padding: 20px 24px 24px;
+            padding: 20px;
+            border-bottom: 1px solid var(--market-border);
         }
 
         .ant-drawer-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #eef8f3;
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
+            color: var(--market-text);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .ant-drawer-body {
+            padding: 20px;
         }
     }
 
@@ -259,210 +140,78 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        min-height: 40px;
-    }
-
-    &__drawer {
-        .ant-drawer-header {
-            padding: 20px 24px 16px;
-        }
-
-        .ant-drawer-header-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-height: 40px;
-        }
-
-        .ant-drawer-close {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            margin: 0;
-            padding: 0;
-        }
-
-        .ant-drawer-title {
-            flex: 1;
-            min-width: 0;
-            min-height: 40px;
-            justify-content: flex-start;
-        }
     }
 
     &__drawerBody {
-        width: min(320px, 100%);
-        margin: 0 auto;
+        width: 100%;
+        min-width: 0;
     }
 
     &__sortControl {
-        padding: 16px;
-        border-radius: 20px;
-        border: 1px solid rgba(147, 214, 255, 0.1);
-        background: rgba(4, 14, 24, 0.76);
-        box-shadow:
-            inset 0 1px 0 rgba(147, 214, 255, 0.06),
-            0 12px 28px rgba(0, 0, 0, 0.18);
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--market-border);
     }
 
     &__sortLabel {
-        color: rgba(188, 217, 203, 0.78);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
+        color: var(--market-muted);
+        font-size: 14px;
+        font-weight: 500;
     }
 
     &__sortSelect.ant-select {
         width: 100%;
     }
 
-    &__sortControl .ant-select-selector {
-        min-height: 48px !important;
-        padding-inline: 16px !important;
-        border: 0 !important;
-        border-radius: 16px !important;
-        background: linear-gradient(180deg, rgba(13, 28, 40, 0.96) 0%, rgba(6, 17, 27, 0.96) 100%) !important;
-        box-shadow:
-            inset 0 1px 0 rgba(147, 214, 255, 0.06),
-            0 10px 20px rgba(0, 0, 0, 0.18);
-    }
-
-    &__sortControl .ant-select-selection-item,
-    &__sortControl .ant-select-selection-placeholder {
-        display: inline-flex;
-        align-items: center;
-        color: #eef8f3;
-        font-weight: 800;
-        letter-spacing: 0.02em;
-    }
-
-    &__sortControl .ant-select-arrow {
-        color: rgba(188, 217, 203, 0.78);
-    }
-
-    &__sortSelectDropdown {
-        &.ant-select-dropdown {
-            padding: 8px;
-            border-radius: 18px;
-            border: 0;
-            background:
-                radial-gradient(circle at 100% 0%, rgba(47, 140, 255, 0.08), transparent 30%),
-                linear-gradient(180deg, rgba(4, 15, 25, 0.98), rgba(3, 12, 21, 0.98));
-            box-shadow:
-                0 22px 46px rgba(0, 0, 0, 0.34),
-                inset 0 1px 0 rgba(147, 214, 255, 0.06);
-        }
-
-        .ant-select-item {
-            min-height: 40px;
-            border-radius: 12px;
-            font-weight: 700;
-        }
-    }
-
     &__drawerMenu.ant-menu,
     &__drawer .ant-menu {
         background: transparent;
         border-inline-end: 0 !important;
-        margin-top: 4px;
+        margin-block: 16px;
     }
 
     &__drawerMenu .ant-menu-item,
     &__drawer .ant-menu-item {
         display: flex;
         align-items: center;
-        min-height: 46px;
-        margin: 0 0 8px;
-        border-radius: 16px;
-        padding-inline: 16px;
+        min-height: 44px;
+        margin: 0 0 4px;
+        border-radius: 4px;
         text-align: left;
-    }
-
-    &__drawerMenu .ant-menu-title-content,
-    &__drawer .ant-menu-title-content {
-        display: inline-flex;
-        align-items: center;
-        min-height: 100%;
     }
 
     &__drawerNav,
     &__desktopDrawerNav {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        padding-top: 12px;
+        gap: 8px;
+        padding-top: 16px;
+        border-top: 1px solid var(--market-border);
     }
 
     &__drawerNav .ant-btn,
     &__desktopDrawerNav .ant-btn {
         justify-content: flex-start;
-        min-height: 48px;
-        border: 0;
-        background: rgba(4, 14, 24, 0.84);
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    }
-
-    &__drawerPublish {
-        margin-bottom: 0;
-    }
-}
-
-.SearchButton__menuOverlay {
-    .ant-dropdown-menu {
-        padding: 8px;
-        border-radius: 20px;
-        border: 0;
-        background:
-            radial-gradient(circle at 100% 0%, rgba(47, 140, 255, 0.08), transparent 30%),
-            linear-gradient(180deg, rgba(4, 15, 25, 0.98), rgba(3, 12, 21, 0.98));
-        box-shadow:
-            0 22px 46px rgba(0, 0, 0, 0.34),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    }
-
-    .ant-dropdown-menu-item-group-title {
-        padding: 6px 8px 10px;
-        color: rgba(188, 217, 203, 0.72);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-    }
-
-    .ant-dropdown-menu-item {
-        min-height: 44px;
-        border-radius: 14px;
-        font-weight: 700;
-    }
-}
-
-@include md {
-    .AppHeader {
-        &__inner {
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr) auto;
-            align-items: center;
-        }
+        min-height: 40px;
     }
 }
 
 @include md-min {
     .AppHeader {
-        padding-inline: 14px;
+        padding-inline: 16px;
 
         &__inner {
-            margin-top: 12px;
-            min-height: 66px;
-            padding: 10px 14px;
-            border-radius: 24px;
+            min-height: 64px;
+            gap: 12px;
         }
 
-        &__logo {
-            width: 34px;
-            height: 34px;
+        &__name {
+            font-size: 17px;
         }
+    }
+}
+
+@include xs-min {
+    .AppHeader__name {
+        display: none;
     }
 }

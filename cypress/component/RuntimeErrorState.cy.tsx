@@ -1,17 +1,41 @@
-import { mount } from "cypress/react";
-import { MemoryRouter } from "react-router-dom";
-
 import { RuntimeErrorState } from "../../src/components/ErrorBoundary/RuntimeErrorState";
+import { mountWithProviders, screenshotStep } from "../support/component-tests/directBasic";
 
-describe("runtime error state", () => {
-    it("shows the storage reset prompt on the error page", () => {
-        mount(
-            <MemoryRouter initialEntries={["/broken?section=details#summary"]}>
-                <RuntimeErrorState error={new Error("Something broke")} onRetry={() => undefined} scope="route" />
-            </MemoryRouter>,
-        );
+describe("runtime error recovery", () => {
+    [390, 1440].forEach((width) => {
+        it(`offers safe recovery before technical details at ${width}px`, () => {
+            cy.viewport(width, 900);
+            mountWithProviders(
+                <RuntimeErrorState
+                    error={new Error("Chunk details for diagnosis")}
+                    onRetry={cy.stub().as("retry")}
+                    scope="route"
+                />,
+                {
+                    route: "/broken?section=details",
+                    setup: (win) => win.localStorage.setItem("saved-cart", "keep-me"),
+                },
+            );
 
-        cy.contains("This clears your saved syndication settings and cart data.").should("be.visible");
-        cy.contains("Erase local storage and go home").should("be.visible");
+            cy.contains("We couldn't load this page").should("be.visible");
+            cy.contains("button", "Try again").click();
+            cy.get("@retry").should("have.been.calledOnce");
+            cy.contains("Back to marketplace").should("have.attr", "href", "/");
+            cy.get(".RuntimeErrorState__technicalMessage").should("not.exist");
+            cy.contains("button", "Reset browser settings").should("not.exist");
+            screenshotStep(`safe-recovery-${width}`, "viewport");
+
+            cy.contains("Technical details").click();
+            cy.get(".RuntimeErrorState__technicalMessage")
+                .should("be.visible")
+                .and("contain.text", "Chunk details for diagnosis");
+            cy.contains("Advanced recovery").click();
+            cy.contains("button", "Reset browser settings").click();
+            cy.contains("Reset saved browser settings?").should("be.visible");
+            cy.contains("button", "Keep my settings").click();
+            cy.window().then((win) => {
+                expect(win.localStorage.getItem("saved-cart")).to.equal("keep-me");
+            });
+        });
     });
 });

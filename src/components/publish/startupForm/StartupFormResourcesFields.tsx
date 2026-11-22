@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Form, Input, InputNumber, Select } from "antd";
+import { Flex, Form, InputNumber, Select } from "antd";
 
 import { currencyOptions } from "../constants";
 
@@ -42,7 +42,7 @@ export const StartupFormResourcesFields: React.FunctionComponent = () => {
                 />
             </Form.Item>
             <Form.Item label="Funds Needed" className="Publish__startupFundsField">
-                <Input.Group compact>
+                <Flex gap={8} className="Publish__amountFields">
                     <Form.Item name="fundsNeededAmount" noStyle>
                         <InputNumber placeholder="Amount" className="Publish__amountInput" />
                     </Form.Item>
@@ -50,11 +50,12 @@ export const StartupFormResourcesFields: React.FunctionComponent = () => {
                         <Select
                             placeholder="Currency"
                             options={currencyOptions}
+                            optionLabelProp="value"
                             className="Publish__currencySelect"
                             allowClear
                         />
                     </Form.Item>
-                </Input.Group>
+                </Flex>
             </Form.Item>
         </>
     );

@@ -1,13 +1,9 @@
 .SyndicateModal {
     .ant-modal-content {
         overflow: hidden;
-        border: 1px solid rgba(90, 166, 255, 0.18);
-        background:
-            radial-gradient(circle at top left, rgba(90, 166, 255, 0.14), transparent 32%),
-            linear-gradient(180deg, rgba(7, 21, 36, 0.98), rgba(4, 15, 27, 0.98));
-        box-shadow:
-            0 28px 72px rgba(0, 0, 0, 0.36),
-            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--market-link);
+        background: var(--market-surface);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
     }
 
     .ant-modal-header {
@@ -16,7 +12,7 @@
     }
 
     .ant-modal-title {
-        color: #eef8f3;
+        color: var(--market-text);
     }
 
     .ant-modal-body {
@@ -30,25 +26,25 @@
 
 .SyndicateModal__eyebrow {
     width: fit-content;
-    font-weight: 800;
-    letter-spacing: 0.14em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
 .SyndicateModal__title {
     margin: 0 !important;
-    color: #eef8f3 !important;
+    color: var(--market-text) !important;
 }
 
 .SyndicateModal__description {
     margin-bottom: 0 !important;
-    color: rgba(188, 217, 203, 0.82);
+    color: var(--market-muted);
     line-height: 1.7;
 }
 
 .SyndicateModal__pageCard {
     border: 1px solid rgba(147, 214, 255, 0.12);
-    background: rgba(6, 18, 29, 0.86);
+    background: var(--market-surface);
 
     .ant-card-body {
         padding: 24px;
@@ -66,7 +62,7 @@
 .SyndicateModal__highlight {
     padding-inline: 0 !important;
     border-bottom: 0 !important;
-    color: #eef8f3;
+    color: var(--market-text);
 }
 
 .SyndicateModal__commandBlock {
@@ -81,9 +77,9 @@
     display: block;
     width: 100%;
     padding: 10px 12px;
-    border-radius: 12px;
-    background: rgba(3, 13, 23, 0.78);
-    color: #eef8f3;
+    border-radius: 8px;
+    background: var(--market-surface);
+    color: var(--market-text);
     white-space: normal;
     word-break: break-word;
 }
@@ -92,7 +88,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-weight: 700;
+    font-weight: 600;
     color: #7fd7ff;
 }
 
@@ -119,12 +115,12 @@
 }
 
 .SyndicateModal__pageMeta {
-    color: rgba(188, 217, 203, 0.78);
+    color: var(--market-muted);
 }
 
 .SyndicateModal__browserButton.ant-btn {
     min-width: 180px;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .SyndicationList__resetBtn.ant-btn {

@@ -7,11 +7,12 @@ import { AntProvider } from "../../src/components/AntProvider";
 import { ProductCarousel } from "../../src/components/cards/ProductCarousel";
 import { combineUniqueById } from "../../src/components/detail/utils";
 
-import { screenshotStep } from "../support/component-tests/utils";
+import { screenshotStep } from "../support/component-tests/directBasic";
 
 type CarouselItem = {
     id: string;
     name: string;
+    serverURL?: string;
 };
 
 const buildItem = (id: string, name: string): CarouselItem => ({
@@ -60,6 +61,21 @@ const assertCarouselArrowCentered = () => {
 };
 
 describe("ProductCarousel", () => {
+    it("keeps short recommendations finite and excludes only the current backend's product", () => {
+        cy.viewport(1440, 900);
+        const current = { id: "same-id", name: "Current product", serverURL: "https://first.example" };
+        const otherBackend = { ...current, name: "Other backend product", serverURL: "https://second.example" };
+        const recommendation = buildItem("recommendation", "Recommended product");
+        const items = combineUniqueById([current, recommendation], [recommendation, otherBackend], 5, current);
+
+        expect(items).to.deep.equal([recommendation, otherBackend]);
+        mount(<CarouselHarness items={items} />);
+        cy.get(".ProductCarouselHarness__itemTitle").should("have.length", 2);
+        cy.get(".slick-cloned").should("not.exist");
+        cy.get(".slick-arrow").should("not.exist");
+        screenshotStep("short-related-products");
+    });
+
     it("shows all six products when the detail data already has six", () => {
         cy.viewport(1200, 1200);
         mount(
@@ -75,7 +91,7 @@ describe("ProductCarousel", () => {
             />,
         );
 
-        cy.get("body").should("have.css", "background-color", "rgb(3, 13, 23)");
+        cy.get("body").should("have.css", "background-color", "rgb(21, 23, 25)");
         cy.get(".ProductCarouselHarness__itemTitle").should(($titles) => {
             const renderedTitles = Array.from($titles, (title) => title.textContent?.trim() || "");
             expect(new Set(renderedTitles).size).to.equal(6);

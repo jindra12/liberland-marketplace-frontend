@@ -10,258 +10,145 @@ import { IdentityCard } from "../cards/IdentityCard";
 import { JobCard } from "../cards/JobCard";
 import { ProductServiceCard } from "../cards/ProductServiceCard";
 import { StartupCard } from "../cards/StartupCard";
-import { useEndpointContext } from "../EndpointContext";
-import {
-    useListIdentitiesQuery,
-    useListCompaniesQuery,
-    useListJobsQuery,
-    useListProductsQuery,
-    useListStartupsQuery,
-    useListPostsQuery,
-} from "../hooks";
-import { PostList } from "../lists/PostList";
+import { PostListInternal } from "../lists/PostListInternal";
 import { SlicePostList } from "../lists/SlicePostList";
 import { AnimatedIn } from "../shared/AnimatedIn/AnimatedIn";
 
-import { MARKET_ACCORDION_POSTS_QUERY_LIMIT, MARKET_ACCORDION_POSTS_REST_OFFSET, MARKET_ACCORDION_POST_SLICES } from "./constants";
+import { MARKET_ACCORDION_POST_SLICES } from "./constants";
 import { SyndicationSection } from "./SyndicationSection";
+import type { MarketSection } from "./types";
+import { useMarketAccordion } from "./useMarketAccordion";
 import { isMarketAccordionSectionEnabled } from "./utils";
 
 export const MarketAccordion: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
-    const companiesQuery = useListCompaniesQuery({
-        page: 1,
-        limit: 7,
-    });
-    const jobsQuery = useListJobsQuery({
-        page: 1,
-        limit: 7,
-    });
-    const productsQuery = useListProductsQuery({
-        page: 1,
-        limit: 7,
-    });
-    const startupsQuery = useListStartupsQuery({
-        page: 1,
-        limit: 7,
-    });
-    const identitiesQuery = useListIdentitiesQuery({
-        page: 1,
-        limit: 7,
-    });
-    const postsQuery = useListPostsQuery({
-        page: 1,
-        limit: MARKET_ACCORDION_POSTS_QUERY_LIMIT,
-    });
-    const { urls } = useEndpointContext();
-    const postItems = postsQuery.data?.Posts?.docs || [];
-
-    const items = [
-        {
-            key: "posts-top",
-            title: "Posts",
-            route: routes.posts.route,
-            titleClassName: "MarketAccordion__titleLink--posts",
-            body: (
-                <SlicePostList
-                    items={postItems}
-                    offset={MARKET_ACCORDION_POST_SLICES[0].offset}
-                    limit={MARKET_ACCORDION_POST_SLICES[0].limit}
-                    loading={postsQuery.isLoading}
-                    className="MarketAccordion__postSection--top"
-                />
-            ),
-            enabled: isMarketAccordionSectionEnabled(postsQuery, postItems.length, 1),
-        },
+    const model = useMarketAccordion();
+    const sections = [
         {
             key: "products",
             title: "Products",
             route: routes.productsServices.route,
-            titleClassName: "MarketAccordion__titleLink--products",
             body: (
                 <ProductServiceCard
-                    items={productsQuery.data?.Products?.docs || []}
-                    loading={productsQuery.isLoading}
+                    items={model.products.data?.Products?.docs || []}
+                    loading={model.products.isLoading}
                 />
             ),
+            enabled: isMarketAccordionSectionEnabled(model.products, model.products.data?.Products?.docs?.length ?? 0),
+        },
+        {
+            key: "companies",
+            title: "Companies",
+            route: routes.companies.route,
+            body: (
+                <CompanyCard items={model.companies.data?.Companies?.docs || []} loading={model.companies.isLoading} />
+            ),
             enabled: isMarketAccordionSectionEnabled(
-                productsQuery,
-                productsQuery.data?.Products?.docs?.length ?? 0,
+                model.companies,
+                model.companies.data?.Companies?.docs?.length ?? 0,
             ),
         },
         {
             key: "jobs",
             title: "Jobs",
             route: routes.jobs.route,
-            titleClassName: "MarketAccordion__titleLink--jobs",
-            body: <JobCard items={jobsQuery.data?.Jobs?.docs || []} loading={jobsQuery.isLoading} />,
-            enabled: isMarketAccordionSectionEnabled(jobsQuery, jobsQuery.data?.Jobs?.docs?.length ?? 0),
-        },
-        {
-            key: "posts-first-middle",
-            title: "Posts",
-            route: routes.posts.route,
-            titleClassName: "MarketAccordion__titleLink--posts",
-            body: (
-                <SlicePostList
-                    items={postItems}
-                    offset={MARKET_ACCORDION_POST_SLICES[1].offset}
-                    limit={MARKET_ACCORDION_POST_SLICES[1].limit}
-                    loading={postsQuery.isLoading}
-                    className="MarketAccordion__postSection--firstMiddle"
-                />
-            ),
-            enabled: isMarketAccordionSectionEnabled(
-                postsQuery,
-                postItems.length,
-                MARKET_ACCORDION_POST_SLICES[1].offset + 1,
-            ),
-        },
-        {
-            key: "companies",
-            title: "Companies",
-            route: routes.companies.route,
-            titleClassName: "MarketAccordion__titleLink--companies",
-            body: (
-                <CompanyCard
-                    items={companiesQuery.data?.Companies?.docs || []}
-                    loading={companiesQuery.isLoading}
-                />
-            ),
-            enabled: isMarketAccordionSectionEnabled(
-                companiesQuery,
-                companiesQuery.data?.Companies?.docs?.length ?? 0,
-            ),
-        },
-        {
-            key: "posts-second-middle",
-            title: "Posts",
-            route: routes.posts.route,
-            titleClassName: "MarketAccordion__titleLink--posts",
-            body: (
-                <SlicePostList
-                    items={postItems}
-                    offset={MARKET_ACCORDION_POST_SLICES[2].offset}
-                    limit={MARKET_ACCORDION_POST_SLICES[2].limit}
-                    loading={postsQuery.isLoading}
-                    className="MarketAccordion__postSection--secondMiddle"
-                />
-            ),
-            enabled: isMarketAccordionSectionEnabled(
-                postsQuery,
-                postItems.length,
-                MARKET_ACCORDION_POST_SLICES[2].offset + 1,
-            ),
+            body: <JobCard items={model.jobs.data?.Jobs?.docs || []} loading={model.jobs.isLoading} />,
+            enabled: isMarketAccordionSectionEnabled(model.jobs, model.jobs.data?.Jobs?.docs?.length ?? 0),
         },
         {
             key: "ventures",
             title: "Ventures",
             route: routes.ventures.route,
-            titleClassName: "MarketAccordion__titleLink--ventures",
-            body: (
-                <StartupCard
-                    items={startupsQuery.data?.Startups?.docs || []}
-                    loading={startupsQuery.isLoading}
-                />
-            ),
-            enabled: isMarketAccordionSectionEnabled(
-                startupsQuery,
-                startupsQuery.data?.Startups?.docs?.length ?? 0,
-            ),
+            body: <StartupCard items={model.ventures.data?.Startups?.docs || []} loading={model.ventures.isLoading} />,
+            enabled: isMarketAccordionSectionEnabled(model.ventures, model.ventures.data?.Startups?.docs?.length ?? 0),
         },
         {
             key: "tribes",
             title: "Tribes",
             route: routes.tribes.route,
-            titleClassName: "MarketAccordion__titleLink--tribes",
-            body: (
-                <IdentityCard
-                    items={identitiesQuery.data?.Identities?.docs || []}
-                    loading={identitiesQuery.isLoading}
-                />
-            ),
-            enabled: isMarketAccordionSectionEnabled(
-                identitiesQuery,
-                identitiesQuery.data?.Identities?.docs?.length ?? 0,
-            ),
-        },
-        {
-            key: "posts-third-middle",
-            title: "Posts",
-            route: routes.posts.route,
-            titleClassName: "MarketAccordion__titleLink--posts",
-            body: (
-                <SlicePostList
-                    items={postItems}
-                    offset={MARKET_ACCORDION_POST_SLICES[3].offset}
-                    limit={MARKET_ACCORDION_POST_SLICES[3].limit}
-                    loading={postsQuery.isLoading}
-                    className="MarketAccordion__postSection--thirdMiddle"
-                />
-            ),
-            enabled: isMarketAccordionSectionEnabled(
-                postsQuery,
-                postItems.length,
-                MARKET_ACCORDION_POST_SLICES[3].offset + 1,
-            ),
+            body: <IdentityCard items={model.tribes.data?.Identities?.docs || []} loading={model.tribes.isLoading} />,
+            enabled: isMarketAccordionSectionEnabled(model.tribes, model.tribes.data?.Identities?.docs?.length ?? 0),
         },
         {
             key: "syndication",
             title: "Syndication",
             route: routes.syndication.route,
-            titleClassName: "MarketAccordion__titleLink--syndication",
-            body: (
-                <SyndicationSection />
-            ),
-            enabled: urls.length > 1,
+            body: <SyndicationSection />,
+            enabled: model.hasSyndication,
         },
-        {
-            key: "posts-rest",
-            title: "Posts",
-            route: routes.posts.route,
-            titleClassName: "MarketAccordion__titleLink--posts",
-            body: (
-                <PostList
-                    offset={MARKET_ACCORDION_POSTS_REST_OFFSET}
-                    className="MarketAccordion__postSection--rest"
-                    titleHidden
-                />
-            ),
-            enabled: true,
-        },
-    ];
-    const visibleItems = items.filter((item) => item.enabled);
+    ].filter((section) => section.enabled);
 
-    return md ? (
-        <Flex vertical gap="64px" className="MarketAccordion">
+    const postGroups = MARKET_ACCORDION_POST_SLICES.slice(0, Math.max(0, sections.length - 1));
+    const restOffset = postGroups.reduce((offset, group) => offset + group.limit, 0);
+    const items = sections.flatMap<MarketSection>((section, index) => {
+        const group = postGroups[index];
+        if (!group || !isMarketAccordionSectionEnabled(model.posts, model.postItems.length, group.offset + 1)) {
+            return [section];
+        }
+
+        return [
+            section,
+            {
+                key: `posts-${group.key}`,
+                title: "Popular posts",
+                route: routes.posts.route,
+                body: (
+                    <SlicePostList
+                        items={model.postItems}
+                        offset={group.offset}
+                        limit={group.limit}
+                        loading={model.posts.isLoading}
+                        className={group.className}
+                    />
+                ),
+            },
+        ];
+    });
+    const hasMorePosts = Boolean(model.posts.data?.Posts?.hasNextPage);
+    const visibleItems = [
+        ...items,
+        ...(model.postItems.length > restOffset || model.posts.isLoading || hasMorePosts
+            ? [
+                  {
+                      key: "posts-rest",
+                      title: "Popular posts",
+                      route: routes.posts.route,
+                      body: (
+                          <PostListInternal
+                              items={model.postItems.slice(restOffset)}
+                              hasMore={hasMorePosts}
+                              loading={model.posts.isLoading}
+                              next={model.loadMorePosts}
+                              refetch={model.posts.refetch}
+                              titleHidden
+                          />
+                      ),
+                  },
+              ]
+            : []),
+    ];
+    const firstPostKey = visibleItems.find((item) => item.key.startsWith("posts-"))?.key;
+
+    return (
+        <Flex vertical gap={md ? 32 : 24} className={md ? "MarketAccordion" : "MarketAccordionMobile"}>
             {visibleItems.map((item) => (
                 <AnimatedIn key={item.key}>
-                    <section className="MarketAccordion__section">
-                        <Flex vertical gap={24} className="MarketAccordion__header">
-                            <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
+                    <section
+                        className={md ? "MarketAccordion__section" : "MarketAccordionMobile__section"}
+                        data-section={item.key}
+                    >
+                        <Flex
+                            vertical
+                            gap={12}
+                            className={md ? "MarketAccordion__header" : "MarketAccordionMobile__header"}
+                        >
+                            <Link
+                                to={item.route}
+                                className={`MarketAccordion__titleLink MarketAccordion__titleLink--${item.key.startsWith("posts-") ? "posts" : item.key}`}
+                            >
                                 <Typography.Title
                                     level={2}
-                                    className={`MarketAccordion__title${item.title === "Posts" ? " screen-reader-only" : ""}`}
-                                >
-                                    {item.title}
-                                </Typography.Title>
-                            </Link>
-                        </Flex>
-                        {item.body}
-                    </section>
-                </AnimatedIn>
-            ))}
-        </Flex>
-    ) : (
-        <Flex vertical gap="32px" className="MarketAccordionMobile">
-            {visibleItems.map((item) => (
-                <AnimatedIn key={item.key}>
-                    <section className="MarketAccordionMobile__section">
-                        <Flex vertical gap={18} className="MarketAccordionMobile__header">
-                            <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
-                                <Typography.Title
-                                    level={2}
-                                    className={`MarketAccordion__title${item.title === "Posts" ? " screen-reader-only" : ""}`}
+                                    className={`MarketAccordion__title${item.key.startsWith("posts-") && item.key !== firstPostKey ? " screen-reader-only" : ""}`}
                                 >
                                     {item.title}
                                 </Typography.Title>

@@ -3,6 +3,7 @@
 @import "@uiw/react-md-editor/markdown-editor.css";
 @import "@uiw/react-markdown-preview/markdown.css";
 @import "./styles/queries";
+@import "./styles/theme";
 @import "./styles/buttons";
 @import "./styles/utilities";
 @import "./styles/header";
@@ -31,13 +32,13 @@
 @import "./styles/errors";
 @import "./styles/syndicate";
 @import "./styles/disclaimers";
-@import "./styles/VentureContracts";
+@import "./styles/venture-contracts";
 
 body {
     padding: 0;
     margin: 0;
-    background: #030d17;
-    color: #eef8f3;
+    background: var(--market-bg);
+    color: var(--market-text);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -48,6 +49,6 @@ body {
 }
 
 ::selection {
-    background: rgba(90, 166, 255, 0.32);
-    color: #eef8f3;
+    background: var(--market-accent-subtle);
+    color: var(--market-text);
 }

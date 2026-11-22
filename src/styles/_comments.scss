@@ -17,7 +17,7 @@
 .CommentComposer {
     padding: 16px;
     border: 1px solid var(--ant-color-border-secondary);
-    border-radius: 20px;
+    border-radius: 8px;
     background: var(--ant-color-fill-alter);
 
     &__field {
@@ -33,7 +33,7 @@
     width: 100%;
     padding: 16px;
     border: 1px solid var(--ant-color-border-secondary);
-    border-radius: 20px;
+    border-radius: 8px;
     background: var(--ant-color-bg-elevated);
 }
 
@@ -56,7 +56,7 @@
 }
 
 .CommentCard__author {
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .CommentCard__timestamp {
@@ -136,7 +136,7 @@
 .CommentRepliesList__title {
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
 }
 
 .CommentRepliesList__items {
