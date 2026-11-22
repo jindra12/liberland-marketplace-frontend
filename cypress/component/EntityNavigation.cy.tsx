@@ -120,21 +120,67 @@ describe("source-qualified entity links and tribe affiliation", () => {
             cy.viewport(width, 1200);
             mountWithProviders(
                 <Flex vertical gap={24}>
-                    <CompanyCard items={[companies[0]]} />
-                    <JobCard items={[jobs[0]]} />
-                    <ProductServiceCard items={[products[0]]} />
+                    <CompanyCard
+                        items={[
+                            companies[0],
+                            {
+                                ...companies[0],
+                                id: "company-long",
+                                name: "Harbor Labs shipping, design and development collective",
+                                description: companies[0].description!.repeat(8),
+                            },
+                            { ...companies[0], id: "company-no-tribe", identity: null },
+                        ]}
+                    />
+                    <JobCard
+                        items={[
+                            jobs[0],
+                            {
+                                ...jobs[0],
+                                id: "job-long",
+                                title: "Senior shipping and fulfilment operations coordinator",
+                                description: jobs[0].description!.repeat(8),
+                            },
+                            { ...jobs[0], id: "job-no-tribe", company: { ...companies[0], identity: null } },
+                        ]}
+                    />
+                    <ProductServiceCard
+                        items={[
+                            products[0],
+                            {
+                                ...products[0],
+                                id: "product-long",
+                                name: "Solar Widget professional shipping and fulfilment bundle",
+                                description: products[0].description!.repeat(8),
+                            },
+                            { ...products[0], id: "product-no-tribe", company: { ...companies[0], identity: null } },
+                        ]}
+                    />
                 </Flex>,
             );
             cy.get(".EntityDescription")
-                .should("have.length", 3)
+                .should("have.length", 9)
                 .each(($description) => {
                     const markdown = $description.find(".Markdown")[0].getBoundingClientRect();
-                    const tribe = $description.find(".EntityDescription__tribe")[0].getBoundingClientRect();
-                    expect(tribe.top).to.be.at.least(markdown.bottom);
-                    expect($description.find("a").attr("href")).to.equal(
-                        detailRoute("/tribes", companies[0].identity!.id),
-                    );
+                    const card = $description.closest(".SplashEntityCard__itemCard")[0].getBoundingClientRect();
+                    expect(markdown.bottom).to.be.at.most(card.bottom);
+                    const tribe = $description.find(".EntityDescription__tribe")[0];
+                    if (tribe) {
+                        expect(tribe.getBoundingClientRect().top).to.be.at.least(markdown.bottom);
+                        expect(tribe.getBoundingClientRect().bottom).to.be.at.most(card.bottom);
+                        expect($description.find("a").attr("href")).to.equal(
+                            detailRoute("/tribes", companies[0].identity!.id),
+                        );
+                    }
+                    $description
+                        .closest(".SplashEntityCard__itemCard")
+                        .find(".SplashEntityCard__actions .ant-btn")
+                        .each((_index, button) => {
+                            expect(button.getBoundingClientRect().bottom).to.be.at.most(card.bottom);
+                        });
                 });
+            cy.get(".EntityDescription__tribe").should("have.length", 6);
+            cy.contains("Not specified").should("not.exist");
             screenshotStep(`entity-cards-tribes-${width}`);
         });
     });
@@ -180,7 +226,7 @@ describe("source-qualified entity links and tribe affiliation", () => {
         );
         cy.get(".EntityDescription")
             .first()
-            .should("contain.text", "Not specified")
+            .should("not.contain.text", "Tribe:")
             .and("not.contain.text", companies[3].allowedIdentities![0].name!);
         cy.get(".EntityDescription").last().should("contain.text", "Known tribe");
         cy.get(".EntityDescription a").should("not.exist");

@@ -22,18 +22,16 @@ export const EntityDescription: React.FunctionComponent<EntityDescriptionProps> 
                 {props.description}
             </Markdown>
         )}
-        <Flex align="center" wrap gap={8} className="EntityDescription__tribe">
-            <Typography.Text type="secondary">Tribe:</Typography.Text>
-            {props.identity?.name ? (
+        {props.identity?.name && (
+            <Flex align="center" wrap gap={8} className="EntityDescription__tribe">
+                <Typography.Text type="secondary">Tribe:</Typography.Text>
                 <IdentityTagLink
                     identity={props.identity}
                     serverURL={props.serverURL}
                     icon={<UsergroupAddOutlined />}
                     color="success"
                 />
-            ) : (
-                <Typography.Text type="secondary">Not specified</Typography.Text>
-            )}
-        </Flex>
+            </Flex>
+        )}
     </Flex>
 );

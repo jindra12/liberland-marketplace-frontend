@@ -122,8 +122,17 @@
     width: 100%;
     padding-inline: 28px;
 
+    .slick-track {
+        display: flex;
+        align-items: stretch;
+    }
+
     .slick-slide {
         height: auto;
+
+        > div {
+            height: 100%;
+        }
     }
 
     .slick-prev,
@@ -144,7 +153,8 @@
 }
 
 .SplashEntityCard__carouselSlide {
-    height: 230px;
+    min-height: 230px;
+    height: 100%;
     padding-inline: 6px;
 }
 
