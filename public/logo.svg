@@ -2,9 +2,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
   <defs>
     <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(256 200) rotate(90) scale(320 320)">
-      <stop offset="0" stop-color="#00A7D8"/>
-      <stop offset="0.55" stop-color="#0066B8"/>
-      <stop offset="1" stop-color="#02162F"/>
+      <stop offset="0" stop-color="#78B4A2"/>
+      <stop offset="0.55" stop-color="#477968"/>
+      <stop offset="1" stop-color="#10231B"/>
     </radialGradient>
     <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.25"/>

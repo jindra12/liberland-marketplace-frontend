@@ -115,6 +115,9 @@
         "zod": "4.6.7"
     },
     "scripts": {
+        "assets:brand": "tsx scripts/generate-brand-icons.ts",
+        "test:ct:homepage-feed": "yarn cypress:run --component --browser chrome --spec cypress/component/HomepageFeed.cy.tsx",
+        "test:ct:homepage-feed:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/HomepageFeed.cy.tsx",
         "dev": "next dev --webpack",
         "build": "next build --webpack",
         "start": "next start",
@@ -374,10 +377,12 @@
         "node-mocks-http": "1.18.1",
         "openapi-types": "^12.1.3",
         "patch-package": "^8.0.0",
+        "png-to-ico": "3.0.2",
         "prettier": "^3.8.1",
         "react-app-rewired": "^2.2.1",
         "react-scripts": "5.0.1",
         "schema-dts": "^2.1.0",
+        "sharp": "0.35.5",
         "stream-browserify": "^3.0.0",
         "tsx": "^4.21.0",
         "typescript": "^5.8.3",

@@ -53,9 +53,11 @@ describe("marketplace visual hierarchy", () => {
                 expect($header[0].getBoundingClientRect().height).to.be.at.most(70);
             });
             cy.get(".AppHeader__logo").should("have.css", "width", "30px");
-            cy.get(".SplashEntityCard__inlineActions .ant-btn").first().should(($button) => {
-                expect($button[0].getBoundingClientRect().width).to.be.lessThan(140);
-            });
+            cy.get(".SplashEntityCard__inlineActions .ant-btn")
+                .first()
+                .should(($button) => {
+                    expect($button[0].getBoundingClientRect().width).to.be.lessThan(140);
+                });
             cy.contains("button", "Search marketplace")
                 .focus()
                 .should("have.css", "outline-style", "solid")
@@ -63,6 +65,23 @@ describe("marketplace visual hierarchy", () => {
                 .blur();
             cy.get(".SplashPage__heroTitle").should("have.css", "text-shadow", "none");
             cy.get(".MarketAccordion__title").first().should("have.text", "Products");
+            cy.get('[data-section="posts-top"] .ant-list-item').should("have.length", 3);
+            cy.get(".MarketAccordion, .MarketAccordionMobile")
+                .children()
+                .should(($sections) => {
+                    const order = $sections
+                        .toArray()
+                        .map((section) => section.querySelector("[data-section]")?.getAttribute("data-section"));
+                    expect(order.slice(0, 7)).to.deep.equal([
+                        "products",
+                        "posts-top",
+                        "companies",
+                        "posts-firstMiddle",
+                        "jobs",
+                        "posts-secondMiddle",
+                        "ventures",
+                    ]);
+                });
             cy.document().then(async (doc) => {
                 await doc.fonts.ready;
                 expect(doc.documentElement.scrollWidth).to.be.at.most(doc.documentElement.clientWidth);
