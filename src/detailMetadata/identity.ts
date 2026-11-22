@@ -12,12 +12,7 @@ import {
     fetchListStartupsByIdentity,
 } from "../server/queries";
 
-import {
-    buildAbsoluteImageUrl,
-    buildActionSentence,
-    buildStandardDetailMetadata,
-    normalizeWhitespace,
-} from "./shared";
+import { buildAbsoluteImageUrl, buildActionSentence, buildStandardDetailMetadata, normalizeWhitespace } from "./shared";
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
 import { SITE_URL } from "../siteUrl";
 import { TRIBE_ENTITIES } from "../tribeSearch/constants";
@@ -32,35 +27,33 @@ type IdentityRelatedMetadata = {
     startups: ListStartupsByIdentityQuery["Startups"];
 };
 
-const buildIdentityRelatedItems = (
-    related?: IdentityRelatedMetadata,
-) => {
+const buildIdentityRelatedItems = (serverUrl: string, related?: IdentityRelatedMetadata) => {
     const companyItems = buildItemListJsonLd(
         "Companies",
         (related?.companies?.docs || []).map((company) => ({
             label: company.name ?? "Company",
-            url: buildDetailUrl("/companies", company.id, company.serverURL),
+            url: buildDetailUrl("/companies", company.id, company.serverURL || serverUrl),
         })),
     );
     const jobItems = buildItemListJsonLd(
         "Jobs",
         (related?.jobs?.docs || []).map((job) => ({
             label: job.title ?? "Job",
-            url: buildDetailUrl("/jobs", job.id, job.serverURL),
+            url: buildDetailUrl("/jobs", job.id, job.serverURL || serverUrl),
         })),
     );
     const productItems = buildItemListJsonLd(
         "Products and services",
         (related?.products?.docs || []).map((product) => ({
             label: product.name ?? "Product",
-            url: buildDetailUrl("/products-services", product.id, product.serverURL),
+            url: buildDetailUrl("/products-services", product.id, product.serverURL || serverUrl),
         })),
     );
     const startupItems = buildItemListJsonLd(
         "Ventures",
         (related?.startups?.docs || []).map((startup) => ({
             label: startup.title ?? "Venture",
-            url: buildDetailUrl("/ventures", startup.id, startup.serverURL),
+            url: buildDetailUrl("/ventures", startup.id, startup.serverURL || serverUrl),
         })),
     );
 
@@ -104,7 +97,7 @@ export const buildIdentityPageMetadata = (
                 })),
                 potentialAction: tribeSearchActions(),
             },
-            ...buildIdentityRelatedItems(related),
+            ...buildIdentityRelatedItems(sourceServerUrl, related),
         ],
         {
             imageUrl: buildAbsoluteImageUrl(identity.image?.url),

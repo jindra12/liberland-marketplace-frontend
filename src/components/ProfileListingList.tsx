@@ -55,6 +55,7 @@ export const ProfileListingList = <TItem extends ProfileListingItem>(props: Prof
             dataSource={props.items}
             locale={{ emptyText: props.emptyText }}
             renderItem={(item) => {
+                const sourceItem = { ...item, serverURL: props.serverURL || item.serverURL };
                 const canView = item._status !== "draft";
                 const meta = props.renderMeta(item);
                 const title =
@@ -72,19 +73,19 @@ export const ProfileListingList = <TItem extends ProfileListingItem>(props: Prof
                         actions={[
                             <RouteButton
                                 key="edit"
-                                to={props.routePrefix.edit.getLink(item)}
+                                to={props.routePrefix.edit.getLink(sourceItem)}
                                 size="small"
                                 icon={<EditOutlined />}
                             >
                                 Edit
                             </RouteButton>,
                             canView ? (
-                            <RouteButton
-                                key="view"
-                                to={props.routePrefix.detail.getLink(item)}
-                                size="small"
-                                type="link"
-                                icon={<EyeOutlined />}
+                                <RouteButton
+                                    key="view"
+                                    to={props.routePrefix.detail.getLink(sourceItem)}
+                                    size="small"
+                                    type="link"
+                                    icon={<EyeOutlined />}
                                 >
                                     View
                                 </RouteButton>

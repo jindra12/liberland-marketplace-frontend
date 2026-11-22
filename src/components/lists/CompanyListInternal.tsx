@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import { UseQueryResult } from "@tanstack/react-query";
 
-import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Flex } from "antd";
 
 import { Company, ListCompaniesByIdentityQuery, ListCompaniesQuery } from "../../generated/graphql";
@@ -13,11 +12,10 @@ import { useIdentityFilter } from "../../hooks/useIdentityFilter";
 import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { useDislikeCompanyMutation, useLikeCompanyMutation } from "../hooks";
-import { Markdown } from "../Markdown";
 import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 
 export interface CompanyListInternalProps {
@@ -64,13 +62,6 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                 title: (company) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={routes.companies.detail.getLink(company as Company)}>{company.name}</Link>
-                        {company.identity?.name && (
-                            <IdentityTagLink
-                                identity={company.identity}
-                                color="success"
-                                icon={<UsergroupAddOutlined />}
-                            />
-                        )}
                     </Flex>
                 ),
                 actions: (company) => (
@@ -97,7 +88,11 @@ export const CompanyListInternal: React.FunctionComponent<CompanyListInternalPro
                     ) : undefined,
                 body: (company) => (
                     <Flex vertical gap={8} className="EntityList__body CompanyList__body">
-                        <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>
+                        <EntityDescription
+                            description={company.description}
+                            identity={company.identity}
+                            serverURL={company.serverURL}
+                        />
                         {company.website && (
                             <CompanyContactLinks
                                 website={company.website}

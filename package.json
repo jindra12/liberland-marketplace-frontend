@@ -115,6 +115,8 @@
         "zod": "4.6.7"
     },
     "scripts": {
+        "test:ct:entity-navigation": "yarn cypress:run --component --browser chrome --spec cypress/component/EntityNavigation.cy.tsx",
+        "test:ct:entity-navigation:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/EntityNavigation.cy.tsx",
         "assets:brand": "tsx scripts/generate-brand-icons.ts",
         "test:ct:homepage-feed": "yarn cypress:run --component --browser chrome --spec cypress/component/HomepageFeed.cy.tsx",
         "test:ct:homepage-feed:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/HomepageFeed.cy.tsx",

@@ -8,9 +8,8 @@ import { Company, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { routes } from "../../routes";
 import { useListCompaniesQuery, useSearchCompaniesQuery } from "../hooks";
-import { Markdown } from "../Markdown";
 import { CompanyContactLinks } from "../shared/CompanyContactLinks";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import type { RelatedTargetSelection } from "../shared/post/types";
 
@@ -46,13 +45,15 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
     const items =
         submittedSearchValue.length > 0
             ? mapSearchCompanies(searchDocs)
-            : defaultCompanies.data?.Companies?.docs ?? [];
+            : (defaultCompanies.data?.Companies?.docs ?? []);
     const loading =
         submittedSearchValue.length > 0
             ? searchedCompanies.isLoading && searchDocs.length === 0
             : defaultCompanies.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedCompanies.data?.Searches?.hasNextPage) : false;
-    const handleSelect = (company: NonNullable<NonNullable<typeof defaultCompanies.data>["Companies"]>["docs"][number]) => {
+    const handleSelect = (
+        company: NonNullable<NonNullable<typeof defaultCompanies.data>["Companies"]>["docs"][number],
+    ) => {
         props.onSelect?.({
             relationTo: Post_RelatedPosts_RelationTo.Companies,
             value: company.id,
@@ -75,11 +76,7 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
             placeholder="Search companies"
         >
             <SearchResultsList
-                title={
-                    submittedSearchValue.length > 0
-                        ? `Search results for "${submittedSearchValue}"`
-                        : "Companies"
-                }
+                title={submittedSearchValue.length > 0 ? `Search results for "${submittedSearchValue}"` : "Companies"}
                 onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
@@ -96,9 +93,6 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                             <Link to={routes.companies.detail.getLink(company as Company)} onClick={props.onClose}>
                                 {company.name}
                             </Link>
-                            {company.identity?.name && (
-                                <IdentityTagLink identity={company.identity} color="success" />
-                            )}
                         </Flex>
                     ),
                     avatar: (company) =>
@@ -121,7 +115,11 @@ export const CompaniesSearch: React.FunctionComponent<CompaniesSearchProps> = (p
                                 variant="compact"
                                 className="CompanyList__contacts"
                             />
-                            <Markdown className="Markdown--clamp3 EntityList__description">{company.description}</Markdown>
+                            <EntityDescription
+                                description={company.description}
+                                identity={company.identity}
+                                serverURL={company.serverURL}
+                            />
                         </div>
                     ),
                 }}

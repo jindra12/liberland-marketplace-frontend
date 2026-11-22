@@ -9,7 +9,7 @@ import { ListProductsQuery, Product } from "../../generated/graphql";
 import { routes } from "../../routes";
 import { CartItemCount } from "../cart/CartItemCount";
 import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents } from "../shared/product/utils";
 
@@ -72,11 +72,6 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                             />,
                         ]}
                     >
-                        {product.company?.identity && (
-                            <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                <IdentityTagLink identity={product.company.identity} color="success" />
-                            </Space>
-                        )}
                         <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
                             {price && (
                                 <Tag color="gold" icon={<DollarOutlined />}>
@@ -85,6 +80,11 @@ export const ProductServiceCard: React.FunctionComponent<ProductServiceCardProps
                             )}
                             <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                         </Space>
+                        <EntityDescription
+                            description={product.description}
+                            identity={product.company?.identity}
+                            serverURL={product.serverURL}
+                        />
                     </SplashCardItem>
                 );
             }}

@@ -3,12 +3,7 @@ import { formatBounty, formatPositions } from "./job/utils";
 import { IdentityTagItem, JobDerivedInput, JobIdentityDedupeBy } from "../../types";
 
 export const getJobMeta = (job?: JobDerivedInput | null) => {
-    const companyIdentity = job?.company?.identity?.name
-        ? {
-              id: job.company.identity.id,
-              name: job.company.identity.name,
-          }
-        : undefined;
+    const companyIdentity = job?.company?.identity?.name ? job.company.identity : undefined;
 
     return {
         bounty: formatBounty(job?.bounty?.amount, job?.bounty?.currency),

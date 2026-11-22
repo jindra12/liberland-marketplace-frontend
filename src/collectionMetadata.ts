@@ -62,7 +62,7 @@ const definedAttributes = (
 const buildCollectionItems = (
     route: CollectionRoute,
     data: CollectionQueryData,
-    fallbackServerUrl?: string,
+    fallbackServerUrl: string,
 ): SeoCollectionItem[] => {
     switch (route) {
         case "/companies":
@@ -204,7 +204,7 @@ const collectionData = async (route: CollectionRoute, variables: CollectionVaria
 
 export const fetchHomepageProducts = async (): Promise<SeoCollectionItem[]> => {
     const data = await collectionData("/products-services", { page: 1, limit: 3, sort: "-contentRankScore" });
-    return buildCollectionItems("/products-services", data, process.env.REACT_APP_BACKEND_URL);
+    return buildCollectionItems("/products-services", data, process.env.REACT_APP_BACKEND_URL!);
 };
 
 export const fetchCollectionPageMetadata = async (
@@ -240,7 +240,7 @@ export const fetchCollectionPageMetadata = async (
     })();
     const seo = SEO_BY_ROUTE[route];
     const pageData: SeoCollectionPageData = {
-        items: buildCollectionItems(route, data, process.env.REACT_APP_BACKEND_URL),
+        items: buildCollectionItems(route, data, process.env.REACT_APP_BACKEND_URL!),
         page,
         totalItems: result?.totalDocs ?? 0,
         totalPages: result?.totalPages ?? page,
@@ -270,7 +270,7 @@ export const fetchCollectionPageMetadata = async (
                               url: buildDetailUrl(
                                   "/tribes",
                                   item.identity.id,
-                                  item.identity.serverURL || process.env.REACT_APP_BACKEND_URL,
+                                  item.identity.serverURL || getMetadataServerUrl(item.url),
                               ),
                           },
                       }

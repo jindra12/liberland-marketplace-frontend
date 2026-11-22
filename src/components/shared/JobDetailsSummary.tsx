@@ -19,8 +19,7 @@ import { routes } from "../../routes";
 import { timeAgo } from "./job/utils";
 
 type JobDetailsSummaryProps = {
-    companyName?: string | null;
-    companyId?: string | null;
+    company?: Pick<Company, "id" | "name" | "serverURL"> | null;
     location?: string | null;
     employmentType?: string | null;
     salary?: string | null;
@@ -34,25 +33,21 @@ type JobDetailsSummaryProps = {
 export const JobDetailsSummary: React.FunctionComponent<JobDetailsSummaryProps> = (props) => {
     const showCompanyIcon = props.showCompanyIcon === undefined ? false : props.showCompanyIcon;
     const metaSize: React.ComponentProps<typeof Space>["size"] = props.metaSize ?? [12, 8];
-    const companyLink = props.companyId
-        ? routes.companies.detail.getLink(
-              {
-                  id: props.companyId,
-                  name: props.companyName,
-              } as Company,
-          )
-        : "";
     return (
         <Flex vertical gap={4}>
             <Space size={metaSize} wrap>
-                {props.companyName && (
+                {props.company?.name && (
                     <Typography.Text strong>
                         {showCompanyIcon && (
                             <>
                                 <HomeFilled />{" "}
                             </>
                         )}
-                        {props.companyId ? <Link to={companyLink}>{props.companyName}</Link> : props.companyName}
+                        {props.company.serverURL ? (
+                            <Link to={routes.companies.detail.getLink(props.company)}>{props.company.name}</Link>
+                        ) : (
+                            props.company.name
+                        )}
                     </Typography.Text>
                 )}
                 {props.location && (

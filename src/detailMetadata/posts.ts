@@ -11,14 +11,13 @@ import {
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
 import { buildCompanyReference, getMetadataServerUrl } from "./utils";
 
-export const buildPostPageMetadata = (
-    post: NonNullable<PostByIdQuery["Post"]>,
-    canonicalPath: string,
-) => {
+export const buildPostPageMetadata = (post: NonNullable<PostByIdQuery["Post"]>, canonicalPath: string) => {
     const detailLabel = post.meta?.title ?? post.title ?? "Post detail";
     const baseDescription =
         post.meta?.description ??
-        (post.content ? buildExcerpt(post.content, 180) : `Detail page for ${post.company?.name ?? "a published post"}.`);
+        (post.content
+            ? buildExcerpt(post.content, 180)
+            : `Detail page for ${post.company?.name ?? "a published post"}.`);
     const description = normalizeWhitespace(
         `${baseDescription} ${buildActionSentence([
             "read the full post",
@@ -82,7 +81,11 @@ export const buildPostPageMetadata = (
                     ? [
                           {
                               label: post.company.name,
-                              url: buildDetailUrl("/companies", post.company.id, post.company.serverURL),
+                              url: buildDetailUrl(
+                                  "/companies",
+                                  post.company.id,
+                                  post.company.serverURL || getMetadataServerUrl(canonicalPath),
+                              ),
                           },
                       ]
                     : [],

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useParams } from "react-router-dom";
 
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { Avatar, Flex, Grid, Space, Typography } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo, Company } from "../../generated/graphql";
@@ -15,7 +15,6 @@ import { CompanyProductsServicesList } from "../lists/CompanyProductsServicesLis
 import { CompanyStartupsList } from "../lists/CompanyStartupsList";
 import { Loader } from "../Loader";
 import { RouteButton } from "../RouteButton";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
 import { getImage } from "../shared/image/utils";
 
 import { CommonDetail } from "./CommonDetail";
@@ -42,12 +41,6 @@ const CompanyDetail: React.FunctionComponent = () => {
             {(data) => {
                 const companyData = data.Company;
                 const imageSrc = getImage(companyData);
-                const companyIdentity = companyData?.identity?.name
-                    ? {
-                          id: companyData.identity.id,
-                          name: companyData.identity.name,
-                      }
-                    : undefined;
                 const avatarSize = md ? 120 : 72;
                 const shareTitle = companyData?.name ?? "Company";
                 const shareText = `Check out ${shareTitle} on NSwap.`;
@@ -87,15 +80,8 @@ const CompanyDetail: React.FunctionComponent = () => {
                                                 {companyData?.name}
                                             </Typography.Title>
                                         </div>
-                                        {(companyIdentity || companyData?.verification) && (
+                                        {companyData?.verification && (
                                             <Flex gap={8} wrap align="center" className="CompanyDetail__identityRow">
-                                                {companyIdentity && (
-                                                    <IdentityTagLink
-                                                        identity={companyIdentity}
-                                                        color="success"
-                                                        icon={<UsergroupAddOutlined />}
-                                                    />
-                                                )}
                                                 <CompanyVerificationTag verification={companyData?.verification} />
                                             </Flex>
                                         )}

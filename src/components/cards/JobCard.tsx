@@ -2,13 +2,12 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Space, Tag } from "antd";
 
 import { Job, ListJobsQuery } from "../../generated/graphql";
 import { routes } from "../../routes";
 import { useDislikeJobMutation, useLikeJobMutation } from "../hooks";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import { formatEmploymentType, formatSalary } from "../shared/job/utils";
 
@@ -70,19 +69,15 @@ export const JobCard: React.FunctionComponent<JobCardProps> = (props) => {
                             />,
                         ]}
                     >
-                        {job.company?.identity && (
-                            <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                                <IdentityTagLink
-                                    identity={job.company.identity}
-                                    color="success"
-                                    icon={<UsergroupAddOutlined />}
-                                />
-                            </Space>
-                        )}
                         <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
                             {employmentType && <Tag>{employmentType}</Tag>}
                             {salary && <Tag color="gold">{salary}</Tag>}
                         </Space>
+                        <EntityDescription
+                            description={job.description}
+                            identity={job.company?.identity}
+                            serverURL={job.serverURL}
+                        />
                     </SplashCardItem>
                 );
             }}

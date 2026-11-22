@@ -13,10 +13,9 @@ import { routes } from "../../routes";
 import { AppList } from "../AppList";
 import { ApplyButton } from "../ApplyButton";
 import { useDislikeJobMutation, useLikeJobMutation } from "../hooks";
-import { Markdown } from "../Markdown";
 import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import { formatEmploymentType, formatSalary } from "../shared/job/utils";
 import { getJobMeta } from "../shared/jobDerived";
@@ -69,15 +68,12 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                 title: (job) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={routes.jobs.detail.getLink(job as Job)}>{job.title}</Link>
-                        {job.company?.identity?.name && (
-                            <IdentityTagLink identity={job.company.identity} color="success" />
-                        )}
                     </Flex>
                 ),
                 avatar: (job) => {
                     const imageSrc = getImage(job) || getImage(job.company);
                     return imageSrc ? (
-                            <Link to={routes.jobs.detail.getLink(job as Job)}>
+                        <Link to={routes.jobs.detail.getLink(job as Job)}>
                             <Avatar
                                 shape="square"
                                 size={80}
@@ -98,8 +94,7 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                     return (
                         <div className="EntityList__body JobList__body">
                             <JobDetailsSummary
-                                companyName={job.company?.name}
-                                companyId={job.company?.id}
+                                company={job.company}
                                 location={job.location}
                                 employmentType={employmentType}
                                 salary={salary}
@@ -110,7 +105,11 @@ export const JobListInternal: React.FunctionComponent<JobListInternalProps> = (p
                                 showCompanyIcon
                                 metaSize={[8, 4]}
                             />
-                            <Markdown className="Markdown--clamp3 EntityList__description">{job.description}</Markdown>
+                            <EntityDescription
+                                description={job.description}
+                                identity={job.company?.identity}
+                                serverURL={job.serverURL}
+                            />
                         </div>
                     );
                 },

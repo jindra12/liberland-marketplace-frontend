@@ -4,6 +4,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { mock } from "node:test";
 import type { CompanyByIdQuery, JobByIdQuery, ProductByIdQuery } from "../../src/generated/graphql";
 import type { JsonLdResponse } from "../../src/server/jsonLd/types";
+import { collection } from "./graphqlMock/fixtures/shared";
 
 const serverUrl = "https://metadata.example";
 const encoded = Buffer.from(serverUrl).toString("hex");
@@ -65,6 +66,8 @@ export const jsonLdChecks = {
         const { buildJobPageMetadata } = await import("../../src/detailMetadata/jobs");
         const { buildProductPageMetadata } = await import("../../src/detailMetadata/products");
         const { buildIdentityPageMetadata } = await import("../../src/detailMetadata/identity");
+        const { buildPostPageMetadata } = await import("../../src/detailMetadata/posts");
+        const { buildStartupPageMetadata } = await import("../../src/detailMetadata/ventures");
         const { buildCompanyReference, buildTribeReference, buildProductOffers } = await import("../../src/detailMetadata/utils");
         const { SITE_URL } = await import("../../src/siteUrl");
         const companyPath = `/companies/${company.id}/${encoded}`;
@@ -95,6 +98,23 @@ export const jsonLdChecks = {
         const foreign = buildCompanyReference({ ...company, serverURL: "https://other.example", identity: { ...tribe, serverURL: "https://tribe-backend.example" } }, serverUrl);
         assert.notEqual(foreign["@id"], organization["@id"]);
         assert.match(JSON.stringify(foreign.memberOf), new RegExp(Buffer.from("https://tribe-backend.example").toString("hex")));
+        const relatedTribe = buildIdentityPageMetadata(tribe, tribePath, {
+            serverUrl,
+            companies: collection([company]),
+            jobs: collection([job]),
+            products: collection([product]),
+            startups: collection([{ id: "venture-id", title: "Coffee venture" }]),
+        });
+        const postMetadata = buildPostPageMetadata({ id: "post-id", title: "Coffee news", company }, `/posts/post-id/${encoded}`);
+        const ventureMetadata = buildStartupPageMetadata({ id: "venture-id", title: "Coffee venture", company, identity: tribe }, `/ventures/venture-id/${encoded}`);
+        [relatedTribe, postMetadata, ventureMetadata].forEach((metadata) => {
+            const lists = metadata.jsonLd.filter((node) => node["@type"] === "ItemList");
+            assert(lists.length > 0);
+            lists.forEach((list) => {
+                const entries = list.itemListElement as Array<{ url: string }>;
+                entries.forEach((entry) => assert(entry.url.endsWith(`/${encoded}`), entry.url));
+            });
+        });
         return true;
     },
     jsonLdOfferAccuracy: async () => {

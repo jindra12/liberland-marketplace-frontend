@@ -20,10 +20,9 @@ import { AppList } from "../AppList";
 import { AddToCartButtonGuard } from "../cart/AddToCartButtonGuard";
 import { CartItemCount } from "../cart/CartItemCount";
 import { useDislikeProductMutation, useLikeProductMutation } from "../hooks";
-import { Markdown } from "../Markdown";
 import { getSourceQualifiedEntityKey } from "../query/utils";
 import { ListShareDetailButtons } from "../share/ListShareDetailButtons";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 
@@ -109,9 +108,6 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                 title: (product) => (
                     <Flex justify="space-between" align="center" wrap>
                         <Link to={routes.productsServices.detail.getLink(product as Product)}>{product.name}</Link>
-                        {product.company?.identity?.name && (
-                            <IdentityTagLink identity={product.company.identity} color="success" />
-                        )}
                     </Flex>
                 ),
                 actions: (product) => {
@@ -143,7 +139,7 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                                         <Tag color="success" icon={<DollarOutlined />}>
                                             {`Price: ${formatUsdFromCents(product.priceInUSD)}`}
                                         </Tag>
-                                )}
+                                    )}
                                 <CartItemCount productId={product.id} serverURL={product.serverURL!} />
                             </Flex>
                             {purchaseControl ? (
@@ -214,7 +210,11 @@ export const ProductServiceListInternal: React.FunctionComponent<ProductServiceL
                         </Link>
                     ) : undefined,
                 description: (product) => (
-                    <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>
+                    <EntityDescription
+                        description={product.description}
+                        identity={product.company?.identity}
+                        serverURL={product.serverURL}
+                    />
                 ),
                 body: () => null,
             }}

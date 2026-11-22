@@ -3,7 +3,9 @@ import * as React from "react";
 import { GiftOutlined, HomeFilled, InfoCircleOutlined, TeamOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Space, Tag } from "antd";
 
-import { IdentityTagItem, IdentityTagLink } from "./IdentityTagLink";
+import type { IdentityTagItem } from "../../types";
+
+import { IdentityTagLink } from "./IdentityTagLink";
 
 type JobMetaTagsProps = {
     showCompany?: boolean;

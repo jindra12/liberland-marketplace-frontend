@@ -8,8 +8,8 @@ import { Alert, List, Skeleton, Tabs } from "antd";
 
 import type { Job, ListJobsByCompanyQuery, ListProductsByCompanyQuery, Product } from "../../../generated/graphql";
 import { routes } from "../../../routes";
-import { Markdown } from "../../Markdown";
 import { getSourceQualifiedEntityKey } from "../../query/utils";
+import { EntityDescription } from "../../shared/EntityDescription";
 
 interface CompanyOverviewListingsProps {
     jobs: UseQueryResult<ListJobsByCompanyQuery>;
@@ -40,7 +40,11 @@ export const CompanyOverviewListings: React.FunctionComponent<CompanyOverviewLis
                                               </Link>
                                           }
                                           description={
-                                              <Markdown className="Markdown--clamp2">{product.description}</Markdown>
+                                              <EntityDescription
+                                                  description={product.description}
+                                                  identity={product.company?.identity}
+                                                  serverURL={product.serverURL}
+                                              />
                                           }
                                       />
                                   </List.Item>
@@ -63,7 +67,13 @@ export const CompanyOverviewListings: React.FunctionComponent<CompanyOverviewLis
                                   <List.Item>
                                       <List.Item.Meta
                                           title={<Link to={routes.jobs.detail.getLink(job as Job)}>{job.title}</Link>}
-                                          description={job.location}
+                                          description={
+                                              <EntityDescription
+                                                  description={job.description}
+                                                  identity={job.company?.identity}
+                                                  serverURL={job.serverURL}
+                                              />
+                                          }
                                       />
                                   </List.Item>
                               )}

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useParams } from "react-router-dom";
 
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { Avatar, Divider, Flex, Grid, Space, Typography } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo, Job } from "../../generated/graphql";
@@ -11,9 +11,8 @@ import { ApplyButton } from "../ApplyButton";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useJobByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
-import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import { formatEmploymentType, formatSalary } from "../shared/job/utils";
 import { getJobIdentityAccess, getJobMeta } from "../shared/jobDerived";
@@ -73,18 +72,9 @@ const JobDetail: React.FunctionComponent = () => {
                                     <Typography.Title level={1} className="JobDetail__title" delete={isInactive}>
                                         {job?.title}
                                     </Typography.Title>
-                                    {companyIdentity && (
-                                        <div className="JobDetail__identityRow">
-                                            <IdentityTagLink
-                                                identity={companyIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
-                                        </div>
-                                    )}
                                     <div className="JobDetail__summary">
                                         <JobDetailsSummary
-                                            companyName={job?.company?.name}
+                                            company={job?.company}
                                             location={job?.location}
                                             employmentType={empType}
                                             salary={salary}
@@ -111,7 +101,12 @@ const JobDetail: React.FunctionComponent = () => {
                                 )}
                                 <Divider />
                                 <Flex gap="32px" vertical>
-                                    <Markdown>{job?.description}</Markdown>
+                                    <EntityDescription
+                                        description={job?.description}
+                                        identity={companyIdentity}
+                                        serverURL={job?.serverURL || routeServerURL}
+                                        variant="detail"
+                                    />
                                     <IdentityGroups
                                         allowedIdentities={allowedIdentities}
                                         disallowedIdentities={disallowedIdentities}
@@ -122,16 +117,18 @@ const JobDetail: React.FunctionComponent = () => {
                                 </Flex>
                             </>
                         }
-                        sections={[{
-                            key: "comments",
-                            children: (
-                                <EntityCommentsSection
-                                    targetId={id!}
-                                    relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
-                                    serverURL={job?.serverURL ?? routeServerURL}
-                                />
-                            )
-                        }]}
+                        sections={[
+                            {
+                                key: "comments",
+                                children: (
+                                    <EntityCommentsSection
+                                        targetId={id!}
+                                        relationTo={Comment_ReplyPostRelationshipInputRelationTo.Jobs}
+                                        serverURL={job?.serverURL ?? routeServerURL}
+                                    />
+                                ),
+                            },
+                        ]}
                     />
                 );
             }}

@@ -3,7 +3,9 @@ import * as React from "react";
 import { MinusCircleFilled, UsergroupAddOutlined } from "@ant-design/icons";
 import { Space } from "antd";
 
-import { IdentityTagItem, IdentityTagLink } from "./IdentityTagLink";
+import type { IdentityTagItem } from "../../types";
+
+import { IdentityTagLink } from "./IdentityTagLink";
 
 type IdentityAccessTagsProps = {
     allowedIdentities?: IdentityTagItem[] | null;

@@ -7,8 +7,8 @@ export type RelatedRouteItem = {
     url: string;
 };
 
-export const buildDetailUrl = (sectionPath: string, id: string, serverUrl?: string | null): string => {
-    return `${SITE_URL}${sectionPath}/${id}/${encodeServerUrlSegment(serverUrl ?? "")}`;
+export const buildDetailUrl = (sectionPath: string, id: string, serverUrl: string): string => {
+    return `${SITE_URL}${sectionPath}/${id}/${encodeServerUrlSegment(serverUrl)}`;
 };
 
 export const buildItemListJsonLd = (name: string, items: RelatedRouteItem[]): Record<string, unknown>[] => {

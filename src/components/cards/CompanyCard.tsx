@@ -2,13 +2,12 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
-import { UsergroupAddOutlined } from "@ant-design/icons";
 import { Avatar, Space, Typography } from "antd";
 
 import { Company, ListCompaniesQuery } from "../../generated/graphql";
 import { routes } from "../../routes";
 import { useDislikeCompanyMutation, useLikeCompanyMutation } from "../hooks";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 
 import { SplashCard } from "./SplashCard";
@@ -68,21 +67,17 @@ export const CompanyCard: React.FunctionComponent<CompanyCardProps> = (props) =>
                         ]}
                     >
                         <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
-                            {company.identity && (
-                                <IdentityTagLink
-                                    identity={company.identity}
-                                    color="success"
-                                    icon={<UsergroupAddOutlined />}
-                                />
-                            )}
-                        </Space>
-                        <Space size={[6, 6]} wrap className="SplashEntityCard__meta">
                             {company.website && (
                                 <Typography.Link href={company.website} target="_blank" rel="noreferrer">
                                     Website
                                 </Typography.Link>
                             )}
                         </Space>
+                        <EntityDescription
+                            description={company.description}
+                            identity={company.identity}
+                            serverURL={company.serverURL}
+                        />
                     </SplashCardItem>
                 );
             }}

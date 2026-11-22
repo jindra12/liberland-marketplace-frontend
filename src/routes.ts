@@ -38,11 +38,13 @@ const companies = {
     getLink: () => "/companies",
     detail: {
         route: "/companies/:id/:serverUrl",
-        getLink: (company: Company) => `/companies/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
+        getLink: (company: Pick<Company, "id" | "serverURL">) =>
+            `/companies/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
     },
     edit: {
         route: "/companies/edit/:id/:serverUrl",
-        getLink: (company: Company) => `/companies/edit/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
+        getLink: (company: Pick<Company, "id" | "serverURL">) =>
+            `/companies/edit/${company.id}/${encodeServerUrlSegment(company.serverURL ?? "")}`,
     },
 };
 
@@ -51,7 +53,8 @@ const tribes = {
     getLink: () => "/tribes",
     detail: {
         route: "/tribes/:id/:serverUrl",
-        getLink: (identity: Identity) => `/tribes/${identity.id}/${encodeServerUrlSegment(identity.serverURL ?? "")}`,
+        getLink: (identity: Pick<Identity, "id" | "serverURL">) =>
+            `/tribes/${identity.id}/${encodeServerUrlSegment(identity.serverURL ?? "")}`,
     },
 };
 
@@ -100,7 +103,7 @@ const posts = {
                 case "Product":
                     return productsServices.detail.getLink(value as Product);
                 case "Identity":
-                    return tribes.detail.getLink(value as unknown as Identity);
+                    return tribes.detail.getLink(value);
                 case "Startup":
                     return ventures.detail.getLink(value as Startup);
             }
@@ -115,7 +118,8 @@ const syndication = {
     getLink: () => "/syndication",
     detail: {
         route: "/syndication/:id/:serverUrl",
-        getLink: (entry: URL) => `/syndication/${encodeURIComponent(entry.value)}/${encodeServerUrlSegment(entry.value)}`,
+        getLink: (entry: URL) =>
+            `/syndication/${encodeURIComponent(entry.value)}/${encodeServerUrlSegment(entry.value)}`,
     },
 };
 

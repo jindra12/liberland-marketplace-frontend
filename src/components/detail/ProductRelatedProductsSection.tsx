@@ -20,6 +20,7 @@ export const ProductRelatedProductsSection: React.FunctionComponent<ProductRelat
     const companyProductsQuery = useListProductsByCompanyQuery(
         {
             companyId: props.product.company?.id || "",
+            url: props.product.serverURL || props.product.company?.serverURL,
             page: 1,
             limit: 10,
             sort: "-contentRankScore",

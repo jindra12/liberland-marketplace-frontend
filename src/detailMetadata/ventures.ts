@@ -1,28 +1,23 @@
 import type { StartupByIdQuery } from "../generated/graphql";
 
-import {
-    buildAbsoluteImageUrl,
-    buildActionSentence,
-    buildStandardDetailMetadata,
-    normalizeWhitespace,
-} from "./shared";
+import { buildAbsoluteImageUrl, buildActionSentence, buildStandardDetailMetadata, normalizeWhitespace } from "./shared";
 import { buildDetailUrl, buildItemListJsonLd } from "./related";
+import { getMetadataServerUrl } from "./utils";
 
-export const buildStartupPageMetadata = (
-    startup: NonNullable<StartupByIdQuery["Startup"]>,
-    canonicalPath: string,
-) => {
+export const buildStartupPageMetadata = (startup: NonNullable<StartupByIdQuery["Startup"]>, canonicalPath: string) => {
     const detailLabel = startup.title ?? "Venture detail";
     const fundingDetails =
         startup.fundsNeeded?.amount !== null && startup.fundsNeeded?.amount !== undefined
             ? ` Funding goal ${startup.fundsNeeded.amount}${startup.fundsNeeded.currency ? ` ${startup.fundsNeeded.currency}` : ""}.`
             : "";
     const description = normalizeWhitespace(
-        `${startup.description ?? `Detail page for ${startup.title ?? "a venture"}.`}${fundingDetails} ${buildActionSentence([
-            "review the startup overview",
-            "see what the team is looking for",
-            "open the connected company and identity pages",
-        ])}`,
+        `${startup.description ?? `Detail page for ${startup.title ?? "a venture"}.`}${fundingDetails} ${buildActionSentence(
+            [
+                "review the startup overview",
+                "see what the team is looking for",
+                "open the connected company and identity pages",
+            ],
+        )}`,
     );
 
     return buildStandardDetailMetadata(
@@ -48,7 +43,11 @@ export const buildStartupPageMetadata = (
                     ? [
                           {
                               label: startup.company.name,
-                              url: buildDetailUrl("/companies", startup.company.id, startup.company.serverURL),
+                              url: buildDetailUrl(
+                                  "/companies",
+                                  startup.company.id,
+                                  startup.company.serverURL || getMetadataServerUrl(canonicalPath),
+                              ),
                           },
                       ]
                     : [],
@@ -59,7 +58,11 @@ export const buildStartupPageMetadata = (
                     ? [
                           {
                               label: startup.identity.name,
-                              url: buildDetailUrl("/tribes", startup.identity.id, startup.identity.serverURL),
+                              url: buildDetailUrl(
+                                  "/tribes",
+                                  startup.identity.id,
+                                  startup.identity.serverURL || getMetadataServerUrl(canonicalPath),
+                              ),
                           },
                       ]
                     : [],

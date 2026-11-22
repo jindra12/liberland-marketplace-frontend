@@ -11,10 +11,7 @@ export const getStartupIdentity = (startup: StartupDetailEntity) => {
         return undefined;
     }
 
-    return {
-        id: startup.identity.id,
-        name: startup.identity.name,
-    };
+    return startup.identity;
 };
 
 export const getStartupShareText = (startup: StartupDetailEntity) => {

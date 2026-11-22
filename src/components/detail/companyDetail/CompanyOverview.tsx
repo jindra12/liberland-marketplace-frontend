@@ -3,8 +3,8 @@ import * as React from "react";
 import { Col, Row, Typography } from "antd";
 
 import type { CompanyByIdQuery } from "../../../generated/graphql";
-import { Markdown } from "../../Markdown";
 import { CompanyContactLinks } from "../../shared/CompanyContactLinks";
+import { EntityDescription } from "../../shared/EntityDescription";
 import { IdentityGroups } from "../IdentityGroups";
 import type { useCompanyTabCounts } from "../useCompanyTabCounts";
 
@@ -19,7 +19,12 @@ export const CompanyOverview: React.FunctionComponent<CompanyOverviewProps> = (p
     <Row gutter={[32, 24]} className="CompanyOverview">
         <Col xs={24} lg={16}>
             <Typography.Title level={2}>About</Typography.Title>
-            <Markdown>{props.company.description}</Markdown>
+            <EntityDescription
+                description={props.company.description}
+                identity={props.company.identity}
+                serverURL={props.company.serverURL}
+                variant="detail"
+            />
             <CompanyOverviewListings jobs={props.listings.jobsQuery} products={props.listings.productsQuery} />
         </Col>
         <Col xs={24} lg={8}>

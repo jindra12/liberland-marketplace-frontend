@@ -8,8 +8,7 @@ import { Post_RelatedPosts_RelationTo, Product } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { routes } from "../../routes";
 import { useListProductsQuery, useSearchProductsQuery } from "../hooks";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import type { RelatedTargetSelection } from "../shared/post/types";
 import { formatUsdFromCents } from "../shared/product/utils";
@@ -44,9 +43,7 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
     );
     const searchDocs = useAccumulatedDocs(searchedProducts.data?.Searches?.docs, page);
     const items =
-        submittedSearchValue.length > 0
-            ? mapSearchProducts(searchDocs)
-            : defaultProducts.data?.Products?.docs ?? [];
+        submittedSearchValue.length > 0 ? mapSearchProducts(searchDocs) : (defaultProducts.data?.Products?.docs ?? []);
     const loading =
         submittedSearchValue.length > 0
             ? searchedProducts.isLoading && searchDocs.length === 0
@@ -99,9 +96,6 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                             >
                                 {product.name}
                             </Link>
-                            {product.company?.identity?.name && (
-                                <IdentityTagLink identity={product.company.identity} color="success" />
-                            )}
                         </Flex>
                     ),
                     avatar: (product) =>
@@ -125,7 +119,11 @@ export const ProductsServicesSearch: React.FunctionComponent<ProductsServicesSea
                                 product.priceInUSD !== undefined && (
                                     <Tag color="success">{`Price: ${formatUsdFromCents(product.priceInUSD)}`}</Tag>
                                 )}
-                            <Markdown className="Markdown--clamp3 EntityList__description">{product.description}</Markdown>
+                            <EntityDescription
+                                description={product.description}
+                                identity={product.company?.identity}
+                                serverURL={product.serverURL}
+                            />
                         </div>
                     ),
                 }}

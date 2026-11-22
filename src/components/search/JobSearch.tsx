@@ -8,8 +8,7 @@ import { Job, Post_RelatedPosts_RelationTo } from "../../generated/graphql";
 import { useAccumulatedDocs } from "../../hooks/useAccumulatedDocs";
 import { routes } from "../../routes";
 import { useListJobsQuery, useSearchJobsQuery } from "../hooks";
-import { Markdown } from "../Markdown";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import { formatEmploymentType, formatSalary } from "../shared/job/utils";
 import { getJobMeta } from "../shared/jobDerived";
@@ -45,10 +44,7 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
         },
     );
     const searchDocs = useAccumulatedDocs(searchedJobs.data?.Searches?.docs, page);
-    const items =
-        submittedSearchValue.length > 0
-            ? mapSearchJobs(searchDocs)
-            : defaultJobs.data?.Jobs?.docs ?? [];
+    const items = submittedSearchValue.length > 0 ? mapSearchJobs(searchDocs) : (defaultJobs.data?.Jobs?.docs ?? []);
     const loading =
         submittedSearchValue.length > 0 ? searchedJobs.isLoading && searchDocs.length === 0 : defaultJobs.isLoading;
     const hasMore = submittedSearchValue.length > 0 ? Boolean(searchedJobs.data?.Searches?.hasNextPage) : false;
@@ -75,9 +71,7 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
             placeholder="Search jobs"
         >
             <SearchResultsList
-                title={
-                    submittedSearchValue.length > 0 ? `Search results for "${submittedSearchValue}"` : "Jobs"
-                }
+                title={submittedSearchValue.length > 0 ? `Search results for "${submittedSearchValue}"` : "Jobs"}
                 onSelectItem={props.onSelect ? handleSelect : undefined}
                 items={items}
                 loading={loading}
@@ -94,9 +88,6 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                             <Link to={routes.jobs.detail.getLink(job as Job)} onClick={props.onClose}>
                                 {job.title}
                             </Link>
-                            {job.company?.identity?.name && (
-                                <IdentityTagLink identity={job.company.identity} color="success" />
-                            )}
                         </Flex>
                     ),
                     avatar: (job) => {
@@ -127,8 +118,7 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                         return (
                             <div className="EntityList__body JobList__body">
                                 <JobDetailsSummary
-                                    companyName={job.company?.name}
-                                    companyId={job.company?.id}
+                                    company={job.company}
                                     location={job.location}
                                     employmentType={employmentType}
                                     salary={salary}
@@ -139,7 +129,11 @@ export const JobSearch: React.FunctionComponent<JobSearchProps> = (props) => {
                                     showCompanyIcon
                                     metaSize={[8, 4]}
                                 />
-                                <Markdown className="Markdown--clamp3 EntityList__description">{job.description}</Markdown>
+                                <EntityDescription
+                                    description={job.description}
+                                    identity={job.company?.identity}
+                                    serverURL={job.serverURL}
+                                />
                             </div>
                         );
                     },

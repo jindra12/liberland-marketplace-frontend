@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useParams } from "react-router-dom";
 
-import { DollarOutlined, EditOutlined, ShoppingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import { DollarOutlined, EditOutlined, ShoppingOutlined } from "@ant-design/icons";
 import { Avatar, Button, Descriptions, Divider, Flex, Grid, Tag, Typography } from "antd";
 
 import { Comment_ReplyPostRelationshipInputRelationTo, Company, Product } from "../../generated/graphql";
@@ -12,9 +12,8 @@ import { CartItemCount } from "../cart/CartItemCount";
 import { EntityCommentsSection } from "../comments/EntityCommentsSection";
 import { useCompanyByIdQuery, useProductByIdQuery } from "../hooks";
 import { Loader } from "../Loader";
-import { Markdown } from "../Markdown";
 import { RouteButton } from "../RouteButton";
-import { IdentityTagLink } from "../shared/IdentityTagLink";
+import { EntityDescription } from "../shared/EntityDescription";
 import { getImage } from "../shared/image/utils";
 import { formatUsdFromCents, isProductPurchasable, parseActionLink } from "../shared/product/utils";
 import { ProductDetailsSummary } from "../shared/ProductDetailsSummary";
@@ -30,7 +29,10 @@ const ProductServiceDetail: React.FunctionComponent = () => {
     const { md } = Grid.useBreakpoint();
     const query = useProductByIdQuery({ id: id!, url: routeServerURL });
     const companyId = query.data?.Product?.company?.id;
-    const companyQuery = useCompanyByIdQuery({ id: companyId || "", url: routeServerURL }, { enabled: Boolean(companyId) });
+    const companyQuery = useCompanyByIdQuery(
+        { id: companyId || "", url: routeServerURL },
+        { enabled: Boolean(companyId) },
+    );
     const isOwner = useIsOwnedByServerUser({
         ownerUserId: query.data?.Product?.company?.createdBy?.id,
         serverURL: query.data?.Product?.company?.serverURL ?? routeServerURL,
@@ -48,15 +50,9 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                     typeof inventoryCount === "number" ? inventoryCount.toLocaleString("en-US") : undefined;
                 const price = product?.priceInUSDEnabled ? formatUsdFromCents(product?.priceInUSD) : null;
                 const companyIdentity = companyData?.identity?.name
-                    ? {
-                          id: companyData.identity.id,
-                          name: companyData.identity.name,
-                      }
+                    ? companyData.identity
                     : product?.company?.identity?.name
-                      ? {
-                            id: product.company.identity.id,
-                            name: product.company.identity.name,
-                        }
+                      ? product.company.identity
                       : undefined;
                 const allowedIdentities = companyData?.allowedIdentities || [];
                 const disallowedIdentities = companyData?.disallowedIdentities || [];
@@ -108,20 +104,8 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                     <Typography.Title level={1} className="EntityDetail__title">
                                         {product?.name}
                                     </Typography.Title>
-                                    {companyIdentity && (
-                                        <div className="ProductDetail__identityRow">
-                                            <IdentityTagLink
-                                                identity={companyIdentity}
-                                                color="success"
-                                                icon={<UsergroupAddOutlined />}
-                                            />
-                                        </div>
-                                    )}
                                     <div className="ProductDetail__summary">
-                                        <ProductDetailsSummary
-                                            companyName={product?.company?.name}
-                                            companyId={product?.company?.id}
-                                        />
+                                        <ProductDetailsSummary company={product?.company} />
                                     </div>
                                     {product?.id && (
                                         <div className="ProductDetail__purchaseSection">
@@ -142,7 +126,9 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                             {purchaseControl && (
                                                 <>
                                                     <Divider className="ProductDetail__purchaseDivider" />
-                                                    <div className="ProductDetail__purchaseControl">{purchaseControl}</div>
+                                                    <div className="ProductDetail__purchaseControl">
+                                                        {purchaseControl}
+                                                    </div>
                                                 </>
                                             )}
                                         </div>
@@ -163,7 +149,12 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 )}
                                 <Divider />
                                 <Flex gap="32px" vertical>
-                                    <Markdown>{product?.description}</Markdown>
+                                    <EntityDescription
+                                        description={product?.description}
+                                        identity={companyIdentity}
+                                        serverURL={product?.serverURL || routeServerURL}
+                                        variant="detail"
+                                    />
                                     <IdentityGroups
                                         allowedIdentities={allowedIdentities}
                                         disallowedIdentities={disallowedIdentities}
@@ -212,16 +203,18 @@ const ProductServiceDetail: React.FunctionComponent = () => {
                                 )}
                             </>
                         }
-                        sections={[{
-                            key: "comments",
-                            children: (
-                                <EntityCommentsSection
-                                    targetId={id!}
-                                    relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
-                                    serverURL={product?.serverURL ?? routeServerURL}
-                                />
-                            )
-                        }]}
+                        sections={[
+                            {
+                                key: "comments",
+                                children: (
+                                    <EntityCommentsSection
+                                        targetId={id!}
+                                        relationTo={Comment_ReplyPostRelationshipInputRelationTo.Products}
+                                        serverURL={product?.serverURL ?? routeServerURL}
+                                    />
+                                ),
+                            },
+                        ]}
                     />
                 );
             }}

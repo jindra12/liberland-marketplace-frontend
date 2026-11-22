@@ -3,7 +3,7 @@ import * as React from "react";
 import { GlobalOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Flex, List, Typography } from "antd";
 
-import { IdentityTagItem } from "./IdentityTagLink";
+import type { IdentityTagItem } from "../../types";
 
 type CompanyContactLinksProps = {
     identity?: IdentityTagItem;

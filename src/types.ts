@@ -73,6 +73,7 @@ export type CryptoWalletOwner =
 export type IdentityTagItem = {
     id: string;
     name: string;
+    serverURL?: string | null;
 };
 
 export type IdentityTagLinkProps = {

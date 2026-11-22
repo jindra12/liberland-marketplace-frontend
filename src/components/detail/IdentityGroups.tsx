@@ -3,7 +3,8 @@ import * as React from "react";
 import { MinusCircleFilled, UsergroupAddOutlined } from "@ant-design/icons";
 import { Divider, Flex } from "antd";
 
-import { IdentityTagItem, IdentityTagLink } from "../shared/IdentityTagLink";
+import type { IdentityTagItem } from "../../types";
+import { IdentityTagLink } from "../shared/IdentityTagLink";
 
 type IdentityGroupsProps = {
     allowedIdentities?: IdentityTagItem[] | null;
