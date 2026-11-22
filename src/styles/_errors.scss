@@ -13,12 +13,11 @@
 
 .RuntimeErrorState__panel {
     width: min(100%, 760px);
+    max-width: 760px;
     border: 1px solid rgba(147, 197, 253, 0.16);
-    border-radius: 28px;
-    background:
-        radial-gradient(circle at top right, rgba(251, 191, 36, 0.16), transparent 34%),
-        linear-gradient(180deg, rgba(10, 18, 30, 0.98), rgba(6, 12, 22, 0.95));
-    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    border-radius: 8px;
+    background: var(--market-surface);
+    box-shadow: none;
     overflow: hidden;
 }
 
@@ -33,7 +32,7 @@
     margin: 0;
     padding: 6px 12px;
     border-radius: 999px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
 }
@@ -61,30 +60,30 @@
 .RuntimeErrorState__routeLabel.ant-typography {
     color: rgba(148, 163, 184, 0.82);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     font-size: 12px;
 }
 
 .RuntimeErrorState__routeValue.ant-typography {
     font-size: 13px;
     padding: 4px 8px;
-    border-radius: 10px;
+    border-radius: 8px;
     color: #dbeafe;
-    background: rgba(15, 23, 42, 0.72);
+    background: var(--market-surface);
     border: 1px solid rgba(96, 165, 250, 0.22);
 }
 
 .RuntimeErrorState__alert.ant-alert {
-    border-radius: 18px;
+    border-radius: 8px;
     border: 1px solid rgba(248, 113, 113, 0.2);
     background: rgba(69, 10, 10, 0.32);
 }
 
 .RuntimeErrorState__details {
     padding: 14px 16px;
-    border-radius: 18px;
-    background: rgba(15, 23, 42, 0.66);
-    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 8px;
+    background: var(--market-surface);
+    border: 1px solid var(--market-border);
 
     summary {
         cursor: pointer;
@@ -107,8 +106,20 @@
     margin-top: 4px;
 }
 
+.RuntimeErrorState__technicalMessage,
+.RuntimeErrorState__technicalStack {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.RuntimeErrorState__technicalStack {
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--market-muted);
+}
+
 .StorageResetPrompt {
-    text-align: center;
+    text-align: left;
 }
 
 .StorageResetPrompt__text.ant-typography {
@@ -160,9 +171,9 @@
     width: 100%;
     margin: 0;
     padding: 12px 14px;
-    border-radius: 16px;
-    background: rgba(15, 23, 42, 0.72);
-    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 8px;
+    background: var(--market-surface);
+    border: 1px solid var(--market-border);
     color: #93c5fd;
     font-size: 12px;
     line-height: 1.5;
@@ -209,6 +220,6 @@
     }
 
     .RuntimeErrorState__panel {
-        border-radius: 22px;
+        border-radius: 8px;
     }
 }

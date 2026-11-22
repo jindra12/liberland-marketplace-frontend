@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { MenuOutlined, PlusOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, Button, Grid, Space, Flex, Tag } from "antd";
+import { Layout, Menu, Button, Grid, Space, Flex, Tag, Image } from "antd";
 
 import { routes } from "../routes";
 
@@ -93,7 +93,14 @@ export const AppHeader: React.FunctionComponent = () => {
         <Header className="AppHeader">
             <div className="AppHeader__inner">
                 <Link className="AppHeader__brand" to={routes.home.route}>
-                    <img className="AppHeader__logo" src="/logo.svg" alt="NSwap" />
+                    <Image
+                        preview={false}
+                        width={30}
+                        height={30}
+                        className="AppHeader__logo"
+                        src="/logo.svg"
+                        alt="NSwap"
+                    />
                     <span className="AppHeader__name">NSwap</span>
                 </Link>
 
@@ -126,17 +133,13 @@ export const AppHeader: React.FunctionComponent = () => {
                                     </Button>
                                 )}
                             </EndpointAuthAction>
-                            <LoginButton
-                                className="AppHeader__authBtn"
-                            />
+                            <LoginButton className="AppHeader__authBtn" />
                             <DesktopDrawer />
                         </Flex>
                     </>
                 ) : (
                     <Space className="AppHeader__mobile" align="center" size={8}>
-                        <LoginButton
-                            className="AppHeader__mobileAuthBtn"
-                        />
+                        <LoginButton className="AppHeader__mobileAuthBtn" />
                         {totalQuantity > 0 && <CartHeaderButton className="AppHeader__iconButton" />}
                         {orderSummary.hasOrders ? (
                             <OrderHeaderButton
@@ -151,10 +154,7 @@ export const AppHeader: React.FunctionComponent = () => {
                             aria-label="Open navigation"
                             onClick={() => setDrawerOpen(true)}
                         />
-                        <MobileDrawer
-                            open={drawerOpen}
-                            onClose={() => setDrawerOpen(false)}
-                        />
+                        <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
                     </Space>
                 )}
             </div>

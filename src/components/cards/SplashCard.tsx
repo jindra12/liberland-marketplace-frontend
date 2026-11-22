@@ -8,7 +8,7 @@ import type { SplashCardProps } from "./types";
 
 export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<TItem>) => {
     const screens = Grid.useBreakpoint();
-    const slidesToShow = screens.xl ? 3 : 2;
+    const slidesToShow = Math.min(props.items.length, screens.xl ? 3 : 2);
 
     return (
         <div className={`SplashEntityCard ${props.className}`}>
@@ -24,12 +24,11 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
                 ) : (
                     <Carousel
                         dots={false}
-                        arrows={screens.md}
-                        autoplay={screens.md}
-                        autoplaySpeed={4800}
+                        arrows={props.items.length > slidesToShow}
+                        infinite={false}
                         draggable
                         pauseOnHover
-                        speed={700}
+                        speed={250}
                         slidesToShow={slidesToShow}
                         slidesToScroll={1}
                         className="SplashEntityCard__carousel"
@@ -45,9 +44,9 @@ export const SplashCard = <TItem extends { id: string }>(props: SplashCardProps<
                             {
                                 breakpoint: 991,
                                 settings: {
-                                    slidesToShow: 2,
+                                    slidesToShow: Math.min(props.items.length, 2),
                                     slidesToScroll: 1,
-                                    arrows: true,
+                                    arrows: props.items.length > 2,
                                 },
                             },
                         ]}

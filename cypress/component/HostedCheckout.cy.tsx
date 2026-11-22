@@ -4,6 +4,7 @@ import { HostedSessionView } from "../../src/components/HostedCheckout/HostedSes
 import type { HostedSession } from "../../src/components/HostedCheckout/types";
 import { MAIN_SERVER_URL } from "../support/component-tests/constants";
 import { mountWithProviders, screenshotStep } from "../support/component-tests/directBasic";
+import { companies } from "../support/graphqlMock/fixtures/companies";
 
 const session: HostedSession = {
     sessionId: "8cb7516d-e899-4d06-a02a-a37554364985",
@@ -23,6 +24,12 @@ const session: HostedSession = {
 };
 
 describe("Guest hosted checkout", () => {
+    beforeEach(() => {
+        interceptGraphQLOperation("CompanyById", (request) => {
+            request.reply({ data: { Company: { ...companies[0], id: "merchant" } } });
+        }).as("recipient");
+    });
+
     it("rejects an invalid backend before rendering a checkout", () => {
         mountWithProviders(<HostedCheckout />, { route: "/pay?serverUrl=invalid&companyId=merchant" });
         cy.contains("This payment link has an invalid marketplace backend URL.").should("be.visible");
@@ -51,12 +58,51 @@ describe("Guest hosted checkout", () => {
             route: `/pay?serverUrl=${encodeURIComponent(MAIN_SERVER_URL)}&companyId=merchant`,
         });
         cy.contains("without creating a Nswap account").should("be.visible");
+        cy.wait("@recipient");
+        cy.get(".HostedCheckoutForm__recipient")
+            .should("contain.text", "You're supporting")
+            .and("contain.text", "Harbor Labs");
+        cy.contains("a", "View company profile").should("have.attr", "href").and("contain", "/companies/merchant/");
         screenshotStep("guest-donation-form");
         cy.contains("button", "Continue to payment").click();
         cy.wait("@donationSession");
         cy.location("search").should("contain", `session=${session.sessionId}`);
         cy.wait("@createdCheckoutStatus");
         cy.get('[data-cy="thirdweb-checkout"]').should("contain", "10.00");
+    });
+
+    [390, 1280].forEach((width) => {
+        it(`sends the chosen one-time amount, including custom cents, at ${width}px`, () => {
+            cy.viewport(width, 1000);
+            interceptGraphQLOperation<{ input: { amountUsdCents: number } }>(
+                "CreateHostedCheckoutSession",
+                (request) => {
+                    expect(request.body.variables.input.amountUsdCents).to.equal(3750);
+                    request.reply({
+                        body: { data: { createHostedCheckoutSession: { ...session, amountUsdCents: 3750 } } },
+                    });
+                },
+            ).as("customDonation");
+            interceptGraphQLOperation("HostedCheckoutSession", (request) => {
+                request.reply({ body: { data: { hostedCheckoutSession: { ...session, amountUsdCents: 3750 } } } });
+            });
+            mountWithProviders(<HostedCheckout />, {
+                route: `/pay?serverUrl=${encodeURIComponent(MAIN_SERVER_URL)}&companyId=merchant`,
+            });
+            cy.wait("@recipient");
+            cy.contains(".ant-radio-button-wrapper", "$25").click();
+            cy.get("#amount").should("have.value", "25.00");
+            cy.contains(".ant-radio-button-wrapper", "Custom").click();
+            cy.get("#amount").should("be.visible").clear().type("37.50").blur();
+            cy.contains("One-time donation in USD. No recurring charges.").should("be.visible");
+            cy.document().then((doc) => {
+                expect(doc.documentElement.scrollWidth).to.be.at.most(width);
+            });
+            screenshotStep(`donation-recipient-and-amount-${width}`);
+            cy.contains("button", "Continue to payment").click();
+            cy.wait("@customDonation");
+            cy.get('[data-cy="thirdweb-checkout"]').should("contain", "37.50");
+        });
     });
 
     it("shows verified success only after the backend reports payment completed", () => {

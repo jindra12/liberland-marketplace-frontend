@@ -230,18 +230,21 @@ export const MarketAccordion: React.FunctionComponent = () => {
             enabled: true,
         },
     ];
-    const visibleItems = items.filter((item) => item.enabled);
+    const visibleItems = [
+        ...items.filter((item) => !item.key.startsWith("posts")),
+        ...items.filter((item) => item.key.startsWith("posts")),
+    ].filter((item) => item.enabled);
 
     return md ? (
-        <Flex vertical gap="64px" className="MarketAccordion">
+        <Flex vertical gap={32} className="MarketAccordion">
             {visibleItems.map((item) => (
                 <AnimatedIn key={item.key}>
                     <section className="MarketAccordion__section">
-                        <Flex vertical gap={24} className="MarketAccordion__header">
+                        <Flex vertical gap={12} className="MarketAccordion__header">
                             <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
                                 <Typography.Title
                                     level={2}
-                                    className={`MarketAccordion__title${item.title === "Posts" ? " screen-reader-only" : ""}`}
+                                    className={`MarketAccordion__title${item.title === "Posts" && item.key !== "posts-top" ? " screen-reader-only" : ""}`}
                                 >
                                     {item.title}
                                 </Typography.Title>
@@ -253,7 +256,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
             ))}
         </Flex>
     ) : (
-        <Flex vertical gap="32px" className="MarketAccordionMobile">
+        <Flex vertical gap={24} className="MarketAccordionMobile">
             {visibleItems.map((item) => (
                 <AnimatedIn key={item.key}>
                     <section className="MarketAccordionMobile__section">
@@ -261,7 +264,7 @@ export const MarketAccordion: React.FunctionComponent = () => {
                             <Link to={item.route} className={`MarketAccordion__titleLink ${item.titleClassName}`}>
                                 <Typography.Title
                                     level={2}
-                                    className={`MarketAccordion__title${item.title === "Posts" ? " screen-reader-only" : ""}`}
+                                    className={`MarketAccordion__title${item.title === "Posts" && item.key !== "posts-top" ? " screen-reader-only" : ""}`}
                                 >
                                     {item.title}
                                 </Typography.Title>

@@ -100,6 +100,21 @@ describe("job create/edit", () => {
         });
     });
 
+    it("keeps salary and currency fields readable on narrow screens", () => {
+        cy.viewport(390, 1000);
+        mountJobForm({ salaryMin: 1200, salaryMax: 2400, bountyAmount: 100 });
+        cy.wait("@ownedCompanies");
+        cy.get(".Publish__salaryFields .ant-select").scrollIntoView().should("be.visible");
+        cy.get(".Publish__salaryFields .ant-select-selection-item").should(($label) => {
+            expect($label[0].scrollWidth).to.be.at.most($label[0].clientWidth);
+        });
+        cy.get(".Publish__salaryFields").screenshot("job-mobile-salary-fields");
+        cy.get(".Publish__amountFields").first().screenshot("job-mobile-bounty-fields");
+        cy.document().then((doc) => {
+            expect(doc.documentElement.scrollWidth).to.be.at.most(doc.documentElement.clientWidth);
+        });
+    });
+
     it("hides private companies in the company selector", () => {
         mountJobForm();
         cy.wait("@ownedCompanies");

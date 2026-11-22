@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Space } from "antd";
+import { Flex } from "antd";
 
 import { RouteButton } from "../RouteButton";
 import { NativeShareButton } from "../share/NativeShareButton";
@@ -12,19 +12,17 @@ type SplashShareDetailActionRowProps = {
 };
 export const SplashShareDetailActionRow: React.FunctionComponent<SplashShareDetailActionRowProps> = (props) => {
     return (
-        <div className="SplashEntityCard__inlineActions">
-            <Space.Compact block className="SplashEntityCard__actionGroup SplashEntityCard__actionGroup--compact">
-                <NativeShareButton
-                    path={props.detailPath}
-                    title={props.title}
-                    text={props.text}
-                    size="small"
-                    className="NativeShareButton"
-                />
-                <RouteButton to={props.detailPath} type="primary" size="small">
-                    Details
-                </RouteButton>
-            </Space.Compact>
-        </div>
+        <Flex wrap gap={8} className="SplashEntityCard__inlineActions SplashEntityCard__actionGroup">
+            <RouteButton to={props.detailPath} type="primary">
+                Details
+            </RouteButton>
+            <NativeShareButton
+                path={props.detailPath}
+                title={props.title}
+                text={props.text}
+                type="text"
+                className="NativeShareButton"
+            />
+        </Flex>
     );
 };

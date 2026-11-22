@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useSearchParams } from "react-router-dom";
 
-import { Select, Spin } from "antd";
+import { Select, Spin, Typography } from "antd";
 import type { LabeledValue } from "antd/es/select";
 
 import type { DocType, SearchOption } from "../types";
@@ -57,6 +57,7 @@ export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (pro
 
     return (
         <Select
+            aria-label="Filter by tribe affiliation"
             className="FilterControl"
             mode="multiple"
             showSearch
@@ -70,7 +71,17 @@ export const IdentityFilter: React.FunctionComponent<IdentityFilterProps> = (pro
                 value: option.value,
                 label: option.label || option.id,
             }))}
-            notFoundContent={query.isLoading ? <Spin size="small" /> : undefined}
+            notFoundContent={
+                !searchTerm ? (
+                    <Typography.Text type="secondary">Type a tribe name to search</Typography.Text>
+                ) : query.isFetching ? (
+                    <Spin size="small" />
+                ) : (
+                    <Typography.Text type={query.isError ? "danger" : "secondary"}>
+                        {query.isError ? "Could not load tribes. Try searching again." : "No matching tribes"}
+                    </Typography.Text>
+                )
+            }
             onSearch={(value) => {
                 setSearchTerm(value);
             }}

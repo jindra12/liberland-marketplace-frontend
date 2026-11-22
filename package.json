@@ -78,7 +78,7 @@
         "marked": "^18.0.0",
         "mdast-util-to-markdown": "^2.2.1",
         "negotiator": "^1.1.0",
-        "next": "16.4.3",
+        "next": "16.4.6",
         "normalize-url": "10.0.0",
         "object-hash": "^3.0.0",
         "oidc-client-ts": "^3.4.1",
@@ -310,6 +310,8 @@
         "postinstall": "patch-package",
         "test:ct:venture-liquidity": "yarn cypress:run --component --browser chrome --spec cypress/component/VentureContracts.liquidity.cy.tsx",
         "test:ct:venture-liquidity:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/VentureContracts.liquidity.cy.tsx",
+        "test:ct:marketplace-appearance": "yarn cypress:run --component --browser chrome --spec cypress/component/MarketplaceAppearance.cy.tsx",
+        "test:ct:marketplace-appearance:headed": "yarn cypress:run --component --browser chrome --headed --spec cypress/component/MarketplaceAppearance.cy.tsx",
         "cypress:run": "./scripts/run-cypress-single.sh"
     },
     "browserslist": {

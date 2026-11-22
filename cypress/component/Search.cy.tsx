@@ -80,6 +80,7 @@ describe("job search component", () => {
         cy.get("@select").should("have.been.calledOnceWithExactly", {
             relationTo: Post_RelatedPosts_RelationTo.Jobs,
             value: "job-developer",
+            serverURL: MAIN_SERVER_URL,
             label: "Frontend developer",
         });
         cy.get("@close").should("have.been.calledOnce");

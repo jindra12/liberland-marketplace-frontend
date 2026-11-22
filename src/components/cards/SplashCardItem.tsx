@@ -34,9 +34,9 @@ export const SplashCardItem: React.FunctionComponent<SplashCardItemProps> = (pro
     const wrappedActions =
         actionContent.length > 0 ? (
             <Flex
-                vertical={!md}
+                wrap
                 justify={md ? "flex-end" : undefined}
-                align={md ? "center" : "flex-start"}
+                align="center"
                 gap="12px"
                 className={`SplashEntityCard__actions${md ? "" : " SplashEntityCard__actions--stacked"}`}
             >

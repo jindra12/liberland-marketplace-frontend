@@ -11,15 +11,10 @@
 .UnsubscribePage__card {
     position: relative;
     overflow: hidden;
-    border-radius: 34px;
+    border-radius: 8px;
     padding: clamp(28px, 4vw, 44px);
-    background:
-        radial-gradient(circle at top right, rgba(47, 140, 255, 0.22), transparent 30%),
-        radial-gradient(circle at bottom left, rgba(121, 230, 177, 0.16), transparent 34%),
-        linear-gradient(135deg, rgba(9, 23, 38, 0.96), rgba(4, 14, 25, 0.98));
-    box-shadow:
-        0 32px 72px rgba(0, 0, 0, 0.42),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    background: var(--market-surface);
+    box-shadow: none;
 
     &::before {
         content: "";
@@ -28,30 +23,21 @@
         width: 320px;
         height: 320px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(121, 230, 177, 0.16), transparent 70%);
+        background: none;
         pointer-events: none;
     }
 }
 
 .UnsubscribePage__card--success {
-    background:
-        radial-gradient(circle at top right, rgba(121, 230, 177, 0.22), transparent 32%),
-        radial-gradient(circle at bottom left, rgba(82, 168, 255, 0.2), transparent 36%),
-        linear-gradient(135deg, rgba(7, 24, 33, 0.96), rgba(3, 14, 24, 0.98));
+    background: var(--market-surface);
 }
 
 .UnsubscribePage__card--invalid {
-    background:
-        radial-gradient(circle at top right, rgba(90, 166, 255, 0.2), transparent 28%),
-        radial-gradient(circle at bottom left, rgba(121, 230, 177, 0.12), transparent 32%),
-        linear-gradient(135deg, rgba(18, 25, 39, 0.96), rgba(9, 15, 25, 0.98));
+    background: var(--market-surface);
 }
 
 .UnsubscribePage__card--loading {
-    background:
-        radial-gradient(circle at top right, rgba(82, 168, 255, 0.24), transparent 32%),
-        radial-gradient(circle at bottom left, rgba(121, 230, 177, 0.14), transparent 32%),
-        linear-gradient(135deg, rgba(10, 23, 39, 0.96), rgba(4, 14, 25, 0.98));
+    background: var(--market-surface);
 }
 
 .UnsubscribePage__kickerRow {
@@ -60,10 +46,10 @@
 }
 
 .UnsubscribePage__eyebrow {
-    color: rgba(121, 230, 177, 0.94);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
+    color: var(--market-link);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
@@ -72,11 +58,11 @@
     padding: 6px 12px;
     border: 1px solid rgba(147, 214, 255, 0.14);
     border-radius: 999px;
-    background: rgba(7, 20, 35, 0.58);
-    color: #eef8f3;
+    background: var(--market-surface);
+    color: var(--market-text);
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
@@ -93,17 +79,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 24px;
-    background: linear-gradient(135deg, rgba(90, 166, 255, 0.24), rgba(121, 230, 177, 0.18)), rgba(7, 20, 35, 0.72);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 18px 30px rgba(0, 0, 0, 0.22);
-    color: #eef8f3;
+    border-radius: 8px;
+    background: var(--market-surface);
+    box-shadow: none;
+    color: var(--market-text);
     font-size: 30px;
 }
 
 .UnsubscribePage__iconWrap--success {
-    background: linear-gradient(135deg, rgba(121, 230, 177, 0.28), rgba(82, 168, 255, 0.16)), rgba(7, 20, 35, 0.72);
+    background: var(--market-surface);
     color: #effff7;
 }
 
@@ -131,14 +115,14 @@
     gap: 18px;
     padding: 20px;
     border: 1px solid rgba(147, 214, 255, 0.09);
-    border-radius: 26px;
-    background: rgba(6, 18, 31, 0.62);
-    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    background: var(--market-surface);
+    backdrop-filter: none;
 }
 
 .UnsubscribePage__entityAvatar {
     border: 1px solid rgba(147, 214, 255, 0.12);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+    box-shadow: none;
 }
 
 .UnsubscribePage__entityBody {
@@ -148,10 +132,10 @@
 .UnsubscribePage__entityType.ant-typography {
     display: inline-block;
     margin-bottom: 6px;
-    color: rgba(188, 217, 203, 0.68);
+    color: var(--market-muted);
     font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
@@ -188,8 +172,8 @@
     min-width: 0;
     max-width: 100%;
     padding: 12px 16px;
-    border-radius: 999px;
-    background: rgba(7, 20, 35, 0.6);
+    border-radius: 8px;
+    background: var(--market-surface);
     border: 1px solid rgba(147, 214, 255, 0.09);
     color: rgba(232, 245, 238, 0.88);
     font-size: 14px;
@@ -210,22 +194,22 @@
 .UnsubscribePage__actions .ant-btn {
     min-height: 50px;
     padding-inline: 22px;
-    border-radius: 999px;
-    font-weight: 800;
+    border-radius: 8px;
+    font-weight: 600;
     letter-spacing: 0.01em;
 }
 
 .UnsubscribePage__secondaryAction.ant-btn {
     border-color: rgba(147, 214, 255, 0.14);
-    background: rgba(7, 20, 35, 0.58);
-    color: #eef8f3;
+    background: var(--market-surface);
+    color: var(--market-text);
 }
 
 .UnsubscribePage__secondaryAction.ant-btn:hover,
 .UnsubscribePage__secondaryAction.ant-btn:focus {
     border-color: rgba(147, 214, 255, 0.24) !important;
-    background: rgba(9, 24, 39, 0.74) !important;
-    color: #eef8f3 !important;
+    background: var(--market-surface) !important;
+    color: var(--market-text) !important;
 }
 
 .UnsubscribePage__loadingRow {
@@ -237,7 +221,7 @@
 
 @include md-min {
     .UnsubscribePage__card {
-        border-radius: 28px;
+        border-radius: 8px;
         padding: 24px 20px;
     }
 
@@ -248,7 +232,7 @@
     .UnsubscribePage__iconWrap {
         width: 64px;
         height: 64px;
-        border-radius: 20px;
+        border-radius: 8px;
         font-size: 26px;
     }
 

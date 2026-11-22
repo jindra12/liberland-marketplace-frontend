@@ -21,7 +21,7 @@ export const ProfileSummaryCard: React.FunctionComponent<ProfileSummaryCardProps
                     <Avatar size={64} src={props.picture} icon={<UserOutlined />} />
                 </Link>
                 <Descriptions column={1} size="small" className="Profile__summaryDetails">
-                    <Descriptions.Item label="Name">{props.name || "—"}</Descriptions.Item>
+                    <Descriptions.Item label="Sign-in name">{props.name || "—"}</Descriptions.Item>
                     <Descriptions.Item label="Email">
                         <Flex wrap gap={8} align="center" className="Profile__summaryEmail">
                             <Typography.Text className="Profile__email">{props.email || "—"}</Typography.Text>

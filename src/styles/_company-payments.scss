@@ -13,3 +13,36 @@
 .PaymentWebhookSecret__value {
     overflow-wrap: anywhere;
 }
+
+.HostedCheckoutForm {
+    max-width: 560px;
+
+    &__recipient {
+        padding: 20px;
+        margin-bottom: 24px;
+        border: 1px solid var(--market-border);
+        border-radius: 6px;
+        background: var(--market-raised);
+
+        h3.ant-typography {
+            margin: 0;
+        }
+    }
+}
+
+.DonationAmount__presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .ant-radio-button-wrapper {
+        min-width: 72px;
+        border: 1px solid var(--market-border);
+        border-radius: 4px;
+        text-align: center;
+
+        &::before {
+            display: none;
+        }
+    }
+}

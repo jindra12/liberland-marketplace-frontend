@@ -1,60 +1,36 @@
 import * as React from "react";
 
-import { Image, Flex, Typography, Grid } from "antd";
+import { Flex, Typography } from "antd";
 
 import { routes } from "../routes";
 
 import { RouteButton } from "./RouteButton";
-import { AnimatedIn } from "./shared/AnimatedIn/AnimatedIn";
+import { SearchButton } from "./SearchButton";
 import { MarketAccordion } from "./splash/MarketAccordion";
 
 const Splash: React.FunctionComponent = () => {
-    const { md } = Grid.useBreakpoint();
-
     return (
-        <Flex vertical gap={24} className="SplashPage">
-            <section className="SplashPage__hero">
-                <Flex vertical align="center" justify="center" className="SplashPage__heroInner">
-                    <Image
-                        preview={false}
-                        src="/hero/nswap-hero-bg.svg"
-                        alt=""
-                        aria-hidden="true"
-                        width={940}
-                        height={400}
-                        className="SplashPage__heroBackdrop"
-                    />
-                    <AnimatedIn className="SplashPage__heroOverlay">
-                        <Flex vertical align="center" justify="center" gap={18} className="SplashPage__heroOverlayInner">
-                            <Typography.Title level={1} className="SplashPage__heroWordmark">
-                                NSWAP
-                            </Typography.Title>
-                            <Typography.Paragraph className="SplashPage__heroDescription">
-                                Decentralized marketplace across tribes
-                            </Typography.Paragraph>
-                            <Flex wrap justify="center" gap={12} className="SplashPage__heroActions">
-                                <RouteButton to={routes.productsServices.route} type="primary" size="large" className="SplashPage__heroPrimaryBtn">
-                                    Explore market
-                                </RouteButton>
-                                <RouteButton to={routes.tribes.route} size="large" className="SplashPage__heroSecondaryBtn">
-                                    Explore Tribes
-                                </RouteButton>
-                            </Flex>
-                        </Flex>
-                    </AnimatedIn>
+        <Flex vertical gap={32} className="SplashPage">
+            <Flex vertical gap={16} className="SplashPage__hero">
+                <Flex vertical gap={8}>
+                    <Typography.Title level={1} className="SplashPage__heroTitle">
+                        Marketplace
+                    </Typography.Title>
+                    <Typography.Paragraph className="SplashPage__heroDescription">
+                        Browse products, companies, jobs and ventures across tribes.
+                    </Typography.Paragraph>
                 </Flex>
-            </section>
-
-            <Flex vertical gap={20} className="SplashPage__sections">
-                {!md ? (
-                    <div className="SplashPage__marketAccordion SplashPage__marketAccordion--mobile">
-                        <MarketAccordion />
-                    </div>
-                ) : (
-                    <div className="SplashPage__marketAccordion">
-                        <MarketAccordion />
-                    </div>
-                )}
+                <Flex gap={8} wrap className="SplashPage__heroActions">
+                    <SearchButton type="primary">Search marketplace</SearchButton>
+                    <RouteButton to={routes.productsServices.route}>Products and services</RouteButton>
+                    <RouteButton to={routes.companies.route}>Companies</RouteButton>
+                    <RouteButton to={routes.jobs.route}>Jobs</RouteButton>
+                    <RouteButton to={routes.ventures.route}>Ventures</RouteButton>
+                    <RouteButton to={routes.tribes.route}>Tribes</RouteButton>
+                </Flex>
+            </Flex>
+            <Flex vertical className="SplashPage__sections">
+                <MarketAccordion />
             </Flex>
         </Flex>
     );

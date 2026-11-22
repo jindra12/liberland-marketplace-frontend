@@ -1,694 +1,168 @@
 .SplashPage {
-    position: relative;
-    isolation: isolate;
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 0 20px 8px;
+    width: min(1280px, 100%);
     box-sizing: border-box;
+    margin-inline: auto;
+    padding: 8px 24px 24px;
 
     &__hero {
-        position: relative;
-        z-index: 1;
-        width: min(1520px, 100%);
-        margin: 0 auto;
-        border-radius: 0;
-        overflow: hidden;
-        border: 0;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--market-border);
     }
 
-    &__heroInner {
-        position: relative;
-        isolation: isolate;
-        min-height: 150px;
-        padding: 0;
-        border-radius: 0;
-        background: transparent;
-        box-shadow: none;
-
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            background: radial-gradient(circle at 50% 34%, rgba(0, 167, 216, 0.18), transparent 28%);
-            pointer-events: none;
-        }
+    &__heroTitle.ant-typography {
+        margin: 0;
+        font-size: 36px;
+        line-height: 1.2;
+        color: var(--market-text);
     }
 
-    &__heroBackdrop {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        width: fit-content;
-        height: auto;
-        margin: auto;
-        opacity: 0.22;
-        transform: translateY(2px) scale(1);
-        filter:
-            brightness(0.42)
-            saturate(0.7)
-            drop-shadow(0 0 28px rgba(0, 167, 216, 0.16))
-            drop-shadow(0 0 58px rgba(121, 230, 177, 0.08));
-        pointer-events: none;
-        user-select: none;
-    }
-
-    &__heroOverlay {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100%;
-        max-width: 100%;
-        text-align: center;
-        padding: clamp(6px, 1vw, 14px) clamp(10px, 1.5vw, 24px);
-    }
-
-    &__heroOverlayInner {
-        width: 100%;
-    }
-
-    &__heroTitle {
-        margin: 0 !important;
-        position: relative;
-        z-index: 1;
-        max-width: 11ch;
-        text-align: center;
-        color: #eef8f3 !important;
-        line-height: 0.98 !important;
-        letter-spacing: -0.055em;
-        text-wrap: balance;
-        font-size: 46px !important;
-
-        @media (min-width: 1200px) {
-            font-size: 86px !important;
-        }
-    }
-
-    &__heroAccent {
-        background: linear-gradient(135deg, #79e6b1, #7ee3df 48%, #5aa6ff 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-box-decoration-break: clone;
-        box-decoration-break: clone;
-        padding-inline-end: 0.04em;
-        color: transparent;
-    }
-
-    &__heroDescription {
-        margin: 0 !important;
-        position: relative;
-        z-index: 1;
-        max-width: 36rem;
-        text-align: center;
-        color: rgba(188, 217, 203, 0.84);
-        font-size: 14px;
-        line-height: 1.5;
-
-        @media (min-width: 1200px) {
-            font-size: 18px;
-            max-width: 44rem;
-        }
-    }
-
-    &__heroActions {
-        position: relative;
-        z-index: 1;
-        margin-top: 8px;
-    }
-
-    &__heroWordmark.ant-typography {
-        margin: 0 !important;
-        position: relative;
-        z-index: 1;
-        background: linear-gradient(135deg, #f6fbff 0%, #8ef6d2 42%, #7edfff 68%, #5aa6ff 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent !important;
-        font-size: 46px !important;
-        line-height: 0.94 !important;
-        letter-spacing: -0.025em;
-        text-align: center;
-        text-shadow:
-            0 0 18px rgba(121, 230, 177, 0.24),
-            0 0 42px rgba(90, 166, 255, 0.18);
-
-        @media (min-width: 1200px) {
-            font-size: 86px !important;
-        }
-    }
-
-    &__heroPrimaryBtn.ant-btn {
-        position: relative;
-        z-index: 1;
-        min-width: 142px;
-        min-height: 36px;
-        border-radius: 999px;
-        font-weight: 800;
-        box-shadow:
-            0 14px 32px rgba(90, 166, 255, 0.22),
-            0 0 0 1px rgba(121, 230, 177, 0.14);
-    }
-
-    &__heroSecondaryBtn.ant-btn {
-        position: relative;
-        z-index: 1;
-        min-width: 142px;
-        min-height: 36px;
-        border-radius: 999px;
-        font-weight: 800;
-        color: #79e6b1;
-        border-color: rgba(121, 230, 177, 0.3);
-        background: rgba(6, 23, 37, 0.72);
-        box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
-        text-shadow: 0 0 18px rgba(121, 230, 177, 0.14);
+    &__heroDescription.ant-typography {
+        margin: 0;
+        color: var(--market-muted);
+        font-size: 16px;
     }
 
     &__sections {
-        position: relative;
-        z-index: 1;
-        width: min(1520px, 100%);
-        margin: 26px auto 0;
-        padding: 0 0 0;
-        box-sizing: border-box;
-    }
-
-    &__loading {
-        min-height: 220px;
-    }
-
-    &__identityList {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-    }
-
-    &__identitySection {
-        padding: 26px;
-        border-radius: 32px;
-        background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
-        box-shadow:
-            0 24px 56px rgba(0, 0, 0, 0.24),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    }
-
-    &__identityHeadingLink {
-        display: block;
-        margin-bottom: 20px;
-        color: inherit;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
-    &__identityHeader {
         min-width: 0;
     }
 
-    &__identityHeading {
-        margin: 0 !important;
-        color: #eef8f3 !important;
-        font-size: 32px !important;
-        line-height: 1.02 !important;
-    }
-
-    &__identityMeta {
-        color: rgba(188, 217, 203, 0.72);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-    }
-
-    &__identityAvatar {
-        background: linear-gradient(145deg, rgba(10, 63, 120, 0.98), rgba(23, 121, 89, 0.92));
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-        flex-shrink: 0;
-    }
-
-    &__syndicationSection {
-        padding: 28px;
-        border-radius: 32px;
-        background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
-        box-shadow:
-            0 24px 56px rgba(0, 0, 0, 0.24),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06);
-    }
-
     &__syndicationHeader {
-        margin-bottom: 22px;
+        margin-bottom: 20px;
     }
 
     &__syndicationHeaderCopy {
-        max-width: 760px;
+        max-width: 640px;
     }
 
-    &__syndicationEyebrow {
-        color: #79e6b1;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
+    &__syndicationEyebrow,
+    &__syndicationCardEyebrow,
+    &__syndicationCardHost,
+    &__syndicationCardMetaCopy {
+        color: var(--market-muted);
+        font-size: 13px;
     }
 
-    &__syndicationTitle {
-        margin: 0 !important;
-        color: #eef8f3 !important;
-        line-height: 1.02 !important;
+    &__syndicationTitle.ant-typography {
+        margin: 0;
+        font-size: 24px;
     }
 
-    &__syndicationDescription {
-        margin: 0 !important;
-        color: rgba(188, 217, 203, 0.82);
-        font-size: 15px;
-        line-height: 1.65;
+    &__syndicationDescription,
+    &__syndicationCardDescription {
+        color: var(--market-muted);
+        margin: 0;
     }
 
     &__syndicationGrid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
+        gap: 16px;
     }
 
-    &__syndicationEntityCard {
+    &__syndicationEntityCard,
+    &__syndicationCardBody {
         height: 100%;
-        box-shadow:
-            0 18px 40px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06),
-            inset 0 0 0 1px rgba(22, 50, 72, 0.3);
-        transition:
-            transform 0.18s ease,
-            box-shadow 0.18s ease;
-
-        &:hover {
-            transform: translateY(-2px);
-            box-shadow:
-                0 24px 48px rgba(0, 0, 0, 0.24),
-                inset 0 1px 0 rgba(147, 214, 255, 0.08),
-                inset 0 0 0 1px rgba(44, 91, 130, 0.26);
-        }
-
-        .ant-card-head {
-            min-height: 110px;
-            align-items: flex-start;
-        }
-
-        .ant-card-head-wrapper {
-            width: 100%;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .ant-card-head-title {
-            padding-block: 18px;
-            white-space: normal;
-        }
-
-        .ant-card-extra {
-            padding-block: 18px 0;
-
-            .ant-tag {
-                margin-inline-end: 0;
-            }
-        }
-
-        .ant-card-body {
-            gap: 16px;
-        }
-    }
-
-    &__syndicationEntityCard--enabled {
-        box-shadow:
-            0 18px 40px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(147, 214, 255, 0.06),
-            inset 0 0 0 1px rgba(121, 230, 177, 0.14);
     }
 
     &__syndicationCardHeader {
         min-width: 0;
     }
 
-    &__syndicationCardEyebrow {
-        display: block;
-        color: #79e6b1;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-    }
-
-    &__syndicationCardTitle {
-        margin: 0 !important;
-        color: #eef8f3 !important;
-        font-size: 22px !important;
-        line-height: 1.08 !important;
-    }
-
-    &__syndicationCardTitleLink {
-        color: inherit;
-
-        &:hover {
-            color: inherit;
-        }
-    }
-
-    &__syndicationCardHost {
-        color: rgba(188, 217, 203, 0.72);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        word-break: break-word;
-    }
-
-    &__syndicationCardBody {
-        height: 100%;
-        min-width: 0;
-    }
-
-    &__syndicationCardDescription {
-        margin: 0 !important;
-        color: rgba(188, 217, 203, 0.78);
-        font-size: 14px;
-        line-height: 1.6;
-        word-break: break-word;
-    }
-
-    &__syndicationCardTags {
-        .ant-tag {
-            margin-inline-end: 0;
-        }
+    &__syndicationCardTitle.ant-typography {
+        margin: 0;
+        font-size: 20px;
     }
 
     &__syndicationCardActions {
         margin-top: auto;
     }
-
-    &__syndicationCardCompactActions.ant-space-compact {
-        flex-shrink: 0;
-    }
-
-    &__syndicationCardMetaCopy {
-        color: rgba(188, 217, 203, 0.7);
-        font-size: 13px;
-        line-height: 1.5;
-        max-width: 18rem;
-    }
 }
 
-.IdentityMarketAccordion,
-.MarketAccordion {
+.MarketAccordion,
+.MarketAccordionMobile,
+.MarketAccordion__section,
+.MarketAccordionMobile__section {
     width: 100%;
-}
-
-.IdentityMarketAccordion__label,
-.MarketAccordion__label {
     min-width: 0;
 }
 
-.IdentityMarketAccordion__titleLink,
-.MarketAccordion__titleLink {
-    display: inline-flex;
-    width: fit-content;
-    color: inherit;
-    text-decoration: none;
-    transition:
-        transform 0.22s ease,
-        text-shadow 0.22s ease,
-        color 0.22s ease;
-
-    &:hover,
-    &:focus-visible {
-        transform: translateY(-1px);
-        text-decoration: none;
-    }
-}
-
-.IdentityMarketAccordion__title.ant-typography,
-.MarketAccordion__title.ant-typography {
-    margin: 0 !important;
-    color: inherit;
-    font-size: 36px !important;
-    line-height: 1 !important;
-}
-
-.MarketAccordion__titleLink--products,
-.MarketAccordion__titleLink--jobs,
-.MarketAccordion__titleLink--companies,
-.MarketAccordion__titleLink--ventures,
-.MarketAccordion__titleLink--tribes,
-.SplashPage__tribesTitleLink {
-    text-shadow: 0 0 18px rgba(121, 230, 177, 0.14);
-}
-
-.MarketAccordion__titleLink--products {
-    color: #7ee3df;
-
-    &:hover,
-    &:focus-visible {
-        color: #b7faf6;
-        text-shadow:
-            0 0 10px rgba(126, 227, 223, 0.5),
-            0 0 24px rgba(126, 227, 223, 0.24);
-    }
-}
-
-.MarketAccordion__titleLink--jobs {
-    color: #79e6b1;
-
-    &:hover,
-    &:focus-visible {
-        color: #bbffd8;
-        text-shadow:
-            0 0 10px rgba(121, 230, 177, 0.48),
-            0 0 24px rgba(121, 230, 177, 0.24);
-    }
-}
-
-.MarketAccordion__titleLink--companies {
-    color: #8ab8ff;
-
-    &:hover,
-    &:focus-visible {
-        color: #d0e2ff;
-        text-shadow:
-            0 0 10px rgba(138, 184, 255, 0.5),
-            0 0 24px rgba(138, 184, 255, 0.24);
-    }
-}
-
-.MarketAccordion__titleLink--ventures {
-    color: #ffd166;
-
-    &:hover,
-    &:focus-visible {
-        color: #ffe9b3;
-        text-shadow:
-            0 0 10px rgba(255, 209, 102, 0.52),
-            0 0 24px rgba(255, 209, 102, 0.24);
-    }
-}
-
-.SplashPage__tribesTitleLink {
-    color: #c49bff;
-
-    &:hover,
-    &:focus-visible {
-        color: #ecdcff;
-        text-shadow:
-            0 0 10px rgba(196, 155, 255, 0.5),
-            0 0 24px rgba(196, 155, 255, 0.24);
-    }
-}
-
-.MarketAccordion__titleLink--tribes {
-    color: #c49bff;
-
-    &:hover,
-    &:focus-visible {
-        color: #ecdcff;
-        text-shadow:
-            0 0 10px rgba(196, 155, 255, 0.5),
-            0 0 24px rgba(196, 155, 255, 0.24);
-    }
-}
-
-.IdentityMarketAccordion__identityLink {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    width: fit-content;
-    color: rgba(188, 217, 203, 0.88);
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.IdentityMarketAccordion__identityAvatar {
-    flex-shrink: 0;
-    border-radius: 999px;
-    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.08);
-}
-
-.IdentityMarketAccordion__identityName {
-    min-width: 0;
-    color: inherit;
-}
-
-.MarketAccordion__section {
-    width: 100%;
-}
-
-.MarketAccordion__header {
-    min-width: 0;
-    margin-bottom: 20px;
-    margin-left: 10px;
-}
-
+.MarketAccordion__header,
 .MarketAccordionMobile__header {
-    margin-bottom: 10px;
-    margin-left: 5px;
+    margin-bottom: 16px;
 }
 
-.SplashPage__tribesSection {
-    padding: 28px;
-    border-radius: 32px;
-    background: linear-gradient(180deg, rgba(7, 20, 35, 0.92), rgba(4, 16, 29, 0.94));
-    box-shadow:
-        0 24px 56px rgba(0, 0, 0, 0.24),
-        inset 0 1px 0 rgba(147, 214, 255, 0.06);
+.MarketAccordion__titleLink {
+    color: var(--market-text);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--market-link);
+    }
 }
 
-.SplashPage__tribesHeader {
-    margin-bottom: 18px;
+.MarketAccordion__title.ant-typography {
+    color: inherit;
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.3;
 }
 
-.SplashPage__tribesEyebrow {
-    color: #c49bff;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+.SplashEntityCard {
+    width: 100%;
+    min-width: 0;
 }
 
-.SplashPage__tribesTitle {
-    margin: 0 !important;
-    color: #eef8f3 !important;
-    line-height: 1.02 !important;
-}
-
-.SplashPage__tribesDescription {
-    margin: 0 !important;
-    color: rgba(188, 217, 203, 0.82);
-    font-size: 15px;
-    line-height: 1.65;
-}
-
-.SplashPage__tribesMeta {
-    color: rgba(188, 217, 203, 0.76);
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 1.5;
+.SplashEntityCard__spin,
+.SplashEntityCard__stack {
+    width: 100%;
 }
 
 .SplashEntityCard__carousel {
     width: 100%;
-
-    .slick-list {
-        overflow: hidden;
-    }
+    padding-inline: 28px;
 
     .slick-slide {
         height: auto;
     }
 
-    .slick-slide > div {
-        height: 100%;
+    .slick-prev,
+    .slick-next {
+        top: 50%;
+        width: 24px;
+        height: 24px;
+        transform: translateY(-50%);
     }
-}
 
-@include md {
-    .SplashEntityCard__carousel {
-        padding-inline-start: 30px;
-        padding-inline-end: 44px;
-        box-sizing: border-box;
+    .slick-prev {
+        inset-inline-start: 0;
+    }
 
-        .slick-prev,
-        .slick-next {
-            top: 50%;
-            z-index: 2;
-            width: 34px;
-            height: 34px;
-            transform: translateY(-50%);
-        }
-
-        .slick-prev {
-            inset-inline-start: 0;
-        }
-
-        .slick-next {
-            inset-inline-end: 0;
-        }
-
-        .slick-prev::before,
-        .slick-next::before {
-            font-size: 34px;
-            opacity: 0.88;
-        }
+    .slick-next {
+        inset-inline-end: 0;
     }
 }
 
 .SplashEntityCard__carouselSlide {
-    height: 222px;
-    padding-inline: 8px;
-}
-
-.SplashEntityCard__stack {
-    width: 100%;
-}
-
-.SplashEntityCard__stackItem {
-    width: 100%;
-}
-
-.SplashEntityCard {
-    width: 100%;
-}
-
-.SplashEntityCard__spin {
-    width: 100%;
-}
-
-.SplashEntityCard__empty {
-    display: block;
-    padding: 16px 4px;
-    color: rgba(188, 217, 203, 0.72);
-    font-weight: 700;
+    height: 230px;
+    padding-inline: 6px;
 }
 
 .SplashEntityCard__itemCard.ant-card {
     height: 100%;
-    border: 0;
-    border-radius: 24px;
-    background: linear-gradient(180deg, rgba(7, 20, 35, 0.96), rgba(4, 16, 29, 0.96));
-    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.06);
+    border: 1px solid var(--market-border);
+    border-radius: 8px;
+    background: var(--market-surface);
+    box-shadow: none;
 }
 
 .SplashEntityCard__itemCard .ant-card-body {
     height: 100%;
-    padding: 20px;
+    padding: 16px;
 }
 
-.SplashEntityCard__itemBody {
+.SplashEntityCard__itemBody,
+.SplashEntityCard__itemHeading {
     height: 100%;
     min-width: 0;
 }
@@ -698,205 +172,66 @@
 }
 
 .SplashEntityCard__itemHeading {
-    min-width: 0;
     flex: 1;
 }
 
-.SplashEntityCard__itemTitle.ant-typography {
-    margin: 0 !important;
-    color: inherit;
-    font-size: 24px !important;
-    line-height: 1.1 !important;
+.SplashEntityCard__itemTitle.ant-typography,
+.SplashEntityCard__itemLink {
+    color: var(--market-text);
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.35;
 }
 
 .SplashEntityCard__itemLink {
-    display: block;
-    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    color: #eef8f3;
-    font-weight: 800;
-    font-size: 24px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.SplashEntityCard__meta {
-    margin-top: 4px;
-
-    .ant-tag {
-        margin-inline-end: 0;
-    }
 }
 
 .SplashEntityCard__avatar {
     flex-shrink: 0;
-    border-radius: 16px;
-    box-shadow: inset 0 1px 0 rgba(147, 214, 255, 0.08);
+    border-radius: 6px;
+}
 
-    img {
-        object-fit: contain;
-    }
+.SplashEntityCard__meta {
+    margin-top: 4px;
+    font-size: 14px;
 }
 
 .SplashEntityCard__actions {
     margin-top: auto;
+    width: 100%;
 }
 
-@include lg-min {wait wh
-    .SplashPage {
-        padding-inline: 14px;
-
-        &__syndicationGrid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        &__identityHeading {
-            font-size: 28px !important;
-        }
-    }
+.SplashEntityCard__inlineActions {
+    margin-left: auto;
 }
 
-@include xl-min {
-    .IdentityMarketAccordion__title.ant-typography,
-    .MarketAccordion__title.ant-typography {
-        font-size: 34px !important;
-    }
-
-    .SplashPage__heroInner {
-        min-height: 180px;
-    }
-
-    .SplashEntityCard__itemCard .ant-card-body {
-        padding: 18px;
-    }
-
-    .SplashEntityCard__itemLink {
-        font-size: 17px;
-    }
-
-    .SplashEntityCard__itemTitle.ant-typography {
-        font-size: 20px !important;
-    }
-}
-
-.SplashPage__identitySection .IdentityMarketAccordion {
-    margin-top: 20px;
-}
-
-.SplashPage__marketAccordion {
-    margin-top: 20px;
-}
-
-.SplashPage__tribesCarousel {
-    margin-top: 20px;
-}
-
-.SplashPage__marketNote.ant-alert {
-    border: 0;
-    background: linear-gradient(180deg, rgba(8, 25, 39, 0.82), rgba(5, 18, 31, 0.82));
+.SplashEntityCard__actionGroup .ant-btn {
+    min-height: 32px;
 }
 
 @include md-min {
-    .IdentityMarketAccordion__title.ant-typography,
-    .MarketAccordion__title.ant-typography {
-        font-size: 30px !important;
-    }
-
-    .SplashEntityCard__itemCard .ant-card-body {
-        padding: 16px;
-    }
-
-    .SplashEntityCard__itemLink {
-        font-size: 16px;
-    }
-
     .SplashPage {
-        &__heroInner {
-            min-height: 180px;
+        padding-inline: 16px;
+
+        &__heroTitle.ant-typography {
+            font-size: 30px;
         }
 
-        &__heroBackdrop {
-            width: min(220px, 48vw);
-            opacity: 0.2;
-            transform: translateY(2px) scale(1);
-        }
-
-        &__heroOverlay {
-            padding: 12px 12px 18px;
-        }
-
-        &__identitySection {
-            padding: 20px;
-            border-radius: 24px;
-        }
-
-        &__syndicationSection {
-            padding: 20px;
-            border-radius: 24px;
-        }
-
-        &__tribesSection {
-            padding: 20px;
-            border-radius: 24px;
+        &__heroActions .ant-btn {
+            min-height: 40px;
         }
 
         &__syndicationGrid {
             grid-template-columns: 1fr;
         }
-
-        &__syndicationEntityCard {
-            .ant-card-head {
-                min-height: 96px;
-            }
-        }
-
-        &__syndicationCardActions {
-            align-items: stretch;
-        }
-
-        &__syndicationCardCompactActions.ant-space-compact {
-            width: 100%;
-        }
-
-        &__syndicationCardCompactActions.ant-space-compact > * {
-            flex: 1 1 0;
-        }
-
-        &__syndicationCardCompactActions .ant-btn {
-            width: 100%;
-            justify-content: center;
-        }
-
-        &__identityHeading {
-            font-size: 24px !important;
-        }
-
-        &__heroWordmark.ant-typography {
-            font-size: 40px !important;
-            letter-spacing: -0.02em;
-        }
-
-        &__heroDescription {
-            max-width: 16rem;
-            font-size: 11px;
-        }
-
-        &__heroPrimaryBtn.ant-btn {
-            min-width: 124px;
-            min-height: 38px;
-        }
-
-        &__heroSecondaryBtn.ant-btn {
-            min-width: 124px;
-            min-height: 38px;
-        }
     }
 
-    .SplashPage__syndicationCardTitle {
-        font-size: 20px !important;
-    }
-
-    .SplashPage__tribesTitle {
-        font-size: 20px !important;
+    .SplashEntityCard__itemCard .ant-card-body {
+        padding: 16px;
     }
 }
